@@ -14,7 +14,6 @@ Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'rdnetto/YCM-Generator'
 
-Plugin 'nvie/vim-flake8'
 Plugin 'rust-lang/rust.vim'
 
 call vundle#end()
