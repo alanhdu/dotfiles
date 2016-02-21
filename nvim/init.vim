@@ -15,6 +15,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'rdnetto/YCM-Generator'
 
 Plugin 'rust-lang/rust.vim'
+Plugin 'elixir-lang/vim-elixir'
 
 call vundle#end()
 
@@ -46,7 +47,6 @@ set tabstop=8
 
 set autoindent
 
-autocmd BufWritePost *.py call Flake8()
 autocmd Filetype python setlocal expandtab
     \ textwidth=79
     \ shiftwidth=4
