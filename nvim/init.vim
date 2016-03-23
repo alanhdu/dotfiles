@@ -21,6 +21,8 @@ call vundle#end()
 
 filetype plugin indent on
 
+let g:ycm_rust_src_path='/home/alan/workspace/rust/src'
+
 "minibufexpl stuff
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
