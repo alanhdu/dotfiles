@@ -3,3 +3,5 @@
 	email = alanhdu@gmail.com
 [core]
 	editor = nvim
+[grep]
+	linenumber = true
