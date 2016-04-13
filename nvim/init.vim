@@ -1,23 +1,19 @@
 let g:python_host_prog='/usr/bin/python'    "Avoid virtualenv/conda problems
 
 "vundle stuff
-filetype off
+call plug#begin("~/.vim/plugged")
 
-set rtp+=~/.vim/bundle/Vundle.vim/
-call vundle#begin()
+Plug 'fholgado/minibufexpl.vim'
+Plug 'tpope/vim-sensible'
+Plug 'ntpeters/vim-better-whitespace'
 
-Plugin 'gmarik/Vundle.vim'
-Plugin 'fholgado/minibufexpl.vim'
-Plugin 'tpope/vim-sensible'
-Plugin 'ntpeters/vim-better-whitespace'
+Plug 'Valloric/YouCompleteMe', {'for': ['python', 'rust', 'c', 'cpp']}
+Plug 'rdnetto/YCM-Generator', {'branch': 'stable', 'for': ['c', 'cpp']}
 
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'rdnetto/YCM-Generator'
+Plug 'rust-lang/rust.vim', {'for': 'rust'}
+Plug 'elixir-lang/vim-elixir', {'for': 'elixir'}
 
-Plugin 'rust-lang/rust.vim'
-Plugin 'elixir-lang/vim-elixir'
-
-call vundle#end()
+call plug#end()
 
 filetype plugin indent on
 
