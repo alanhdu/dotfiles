@@ -1,6 +1,5 @@
 let g:python_host_prog='/usr/bin/python'    "Avoid virtualenv/conda problems
 
-"vundle stuff
 call plug#begin("~/.vim/plugged")
 
 Plug 'fholgado/minibufexpl.vim'
@@ -10,8 +9,8 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'Valloric/YouCompleteMe', {'for': ['python', 'rust', 'c', 'cpp']}
 Plug 'rdnetto/YCM-Generator', {'branch': 'stable', 'for': ['c', 'cpp']}
 
-Plug 'rust-lang/rust.vim', {'for': 'rust'}
-Plug 'elixir-lang/vim-elixir', {'for': 'elixir'}
+Plug 'rust-lang/rust.vim'
+Plug 'elixir-lang/vim-elixir'
 
 call plug#end()
 
