@@ -3,7 +3,8 @@ from __future__ import print_function
 import os
 
 mapping = {"gitconfig": "~/.gitconfig",
-           "nvim": "~/.config/nvim"}
+           "nvim": "~/.config/nvim",
+           "redshift": "~/.config/redshift.conf"}
 
 os.chdir(os.path.dirname(__file__))
 
