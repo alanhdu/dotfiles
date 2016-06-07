@@ -4,7 +4,7 @@ import os
 
 mapping = {"gitconfig": "~/.gitconfig",
            "nvim": "~/.config/nvim",
-           "redshift": "~/.config/redshift.conf",
+           "redshift.conf": "~/.config/redshift.conf",
            "irbrc": "~/.irbrc"}
 
 os.chdir(os.path.dirname(__file__))
