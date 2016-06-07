@@ -6,11 +6,12 @@ Plug 'fholgado/minibufexpl.vim'
 Plug 'tpope/vim-sensible'
 Plug 'ntpeters/vim-better-whitespace'
 
-Plug 'Valloric/YouCompleteMe', {'for': ['python', 'rust', 'c', 'cpp']}
+Plug 'Valloric/YouCompleteMe', {'for': ['python', 'rust', 'c', 'cpp', 'ruby']}
 Plug 'rdnetto/YCM-Generator', {'branch': 'stable', 'for': ['c', 'cpp']}
 
 Plug 'rust-lang/rust.vim'
 Plug 'elixir-lang/vim-elixir'
+Plug 'vim-ruby/vim-ruby'
 
 call plug#end()
 
@@ -52,3 +53,7 @@ autocmd Filetype c setlocal noexpandtab
     \ softtabstop=8
     \ shiftwidth=8
     \ tabstop=8
+autocmd Filetype ruby setlocal expandtab
+    \ tabstop=2
+    \ shiftwidth=2
+    \ textwidth=79
