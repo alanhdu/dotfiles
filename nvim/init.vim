@@ -8,9 +8,10 @@ Plug 'fholgado/minibufexpl.vim'
 Plug 'tpope/vim-sensible'
 Plug 'ntpeters/vim-better-whitespace'
 
-Plug 'Valloric/YouCompleteMe', {'for': ['python', 'rust', 'c', 'cpp', 'ruby', 'go']}
+Plug 'Valloric/YouCompleteMe'
 Plug 'rdnetto/YCM-Generator', {'branch': 'stable', 'for': ['c', 'cpp']}
 
+Plug 'rodjek/vim-puppet'
 Plug 'rust-lang/rust.vim', {'for': ['rust']}
 Plug 'elixir-lang/vim-elixir', {'for': ['elixir']}
 Plug 'vim-ruby/vim-ruby', {'for': ['ruby']}
