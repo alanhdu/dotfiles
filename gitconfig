@@ -1,7 +1,12 @@
 [user]
 	name = Alan Du
 	email = alanhdu@gmail.com
+	signingkey = DF040117
 [core]
 	editor = nvim
 [grep]
 	linenumber = true
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg2
