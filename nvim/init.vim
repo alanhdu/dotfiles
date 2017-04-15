@@ -5,7 +5,6 @@ call plug#begin("~/.vim/plugged")
 Plug 'scrooloose/syntastic'
 
 Plug 'fholgado/minibufexpl.vim'
-Plug 'tpope/vim-sensible'
 Plug 'ntpeters/vim-better-whitespace'
 
 Plug 'Valloric/YouCompleteMe'
@@ -61,4 +60,8 @@ autocmd Filetype c setlocal noexpandtab
 autocmd Filetype ruby setlocal expandtab
     \ tabstop=2
     \ shiftwidth=2
+    \ textwidth=79
+autocmd Filetype cpp setlocal noexpandtab
+    \ shiftwidth=2
+    \ tabstop=2
     \ textwidth=79
