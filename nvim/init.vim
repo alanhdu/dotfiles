@@ -10,12 +10,12 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'Valloric/YouCompleteMe'
 Plug 'rdnetto/YCM-Generator', {'branch': 'stable', 'for': ['c', 'cpp']}
 
-Plug 'rodjek/vim-puppet'
-Plug 'rust-lang/rust.vim', {'for': ['rust']}
+Plug 'cespare/vim-toml', {'for': ['toml']}
 Plug 'elixir-lang/vim-elixir', {'for': ['elixir']}
-Plug 'vim-ruby/vim-ruby', {'for': ['ruby']}
 Plug 'fatih/vim-go', {'for': ['go']}
 Plug 'pangloss/vim-javascript', {'for': ['javascript']}
+Plug 'rust-lang/rust.vim', {'for': ['rust']}
+Plug 'vim-ruby/vim-ruby', {'for': ['ruby']}
 
 call plug#end()
 
