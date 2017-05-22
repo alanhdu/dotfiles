@@ -1,4 +1,4 @@
-let g:python_host_prog='/usr/bin/python'    "Avoid virtualenv/conda problems
+let g:ycm_python_binary_path = 'python'
 
 call plug#begin("~/.vim/plugged")
 
