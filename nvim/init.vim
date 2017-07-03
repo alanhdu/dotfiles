@@ -1,4 +1,4 @@
-let g:ycm_python_binary_path = 'python'
+let g:ycm_python_binary_path = 'python3'
 
 call plug#begin("~/.vim/plugged")
 
@@ -10,6 +10,7 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'Valloric/YouCompleteMe'
 Plug 'rdnetto/YCM-Generator', {'branch': 'stable', 'for': ['c', 'cpp']}
 
+Plug 'mindriot101/vim-yapf', {'for': ['python']}
 Plug 'cespare/vim-toml', {'for': ['toml']}
 Plug 'elixir-lang/vim-elixir', {'for': ['elixir']}
 Plug 'fatih/vim-go', {'for': ['go']}
