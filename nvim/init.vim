@@ -1,5 +1,3 @@
-
-
 call plug#begin("~/.vim/plugged")
 
 Plug 'scrooloose/syntastic'
@@ -24,6 +22,7 @@ call plug#end()
 filetype plugin indent on
 
 let g:ycm_rust_src_path='/home/alan/workspace/rust/src'
+let g:ycm_python_binary_path = 'python'
 
 "minibufexpl stuff
 let g:miniBufExplMapWindowNavVim = 1
