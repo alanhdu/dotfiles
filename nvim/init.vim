@@ -10,12 +10,16 @@ Plug 'rdnetto/YCM-Generator', {'branch': 'stable', 'for': ['c', 'cpp']}
 
 Plug 'cespare/vim-toml', {'for': ['toml']}
 Plug 'elixir-lang/vim-elixir', {'for': ['elixir']}
+Plug 'HerringtonDarkholme/yats.vim', {'for': ['typescript']}
 Plug 'fatih/vim-go', {'for': ['go']}
 Plug 'fsharp/vim-fsharp', {'for': ['fsharp'], 'do': 'make fsautocomplete'}
 Plug 'mindriot101/vim-yapf', {'for': ['python']}
+Plug 'ambv/black', {'for': ['python']}
 Plug 'pangloss/vim-javascript', {'for': ['javascript']}
 Plug 'rust-lang/rust.vim', {'for': ['rust']}
 Plug 'vim-ruby/vim-ruby', {'for': ['ruby']}
+
+let g:black_linelength = 79
 
 call plug#end()
 
