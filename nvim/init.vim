@@ -7,6 +7,7 @@ Plug 'ntpeters/vim-better-whitespace'
 
 Plug 'Valloric/YouCompleteMe'
 Plug 'rdnetto/YCM-Generator', {'branch': 'stable', 'for': ['c', 'cpp']}
+Plug 'rhysd/vim-clang-format', {'for': ['c', 'cpp']}
 
 Plug 'cespare/vim-toml', {'for': ['toml']}
 Plug 'elixir-lang/vim-elixir', {'for': ['elixir']}
