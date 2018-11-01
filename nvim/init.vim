@@ -7,7 +7,6 @@ Plug 'ntpeters/vim-better-whitespace'
 
 Plug 'Valloric/YouCompleteMe'
 Plug 'rdnetto/YCM-Generator', {'branch': 'stable', 'for': ['c', 'cpp']}
-Plug 'rhysd/vim-clang-format', {'for': ['c', 'cpp']}
 
 Plug 'cespare/vim-toml', {'for': ['toml']}
 Plug 'elixir-lang/vim-elixir', {'for': ['elixir']}
@@ -60,15 +59,16 @@ autocmd Filetype python setlocal expandtab
     \ textwidth=79
     \ shiftwidth=4
     \ tabstop=4
-autocmd Filetype c setlocal noexpandtab
-    \ softtabstop=8
-    \ shiftwidth=8
-    \ tabstop=8
 autocmd Filetype ruby setlocal expandtab
     \ tabstop=2
     \ shiftwidth=2
     \ textwidth=79
-autocmd Filetype cpp setlocal noexpandtab
+
+autocmd Filetype cpp setlocal expandtab
+    \ textwidth=79
     \ shiftwidth=2
     \ tabstop=2
+autocmd Filetype c setlocal expandtab
     \ textwidth=79
+    \ shiftwidth=2
+    \ tabstop=2
