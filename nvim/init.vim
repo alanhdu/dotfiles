@@ -26,6 +26,7 @@ call plug#end()
 filetype plugin indent on
 
 let g:ycm_python_binary_path = 'python'
+let g:syntastic_python_checkers = ['flake8']
 au BufRead,BufNewFile *.pyi set filetype=python
 
 "minibufexpl stuff
