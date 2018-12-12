@@ -73,3 +73,16 @@ autocmd Filetype c setlocal expandtab
     \ textwidth=79
     \ shiftwidth=2
     \ tabstop=2
+
+autocmd Filetype javascript setlocal expandtab
+    \ textwidth=79
+    \ shiftwidth=2
+    \ tabstop=2
+autocmd Filetype css setlocal expandtab
+    \ textwidth=79
+    \ shiftwidth=2
+    \ tabstop=2
+autocmd Filetype html setlocal expandtab
+    \ textwidth=79
+    \ shiftwidth=2
+    \ tabstop=2
