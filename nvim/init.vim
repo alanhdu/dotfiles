@@ -1,6 +1,7 @@
 call plug#begin("~/.vim/plugged")
 
-Plug 'scrooloose/syntastic'
+Plug 'w0rp/ale'
+let g:ale_python_mypy_options = '--ignore-missing-imports'
 
 Plug 'fholgado/minibufexpl.vim'
 Plug 'ntpeters/vim-better-whitespace'
@@ -27,7 +28,6 @@ filetype plugin indent on
 
 let g:python3_host_prog = '/opt/anaconda/envs/neovim/bin/python'
 let g:ycm_python_binary_path = 'python'
-let g:syntastic_python_checkers = ['flake8']
 au BufRead,BufNewFile *.pyi set filetype=python
 
 "minibufexpl stuff
