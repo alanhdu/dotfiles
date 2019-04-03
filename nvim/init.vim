@@ -3,11 +3,18 @@ call plug#begin("~/.vim/plugged")
 Plug 'w0rp/ale'
 let g:ale_python_mypy_options = '--ignore-missing-imports'
 
+
 Plug 'fholgado/minibufexpl.vim'
 Plug 'ntpeters/vim-better-whitespace'
 
-Plug 'Valloric/YouCompleteMe'
-Plug 'rdnetto/YCM-Generator', {'branch': 'stable', 'for': ['c', 'cpp']}
+" Use tab for trigger completion with characters ahead and navigate.
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ "\<TAB>"
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" Use <c-space> for trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
 
 Plug 'cespare/vim-toml', {'for': ['toml']}
 Plug 'elixir-lang/vim-elixir', {'for': ['elixir']}
@@ -16,18 +23,17 @@ Plug 'fatih/vim-go', {'for': ['go']}
 Plug 'fsharp/vim-fsharp', {'for': ['fsharp'], 'do': 'make fsautocomplete'}
 Plug 'mindriot101/vim-yapf', {'for': ['python']}
 Plug 'ambv/black', {'for': ['python']}
+let g:black_linelength = 79
 Plug 'pangloss/vim-javascript', {'for': ['javascript']}
 Plug 'rust-lang/rust.vim', {'for': ['rust']}
 Plug 'vim-ruby/vim-ruby', {'for': ['ruby']}
 
-let g:black_linelength = 79
 
 call plug#end()
 
 filetype plugin indent on
 
 let g:python3_host_prog = '/opt/anaconda/envs/neovim/bin/python'
-let g:ycm_python_binary_path = 'python'
 au BufRead,BufNewFile *.pyi set filetype=python
 
 "minibufexpl stuff

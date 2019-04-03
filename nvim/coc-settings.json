@@ -1,0 +1,9 @@
+{
+    "languageserver": {
+        "python": {
+            "command": "/opt/anaconda/envs/neovim/bin/pyls",
+            "args": ["--check-parent-process"],
+            "filetypes": ["python"]
+        }
+    }
+}
