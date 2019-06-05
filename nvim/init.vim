@@ -1,9 +1,5 @@
 call plug#begin("~/.vim/plugged")
 
-Plug 'w0rp/ale'
-let g:ale_python_mypy_options = '--ignore-missing-imports'
-
-
 Plug 'fholgado/minibufexpl.vim'
 Plug 'ntpeters/vim-better-whitespace'
 
@@ -23,7 +19,6 @@ Plug 'fatih/vim-go', {'for': ['go']}
 Plug 'fsharp/vim-fsharp', {'for': ['fsharp'], 'do': 'make fsautocomplete'}
 Plug 'mindriot101/vim-yapf', {'for': ['python']}
 Plug 'ambv/black', {'for': ['python']}
-let g:black_linelength = 79
 Plug 'pangloss/vim-javascript', {'for': ['javascript']}
 Plug 'rust-lang/rust.vim', {'for': ['rust']}
 Plug 'vim-ruby/vim-ruby', {'for': ['ruby']}
@@ -52,7 +47,7 @@ set magic       " Make regexes work nicely
 set mouse=c     " Command-line mode
 
 syntax on
-colorscheme custom
+colorscheme slate
 
 " Default tab settings
 set expandtab
