@@ -19,7 +19,7 @@ nmap <silent> ]c <Plug>(coc-diagnostic-next)
 nmap <silent> gD <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)<Paste>
+nmap <silent> gr <Plug>(coc-references)
 
 Plug 'cespare/vim-toml', {'for': ['toml']}
 Plug 'elixir-lang/vim-elixir', {'for': ['elixir']}
