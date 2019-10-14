@@ -31,7 +31,7 @@ Plug 'ambv/black', {'for': ['python']}
 Plug 'pangloss/vim-javascript', {'for': ['javascript']}
 Plug 'rust-lang/rust.vim', {'for': ['rust']}
 Plug 'vim-ruby/vim-ruby', {'for': ['ruby']}
-
+Plug 'rhysd/vim-clang-format', {'for': ['c', 'cpp']}
 
 call plug#end()
 
