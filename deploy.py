@@ -2,10 +2,14 @@
 from __future__ import print_function
 import os
 
-mapping = {"gitconfig": "~/.gitconfig",
-           "nvim": "~/.config/nvim",
-           "redshift.conf": "~/.config/redshift.conf",
-           "irbrc": "~/.irbrc"}
+mapping = {
+    "gitconfig": "~/.gitconfig",
+    "nvim": "~/.config/nvim",
+    "redshift.conf": "~/.config/redshift.conf",
+    "irbrc": "~/.irbrc",
+    "vscode/settings.json": "~/.config/Code/User/settings.json",
+    "vscode/keybindings.json": "~/.config/Code/User/keybindings.json",
+}
 
 os.chdir(os.path.dirname(__file__))
 
