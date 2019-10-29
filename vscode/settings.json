@@ -1,1 +1,13 @@
-{}
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/*.olean": true
+    },
+    "window.zoomLevel": 0,
+    "editor.minimap.enabled": false,
+    "editor.fontSize": 13
+}
