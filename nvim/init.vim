@@ -21,7 +21,7 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-Plug 'ambv/black', {'for': ['python']}
+Plug 'psf/black', {'for': ['python']}
 Plug 'fatih/vim-go', {'for': ['go']}
 Plug 'mindriot101/vim-yapf', {'for': ['python']}
 Plug 'rhysd/vim-clang-format', {'for': ['c', 'cpp']}
