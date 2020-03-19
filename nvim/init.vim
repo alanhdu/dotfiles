@@ -1,12 +1,10 @@
 call plug#begin("~/.vim/plugged")
 Plug 'fholgado/minibufexpl.vim'
+Plug 'morhetz/gruvbox'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'ntpeters/vim-better-whitespace'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
-
-Plug 'morhetz/gruvbox'
-
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 " The Basics
@@ -14,12 +12,15 @@ set number
 set magic       " Make regexes work nicely
 set mouse=c     " Command-line mode
 syntax on
-let g:gruvbox_contrast_dark = "hard"
-colorscheme gruvbox
-
 let g:python3_host_prog = '/opt/anaconda/envs/neovim/bin/python'
 let g:miniBufExplModSelTarget = 1
+
+" Color Scheme
+let g:gruvbox_contrast_dark = "hard"
+set termguicolors
+colorscheme gruvbox
 let g:airline_theme = "gruvbox"
+
 
 " Tab settings
 set expandtab
