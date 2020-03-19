@@ -1,92 +1,75 @@
 call plug#begin("~/.vim/plugged")
-
 Plug 'fholgado/minibufexpl.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'vim-airline/vim-airline'
+
+Plug 'morhetz/gruvbox'
+
 Plug 'ntpeters/vim-better-whitespace'
-
-" Use tab for trigger completion with characters ahead and navigate.
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ "\<TAB>"
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-" Use <c-space> for trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" Use `[c` and `]c` to navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
-" Go-tos
-nmap <silent> gD <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-Plug 'psf/black', {'for': ['python']}
-Plug 'fatih/vim-go', {'for': ['go']}
-Plug 'mindriot101/vim-yapf', {'for': ['python']}
-Plug 'rhysd/vim-clang-format', {'for': ['c', 'cpp']}
-
 call plug#end()
 
-filetype plugin indent on
-
-let g:python3_host_prog = '/opt/anaconda/envs/neovim/bin/python'
-au BufRead,BufNewFile *.pyi set filetype=python
-
-"minibufexpl stuff
-let g:miniBufExplMapWindowNavVim = 1
-let g:miniBufExplMapWindowNavArrows = 1
-let g:miniBufExplMapCTabSwitchBufs = 1
-let g:miniBufExplModSelTarget = 1
-
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-H> <C-W><C-H>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-
+" The Basics
 set number
 set magic       " Make regexes work nicely
 set mouse=c     " Command-line mode
-
 syntax on
-colorscheme slate
+let g:gruvbox_contrast_dark = "hard"
+colorscheme gruvbox
 
-" Default tab settings
+let g:python3_host_prog = '/opt/anaconda/envs/neovim/bin/python'
+let g:miniBufExplModSelTarget = 1
+let g:airline_theme = "gruvbox"
+
+" Tab settings
 set expandtab
 set shiftwidth=4
 set softtabstop=4
 set tabstop=8
 set scrolloff=5
-
 set autoindent
+set updatetime=300
+filetype plugin indent on
 
-autocmd Filetype python setlocal expandtab
-    \ textwidth=79
-    \ shiftwidth=4
-    \ tabstop=4
-autocmd Filetype ruby setlocal expandtab
-    \ tabstop=2
-    \ shiftwidth=2
-    \ textwidth=79
+" Keybindings
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-H> <C-W><C-H>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
 
-autocmd Filetype cpp setlocal expandtab
-    \ textwidth=79
-    \ shiftwidth=2
-    \ tabstop=2
-autocmd Filetype c setlocal expandtab
-    \ textwidth=79
-    \ shiftwidth=2
-    \ tabstop=2
+" Make tab do the right thing (I have no clue how this works)
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
-autocmd Filetype javascript setlocal expandtab
-    \ textwidth=79
-    \ shiftwidth=2
-    \ tabstop=2
-autocmd Filetype css setlocal expandtab
-    \ textwidth=79
-    \ shiftwidth=2
-    \ tabstop=2
-autocmd Filetype html setlocal expandtab
-    \ textwidth=79
-    \ shiftwidth=2
-    \ tabstop=2
+" Use <c-space> for trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+nmap <silent> gD <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+nmap <leader>r <Plug>(coc-rename)
+nmap <leader>qf  <Plug>(coc-fix-current)
+command! -nargs=0 Format :call CocAction('format')
+command! -nargs=0 OrgImports :call CocAction('runCommand', 'editor.action.organizeImport')
+
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <space>;  :<C-u>CocList commands<cr>
