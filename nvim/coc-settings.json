@@ -2,10 +2,9 @@
     "python": {
         "linting": {
             "flake8Enabled": true,
-            "flake8Path": "/opt/anaconda/envs/neovim/bin/flake8",
             "mypyEnabled": true,
-            "mypyPath": "/opt/anaconda/envs/neovim/bin/mypy",
-            "pylintEnabled": false
+            "pylintEnabled": false,
+            "python.formatting.provider": "black"
         }
     },
     "languageserver": {
