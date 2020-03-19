@@ -4,6 +4,7 @@ import os
 
 mapping = {
     "gitconfig": "~/.gitconfig",
+    "gitignore": "~/.gitignore",
     "nvim": "~/.config/nvim",
     "redshift.conf": "~/.config/redshift.conf",
     "irbrc": "~/.irbrc",

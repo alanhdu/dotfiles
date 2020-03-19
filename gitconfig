@@ -1,9 +1,9 @@
 [user]
 	name = Alan Du
 	email = alanhdu@gmail.com
-	signingkey = DF040117
 [core]
 	editor = nvim
+	excludesfile = ~/.gitignore
 [grep]
 	linenumber = true
 [filter "lfs"]
