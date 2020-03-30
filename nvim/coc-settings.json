@@ -7,6 +7,11 @@
             "python.formatting.provider": "black"
         }
     },
+    "coc": {
+        "preferences":  {
+            "formatOnSaveFiletypes": ["python"]
+        }
+    },
     "languageserver": {
         "clangd": {
             "command": "clangd",
