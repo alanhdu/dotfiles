@@ -74,3 +74,8 @@ command! -nargs=0 OrgImports :call CocAction('runCommand', 'editor.action.organi
 
 nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 nnoremap <silent> <space>;  :<C-u>CocList commands<cr>
+
+" Spellcheck
+set spelllang=en
+autocmd FileType markdown setlocal spell
+autocmd FileType gitcommit setlocal spell
