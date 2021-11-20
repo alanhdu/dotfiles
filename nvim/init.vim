@@ -3,7 +3,6 @@ Plug 'fholgado/minibufexpl.vim'
 Plug 'morhetz/gruvbox'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 call plug#end()
 
@@ -16,8 +15,9 @@ let g:python3_host_prog = '/opt/anaconda/envs/neovim/bin/python'
 let g:miniBufExplModSelTarget = 1
 
 " Color Scheme
-let g:gruvbox_contrast_dark = "hard"
+let g:gruvbox_contrast_dark = "none"
 set termguicolors
+hi Normal ctermbg=none
 colorscheme gruvbox
 let g:airline_theme = "gruvbox"
 
@@ -58,6 +58,7 @@ nmap <silent> gD <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <leader> rn <Plug>(coc-rename)
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
