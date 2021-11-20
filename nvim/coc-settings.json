@@ -1,7 +1,7 @@
 {
-    "python.linting.flake8Enabled": true,
+    "pyright.enable": true,
+    "python.linting.flake8Enabled": false,
     "python.linting.mypyEnabled": true,
     "python.linting.pylintEnabled": false,
-    "python.formatting.provider": "black",
-    "coc.preferences.formatOnSaveFiletypes": ["python"]
+    "python.formatting.provider": "black"
 }
