@@ -6,8 +6,12 @@
 	excludesfile = ~/.gitignore
 [grep]
 	linenumber = true
-[filter "lfs"]
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
+
+[branch]
+	sort = v:refname
+
+[alias]
+	fixup = commit --fixup
+	amend = commit --all --amend --no-edit
+	autosquash =  !git rebase --autosquash -i $(git merge-base HEAD master)
+	recent = for-each-ref --sort=committerdate --format='%(committerdate:short): %(refname:short): %(contents:subject)' refs/heads/
