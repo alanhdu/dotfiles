@@ -7,6 +7,9 @@
 [grep]
 	linenumber = true
 
+[pull]
+	ff = only
+
 [branch]
 	sort = v:refname
 
@@ -15,3 +18,9 @@
 	amend = commit --all --amend --no-edit
 	autosquash =  !git rebase --autosquash -i $(git merge-base HEAD master)
 	recent = for-each-ref --sort=committerdate --format='%(committerdate:short): %(refname:short): %(contents:subject)' refs/heads/
+
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
