@@ -1,6 +1,6 @@
 call plug#begin("~/.vim/plugged")
 Plug 'fholgado/minibufexpl.vim'
-Plug 'morhetz/gruvbox'
+Plug 'gruvbox-community/gruvbox'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'vim-airline/vim-airline'
@@ -17,7 +17,7 @@ let g:python3_host_prog = '/home/alandu/miniconda3/envs/neovim/bin/python'
 let g:miniBufExplModSelTarget = 1
 
 " Color Scheme
-let g:gruvbox_contrast_dark = "none"
+let g:gruvbox_color = 'dark0'
 set termguicolors
 hi Normal ctermbg=none
 colorscheme gruvbox
