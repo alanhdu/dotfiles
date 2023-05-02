@@ -1,7 +1,8 @@
 {
     "pyright.enable": true,
-    "python.linting.flake8Enabled": false,
-    "python.linting.mypyEnabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.linting.ruffEnabled": true,
+    "python.linting.mypyEnabled": false,
     "python.linting.pylintEnabled": false,
     "python.formatting.provider": "black"
 }
