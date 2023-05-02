@@ -1,1 +1,36 @@
-{}
+// Place your key bindings in this file to override the defaults
+[
+    {
+        "key": "ctrl+shift+t",
+        "command": "-workbench.action.reopenClosedEditor"
+    },
+    {
+        "key": "ctrl+shift+t",
+        "command": "workbench.action.terminal.new",
+        "when": "terminalProcessSupported || terminalWebExtensionContributedProfile"
+    },
+    {
+        "key": "ctrl+u",
+        "command": "workbench.action.terminal.focusPrevious",
+        "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
+    },
+    {
+        "key": "ctrl+u",
+        "command": "workbench.action.previousEditor",
+        "when": "editorFocus"
+    },
+    {
+        "key": "ctrl+i",
+        "command": "workbench.action.terminal.focusNext",
+        "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
+    },
+    {
+        "key": "ctrl+i",
+        "command": "workbench.action.nextEditor",
+        "when": "editorFocus"
+    },
+    {
+        "key": "ctrl+e ctrl+d",
+        "command": "workbench.action.focusActiveEditorGroup"
+    }
+]

@@ -8,10 +8,26 @@
       "**/*.olean": true
     },
     "window.zoomLevel": 0,
+    "editor.suggestSelection": "first",
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
     "editor.minimap.enabled": false,
     "editor.fontSize": 13,
+    "terminal.integrated.defaultProfile.linux": "fish",
     "terminal.integrated.commandsToSkipShell": [
         "-workbench.action.terminal.focusFind",
         "-workbench.action.quickOpen"
+    ],
+    "vim.normalModeKeyBindings": [
+        {"before": ["g", "d"], "commands": ["editor.action.peekDefinition"]},
+        {"before": ["g", "D"], "commands": ["editor.action.revealDefinition"]},
+        {"before": ["g", "R"], "commands": ["editor.action.rename"]},
+        {"before": ["g", "Y"], "commands": ["editor.action.goToTypeDefinition"]},
+        {"before": ["g", "y"], "commands": ["editor.action.peekTypeDefinition"]},
+        {"before": ["[", "c"], "commands": ["editor.action.marker.nextInFiles"]},
+        {"before": ["]", "c"], "commands": ["editor.action.marker.prevInFiles"]}
+    ],
+    "vim.visualModeKeyBindings": [
+        {"before": [">"], "commands": ["editor.action.indentLines"]},
+        {"before": ["<"], "commands": ["editor.action.outdentLines"]}
     ]
 }
