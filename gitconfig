@@ -13,10 +13,16 @@
 [branch]
 	sort = v:refname
 
+[rebase]
+	autosquash = true
+	autostash = true
+
+[rerere]
+	enabled = true
+
 [alias]
-	fixup = commit --fixup
+	fixup = commit --all --fixup
 	amend = commit --all --amend --no-edit
-	autosquash =  !git rebase --autosquash -i $(git merge-base HEAD master)
 	recent = for-each-ref --sort=committerdate --format='%(committerdate:short): %(refname:short): %(contents:subject)' refs/heads/
 
 [filter "lfs"]
