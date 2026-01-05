@@ -3,6 +3,7 @@ from __future__ import print_function
 import os
 
 mapping = {
+    "jj": "~/.config/jj",
     "gitconfig": "~/.gitconfig",
     "gitignore": "~/.gitignore",
     "nvim": "~/.config/nvim",
