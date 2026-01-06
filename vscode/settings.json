@@ -21,13 +21,20 @@
         {"before": ["g", "d"], "commands": ["editor.action.peekDefinition"]},
         {"before": ["g", "D"], "commands": ["editor.action.revealDefinition"]},
         {"before": ["g", "R"], "commands": ["editor.action.rename"]},
-        {"before": ["g", "Y"], "commands": ["editor.action.goToTypeDefinition"]},
-        {"before": ["g", "y"], "commands": ["editor.action.peekTypeDefinition"]},
-        {"before": ["[", "c"], "commands": ["editor.action.marker.nextInFiles"]},
-        {"before": ["]", "c"], "commands": ["editor.action.marker.prevInFiles"]}
+        {"before": ["g", "T"], "commands": ["editor.action.goToTypeDefinition"]},
+        {"before": ["g", "t"], "commands": ["editor.action.peekTypeDefinition"]},
+        {"before": ["g", "I"], "commands": ["editor.action.goToImplementation"]},
+        {"before": ["g", "i"], "commands": ["editor.action.peekImplementation"]},
+        {"before": ["[", "c"], "commands": ["editor.action.marker.next"]},
+        {"before": ["]", "c"], "commands": ["editor.action.marker.prev"]}
     ],
     "vim.visualModeKeyBindings": [
         {"before": [">"], "commands": ["editor.action.indentLines"]},
         {"before": ["<"], "commands": ["editor.action.outdentLines"]}
-    ]
+    ],
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "editor.inlayHints.enabled": "offUnlessPressed",
+    "python.terminal.activateEnvironment": false
 }
