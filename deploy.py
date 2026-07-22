@@ -4,6 +4,7 @@ import os
 
 mapping = {
     "jj": "~/.config/jj",
+    "claude/skills": "~/.claude/skills",
     "gitconfig": "~/.gitconfig",
     "gitignore": "~/.gitignore",
     "nvim": "~/.config/nvim",
