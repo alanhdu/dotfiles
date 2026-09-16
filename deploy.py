@@ -1,24 +1,29 @@
 #!/usr/bin/env python3
-from __future__ import print_function
-import os
+from pathlib import Path
 
-mapping = {
-    "jj": "~/.config/jj",
-    "claude/skills": "~/.claude/skills",
-    "gitconfig": "~/.gitconfig",
-    "gitignore": "~/.gitignore",
-    "nvim": "~/.config/nvim",
-    "redshift.conf": "~/.config/redshift.conf",
-    "irbrc": "~/.irbrc",
-    "vscode/settings.json": "~/.config/Code/User/settings.json",
-    "vscode/keybindings.json": "~/.config/Code/User/keybindings.json",
-}
+links = [
+    ("agents", "~/.agents"),
+    ("agents/skills", "~/.claude/skills"),
+    ("claude/CLAUDE.md", "~/.claude/CLAUDE.md"),
+    ("claude/agents", "~/.claude/agents"),
+    ("jj/config.toml", "~/.config/jj/config.toml"),
+    ("gitconfig", "~/.gitconfig"),
+    ("gitignore", "~/.gitignore"),
+    ("nvim", "~/.config/nvim"),
+    ("redshift.conf", "~/.config/redshift.conf"),
+    ("irbrc", "~/.irbrc"),
+    ("vscode/settings.json", "~/.config/Code/User/settings.json"),
+    ("vscode/keybindings.json", "~/.config/Code/User/keybindings.json"),
+]
 
-os.chdir(os.path.dirname(__file__))
+repo = Path(__file__).resolve().parent
 
-for src, dest in mapping.items():
-    src = os.path.abspath(src)
-    dest = os.path.expanduser(dest)
-    if not os.path.exists(dest):
+for src, dest in links:
+    src = repo / src
+    dest = Path(dest).expanduser()
+    if not src.exists():
+        raise FileNotFoundError(f"Cannot deploy missing path: {src}")
+    if not dest.exists() and not dest.is_symlink():
+        dest.parent.mkdir(parents=True, exist_ok=True)
         print("Symlinking", src, "to", dest)
-        os.symlink(src, dest)
+        dest.symlink_to(src, target_is_directory=src.is_dir())
