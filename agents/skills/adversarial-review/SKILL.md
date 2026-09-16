@@ -5,12 +5,11 @@ description: Use independent subagents to audit a major diff or commit stack for
 
 # Adversarial review
 
-Read the change with skeptical, uncontaminated eyes: a reviewer who was not in the conversation and
-is skeptical about the code. Do not trust the code works, but do not artificially nitpick it either.
-Act as if it came from a well-intentioned but significantly less skilled engineer.
+Read the change with skeptical, independent eyes. Do not assume the code works,
+but do not manufacture findings or infer defects from missing context.
 
-Adversarial reviews are expensive. Invoke this skill automatically only for major changes; an
-explicit user request always applies.
+Adversarial reviews are expensive. Invoke this skill automatically only for
+major changes; an explicit user request always applies.
 
 ## Scope
 
@@ -19,7 +18,7 @@ whole local stack relative to the repository's configured trunk; if the user
 names commits, files, or a bookmark, review only those. If the user names a base
 and a target, review exactly that range. Do not fetch merely to choose a base.
 
-```
+```text
 jj log -r 'trunk()..@' --no-graph -T 'change_id.short() ++ " " ++ description.first_line() ++ "\n"'
 jj diff -r 'trunk()..@' --stat
 ```
@@ -37,12 +36,12 @@ file list, and its own questions. Do not seed a reviewer with your summary or
 conclusions.
 
 1. **Code quality** — simplicity and documentation, over the non-test files.
-2. **Tests** — over the test files.
+2. **Tests** — changed tests and the relevant production changes, including
+   missing, redundant, or weak tests.
 3. **Organization** — over the commit list and the paths, not the hunks.
 
-A reviewer holding two dimensions will stop at a couple of findings from each
-unless told otherwise, so require it to cover every file it was given and to
-report each dimension explicitly, including a one-line "clean".
+Require each reviewer to cover every assigned file and report every assigned
+dimension explicitly, including a one-line "clean" when it finds nothing.
 
 The reviewer is read-only and reports findings rather than editing. If a
 dimension genuinely requires code execution, run it in the parent session and
@@ -79,15 +78,13 @@ use the result when deciding what to change.
 ### 3. Tests
 
 - Apply the same simplicity standards to tests.
-- Tests are simultaneously documentation *and* regression catchers. The goal
-  is not to exhaustively hit 100% coverage. The goal is to identify and document
-  *key* properties of the code we care about.
-- Make sure every test is capable of catching real bugs. Do not write tests
-  just for padding. The goal is not 100% coverage.
+- Tests are documentation and regression catchers. Focus on the key behaviors
+  the code must preserve, not coverage totals.
+- Every test should be capable of catching a plausible bug.
   - Would this test be how you actually find out it broke? If a training run,
     a loss curve, or a smoke job tells you first and faster, do not propose the
     test.
-  - Flag tests that just duplicate the implementation
+  - Flag tests that just duplicate the implementation.
   - Flag tests that could only fail if a third-party library broke.
   - Check for unnecessarily slow and elaborate unit tests where a cheap
     end-to-end smoke test would carry more value.
@@ -119,11 +116,12 @@ against sections 2-4: reshape, messages, and task artifacts.
 Unless asked otherwise, act on the findings.
 
 - Treat a finding as evidence, not an order; state plainly which findings you reject and why.
-- Fix findings that are obviously correct. If you are uncertain about the results, or if they
-  trigger a major redesign ask the user before proceeding.
-- Fix commit-shape findings by invoking the `restack` skill, not by hand-rolling
-  `jj squash`/`jj rebase`. Fix placement findings directly, then let `restack`
-  absorb the move into the commit it belongs to.
+- Fix findings that are obviously correct. If you are uncertain about the
+  results, or if they trigger a major redesign, ask the user before proceeding.
+- In a jj repository, fix commit-shape findings with the `restack` skill rather
+  than hand-rolling the rewrite. In other repositories, use the native version
+  control workflow. Fix placement findings first, then absorb them into the
+  commit where they belong.
 - After structural changes, rerun the affected review dimensions. Stop when
   they are clean or only explicitly rejected findings remain.
 
@@ -134,35 +132,5 @@ review converged or stopped early.
 
 ## Handoff document
 
-Only on request. The reader is an agent with none of this context, possibly
-working on a different version of the code, who cannot ask a follow-up
-question.
-
-Write it outside the repository -- a unique temporary directory, or a path the
-user names -- and hand back that path. A file written into a jj tree is
-automatically snapshotted into the current commit; a review handoff has landed
-in the middle of live work this way before.
-
-Anchor everything so it survives a tree that has moved:
-
-- Record the base the review ran against: bookmark, the explicit commit ID, and
-  the exact diff-stat command and output. That is how the reader works out which
-  findings still apply to their version.
-- Locate each finding by file path and symbol name, plus the property that is
-  wrong. Never by line number, hunk, or change id -- all three are stale on
-  arrival.
-- For each open finding, say what it assumes is true, so the reader can check
-  that against their own tree before acting.
-
-Contents, in this order:
-
-- What the change sets out to do, in a few lines. The reader has not seen the
-  conversation, the PR, or the ticket.
-- What was already fixed, so they do not redo it.
-- What was rejected and why, so they do not re-raise it.
-- What is still open: the finding, the concrete change wanted, and how strongly
-  you hold it.
-- How to verify: the exact commands, and what a pass looks like.
-
-Write it for a stranger. No reviewer numbering, no "as discussed", no reference
-to this session or to which subagent found what.
+Only on request. Read [the handoff guidance](references/handoff.md) before
+writing it.
