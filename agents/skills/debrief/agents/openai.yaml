@@ -1,0 +1,3 @@
+interface:
+  display_name: "Debrief"
+  short_description: "Reflect on prompting, harness, and codebase improvements"
