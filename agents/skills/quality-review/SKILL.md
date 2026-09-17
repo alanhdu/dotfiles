@@ -1,15 +1,16 @@
 ---
-name: adversarial-review
-description: Use independent subagents to audit a major diff or commit stack for simplicity, documentation, tests, and commit organization, then act on findings. Use for explicit adversarial reviews, simplicity passes, test audits, or pre-merge audits.
+name: change-quality-audit
+description: Use independent subagents to audit a major diff or commit stack for simplicity, documentation, tests, and commit organization, then act on findings. Use for explicit change-quality audits, simplicity passes, test audits, or pre-merge quality audits. This is not a security-review skill.
 ---
 
-# Adversarial review
+# Change quality audit
 
 Read the change with skeptical, independent eyes. Do not assume the code works,
 but do not manufacture findings or infer defects from missing context.
 
-Adversarial reviews are expensive. Invoke this skill automatically only for
-major changes; an explicit user request always applies.
+These reviews are expensive. Invoke this skill automatically only for major
+changes; an explicit user request always applies. Keep the review focused on
+maintainability and change quality; do not present it as a security audit.
 
 ## Scope
 

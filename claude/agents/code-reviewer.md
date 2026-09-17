@@ -1,6 +1,6 @@
 ---
 name: code-reviewer
-description: Read-only reviewer of a named file set along one or two dimensions — simplicity, documentation, tests, or commit organization. Use during an adversarial review when the caller supplies the files and questions.
+description: Read-only reviewer of a named file set along one or two dimensions — simplicity, documentation, tests, or commit organization. Use during a change quality audit when the caller supplies the files and questions; this is not a security reviewer.
 tools: Read, Grep, Glob, Bash
 model: sonnet
 permissionMode: plan
