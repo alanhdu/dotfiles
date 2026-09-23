@@ -1,9 +1,9 @@
 ---
-name: change-quality-audit
+name: quality-audit
 description: Use independent subagents to audit a major diff or commit stack for simplicity, documentation, tests, and commit organization, then act on findings. Use for explicit change-quality audits, simplicity passes, test audits, or pre-merge quality audits. This is not a security-review skill.
 ---
 
-# Change quality audit
+# Quality audit
 
 Read the change with skeptical, independent eyes. Do not assume the code works,
 but do not manufacture findings or infer defects from missing context.
@@ -50,6 +50,8 @@ use the result when deciding what to change.
 
 ### 1. Simplicity
 
+- Explicitly requested generality is a requirement. Do not recommend narrowing
+  it as a simplification.
 - Does each new abstraction express a real contract or extension point?
   - Some abstractions are deliberate hooks for future work. Having one current
     implementation is evidence to examine, not a reason by itself to remove the
@@ -123,8 +125,6 @@ Unless asked otherwise, act on the findings.
   than hand-rolling the rewrite. In other repositories, use the native version
   control workflow. Fix placement findings first, then absorb them into the
   commit where they belong.
-- After structural changes, rerun the affected review dimensions. Stop when
-  they are clean or only explicitly rejected findings remain.
 
 ## Report
 
