@@ -36,25 +36,16 @@ the proposed stack in order. For each commit, list its responsibility, exact
 files or hunks, and focused verification. Explicitly identify every commit that
 will be split, folded, reordered, or abandoned.
 
-- Preserve jj change IDs where possible. Do NOT duplicate commits.
-- Put independent, uncontroversial changes before commits that depend on them.
-- Each proposed commit makes one atomic change
-  - Fold commits that undo, fix, or tidy earlier stack entries into those entries
-    with `jj squash --from <fixup> --into <parent>`.
-  - Every commit can build and pass its relevant tests independently.
-- Each proposed change should be a small atomic unit that can be easily reviewed.
-  - Split commits that implement multiple features at once.
+- Preserve jj change IDs; do not duplicate commits.
+- Order independent changes before their dependents. Split commits with multiple
+  responsibilities, and fold fixups into the commit they correct with
+  `jj squash --from <fixup> --into <parent>`.
+- Each commit must be reviewable and pass its relevant build and tests on its own.
 
 ## 3. Rewrite messages
 
-Rewrite the commit messages to conform to our expectations.
-- Each commit message explains what changed and why. Avoid meaningless messages
-  like "Fix X" (what was the fix) or "clean up Y" (what did we clean up)?
-- Each message should be well-formatted and succinct. Be concise, but do not
-  oversimplify or leave out useful information.
-  - Wrap paragraphs.
-  - Avoid information that only makes sense to someone who watched the work and
-    prioritize information that has long-term value.
+Make each message succinct and useful to someone who did not see the work:
+explain what changed and why, follow the repository's style, and wrap paragraphs.
 
 ```text
 jj describe -r <commit>
