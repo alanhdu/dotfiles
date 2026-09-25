@@ -5,50 +5,31 @@ description: Debrief a completed task with evidence-based proposals for improvin
 
 # Debrief
 
-Identify the smallest set of changes that would materially improve future outcomes.
-A debrief is an attribution and prioritization exercise, not a requirement to produce
-new policy.
+Find the smallest set of changes that would most improve future outcomes. For each real source of
+friction in the task, identify its cause — unclear user context, a harness or tool limitation, a
+codebase property, or an agent mistake despite adequate guidance — and propose the fix that
+addresses that cause most durably at the lowest ongoing cost.
 
-For each important source of friction, determine whether it came from:
+- Prefer mechanical fixes (tests, tooling, simplification) over prose, and editing or deleting
+  existing instructions over adding new ones. Every instruction costs future attention.
+- Ground each proposal in something that actually happened, not a hypothetical.
+- Proposing nothing is often correct. An agent mistake already covered by existing guidance
+  warrants a plain acknowledgement, not a new rule.
+- Suggest a persistent instruction only when the issue is likely to recur, existing guidance
+  does not cover it, and the new wording would change a future decision.
 
-- missing or ambiguous user context;
-- a harness, tool, or workflow limitation;
-- a codebase property that can be improved;
-- the agent making a poor decision despite adequate context and instructions.
+Do not summarize the work, report status, or modify anything unless asked.
 
-Choose the response that best addresses the cause:
+## Output
 
-- For an isolated execution mistake already covered by existing guidance, state that
-  plainly. Do not recommend a persistent change.
-- For task-specific insight, propose an acceptance criterion or verification step for
-  that kind of task, without automatically adding it to shared instructions.
-- For recurring and mechanically detectable problems, prefer tests, tooling,
-  automation, or simplification over prose instructions.
-- Recommend a persistent instruction change only when evidence suggests the issue
-  will recur, existing guidance does not cover it, and the new text would change a
-  future agent's decision enough to justify its attention cost.
+List the highest-priority changes first. If none are warranted, write "No changes recommended"
+and briefly explain why.
 
-Prefer replacing, consolidating, or deleting existing instructions over appending new
-ones. Do not recommend changes merely to fill prompting, harness, and codebase
-categories. It is valid—and often correct—to recommend no persistent changes.
+### [Imperative summary of the change]
 
-Return only the highest-leverage proposals. For each proposal, give:
-
-1. the observed evidence;
-2. the underlying mechanism;
-3. the concrete action; what specific change to the harness (`AGENTS.md`, skills,
-   etc), the codebase, or the prompt?
-   - For changes to `AGENTS.md` or `SKILL.md`, suggest concrete edits.
-4. why that action is preferable to the alternatives.
-
-When proposing an instruction change, identify the exact text it should replace or
-remove. Do not create rules from hypothetical failure modes or use “only if this
-recurs” as a holding area for speculative policy.
-
-Do not:
-
-- summarize or praise the completed work;
-- report task status;
-- disguise an agent execution mistake as a prompting problem;
-- restate guidance that already exists;
-- modify anything unless the user separately requests implementation.
+- **Evidence:** What happened in the task?
+- **Cause:** What produced the friction?
+- **Change:** What specific action would address it?
+- **Where:** Prompt, instruction file, tool/workflow, or codebase. Name files and quote text to
+  replace or remove when applicable.
+- **Why this change:** Why is it worth the ongoing cost?
