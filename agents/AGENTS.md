@@ -36,6 +36,9 @@ machine-specific guidance.
 - Test helpers should represent a genuine testing or domain abstraction, not merely move assertions
   or setup out of sight.
 - Prefer a small, mostly orthogonal test set over coverage-driven enumeration:
+  - A large collection of narrow unit tests needs positive justification: each should cover a
+    distinct plausible failure mode or provide signal that a compact table, property, or smoke test
+    cannot.
   - Use compact `pytest.mark.parametrize` tables when exact inputs and outputs are simple enough to
     hard-code.
     - Keep cases separate when they isolate distinct failure modes or make failures easier to

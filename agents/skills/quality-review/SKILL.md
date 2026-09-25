@@ -68,34 +68,31 @@ use the result when deciding what to change.
 ### 2. Documentation
 
 - Keep a comment only if it helps a reader returning in two months without this
-  conversation.
+  conversation. Flag comments that paraphrase the following line.
 - Docstrings describe interfaces, not implementation, design history, or
-  alternatives considered.
-- Use the following ladder for docstrings: no docstring (for very
-  simple/self-evident functions) -> one-liner -> Google-style `Args`,
-  `Returns`, and `Raises`.
-  - Tests need neither comments nor docstrings that repeat a descriptive name.
-    Only add docstrings that add meaningful information
-- Flag comments that paraphrase the following line.
+  alternatives considered. Use no docstring for self-evident functions, a
+  one-liner when that suffices, and Google-style `Args`, `Returns`, and `Raises`
+  when the interface needs more detail.
+- Tests need no comment or docstring that repeats a descriptive name.
 
 ### 3. Tests
 
-- Apply the same simplicity standards to tests.
-- Tests are documentation and regression catchers. Focus on the key behaviors
-  the code must preserve, not coverage totals.
-- Every test should be capable of catching a plausible bug.
-  - Would this test be how you actually find out it broke? If a training run,
-    a loss curve, or a smoke job tells you first and faster, do not propose the
-    test.
-  - Flag tests that just duplicate the implementation.
-  - Flag tests that could only fail if a third-party library broke.
-  - Check for unnecessarily slow and elaborate unit tests where a cheap
-    end-to-end smoke test would carry more value.
-- Combine tests that share expensive setup or express one behavior when that
-  improves readability.
-- Use the ladder smoke test -> single test -> parameterized test -> property based test
-  depending on the complexity of the code and the power of the property we want
-  to test.
+- Apply the same simplicity standards to tests. Tests document behavior and
+  catch regressions; focus on key behaviors, not coverage totals.
+- Every test should catch a plausible bug. Would a training run, loss curve, or
+  smoke job reveal the problem first and faster? If so, do not propose the test.
+  Flag tests that duplicate the implementation or only check a third-party
+  library.
+- Check for slow, elaborate unit tests where a cheap end-to-end smoke test would
+  provide more value.
+- Treat a large collection of narrow unit tests as a warning sign. If many cases
+  exercise the same contract and differ only in inputs and expected outputs,
+  propose one compact `pytest.mark.parametrize` table. Keep separate tests when
+  they isolate distinct failure modes or improve diagnosis.
+- For complicated behavior with a broad input space, look for a non-trivial
+  property with a simple, independent oracle. Prefer a property-based test over
+  enumerating examples when such a property exists; otherwise keep the smallest
+  useful set of examples or a smoke test.
 
 ### 4. Organization
 
