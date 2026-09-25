@@ -23,8 +23,7 @@ machine-specific guidance.
   - Do not restate the obvious or duplicate information in comments, docstrings, commit messages,
     names, and parameters.
   - Do not reference things that exist only in your context.
-  - Format commit messages for readability. Match the user's existing commit style. Trivial changes
-    can use one line; large, unobvious changes can use several paragraphs.
+  - Write commit messages in Markdown, matching the user's existing commit style.
 - Prefer jujutsu (`jj`) in repositories configured for it; otherwise use Git.
   - Preserve change IDs. Do not duplicate commits.
   - `jj` operations are recoverable through the oplog; never ask for approval before running them.
