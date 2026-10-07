@@ -19,16 +19,30 @@ whole local stack relative to the repository's configured trunk; if the user
 names commits, files, or a bookmark, review only those. If the user names a base
 and a target, review exactly that range. Do not fetch merely to choose a base.
 
-```text
-jj log -r 'trunk()..@' --no-graph -T 'change_id.short() ++ " " ++ description.first_line() ++ "\n"'
-jj diff -r 'trunk()..@' --stat
+For jj, export one file containing every commit's patch. Substitute the selected
+base and target for `trunk()` and `@` when the user specifies them.
+
+```bash
+audit_dir=$(mktemp -d "${TMPDIR:-/tmp}/jj-audit.XXXXXX")
+audit_base=$(jj --ignore-working-copy log -r 'trunk()' --no-graph -T 'commit_id')
+audit_tip=$(jj --ignore-working-copy log -r '@' --no-graph -T 'commit_id')
+jj --ignore-working-copy --color=never --no-pager log -r "$audit_base..$audit_tip" \
+  --reversed --no-graph --patch --git \
+  -T 'change_id.short() ++ " " ++ commit_id ++ " " ++ description.first_line() ++ "\n"' \
+  > "$audit_dir/stack.patch"
+jj --ignore-working-copy log -r "$audit_base..$audit_tip" --no-graph --name-only -T '' \
+  | sort -u > "$audit_dir/files.txt"
 ```
 
-For Git, first resolve the repository's local default or upstream branch, then
-use `git log --oneline <base>..HEAD` and `git diff --stat <base>...HEAD`. Split
-the changed paths into test files and everything else. Pass the explicit commit
-list and file list to each reviewer: reviewers that each re-derive the scope
-disagree about it when the tree moves under them, and pay for the rediscovery.
+Assign files from `files.txt`, including paths absent from the final diff. Give
+reviewers `stack.patch`; inspect assigned hunks in each commit against its parent,
+including intermediate changes absent from the aggregate diff.
+
+For Git, resolve the selected base and target to commit hashes and create a
+unique temporary audit directory. Export `git log --reverse -p <base>..<target>`
+to `stack.patch` and `git log --format= --name-only <base>..<target> | sort -u`
+to `files.txt`. Split the paths into test files and everything else, and pass the
+pinned scope and assigned files to each reviewer.
 
 ## Run the review
 
@@ -125,8 +139,11 @@ Unless asked otherwise, act on the findings.
 
 ## Report
 
-Keep the report short: what changed, what was rejected and why, and whether the
-review converged or stopped early.
+Write `$audit_dir/report.md` with one row per change ID: reviewed files, findings,
+and disposition (`clean`, `fixed`, `rejected: <reason>`, or `unreviewed: <scope>`).
+Keep the chat report short: fixes, rejected findings and reasons, unreviewed scope,
+and the report path. Remove the task-owned audit directory when the user accepts
+the work or requests cleanup.
 
 ## Handoff document
 
