@@ -10,11 +10,14 @@ friction in the task, identify its cause — unclear user context, a harness or 
 codebase property, or an agent mistake despite adequate guidance — and propose the fix that
 addresses that cause most durably at the lowest ongoing cost.
 
+- Cover the entire session, not just the most recent turn or the most recent mistake.
 - Prefer mechanical fixes (tests, tooling, simplification) over prose, and editing or deleting
   existing instructions over adding new ones. Every instruction costs future attention.
 - Ground each proposal in something that actually happened, not a hypothetical.
 - Proposing nothing is often correct. An agent mistake already covered by existing guidance
   warrants a plain acknowledgement, not a new rule.
+- Recommendations must identify something the user can change, not merely
+  describe how the agent should have behaved.
 - Suggest a persistent instruction only when the issue is likely to recur, existing guidance
   does not cover it, and the new wording would change a future decision.
 
@@ -29,7 +32,7 @@ and briefly explain why.
 
 - **Evidence:** What happened in the task?
 - **Cause:** What produced the friction?
-- **Change:** What specific action would address it?
-- **Where:** Prompt, instruction file, tool/workflow, or codebase. Name files and quote text to
-  replace or remove when applicable.
+- **Change:** What concrete change can the user make? Exact text edit suggestions are helpful,
+  but are not required for larger changes.
+- **Where:** Identify the specific target: a file, function, instruction, or configuration setting.
 - **Why this change:** Why is it worth the ongoing cost?

@@ -41,6 +41,10 @@ will be split, folded, reordered, or abandoned.
   responsibilities, and fold fixups into the commit they correct with
   `jj squash --from <fixup> --into <parent>`.
 - Each commit must be reviewable and pass its relevant build and tests on its own.
+- Apply every edit before resolving conflicts: put the changes in one commit on
+  top of the stack and `jj absorb` it, or edit the target commits in sequence
+  without testing in between. Then resolve each conflicted descendant once,
+  bottom-up, leaving commits that rename or move files for last.
 
 ## 3. Rewrite messages
 
@@ -63,8 +67,9 @@ Do not clean unrelated stale state merely because it is visible in `jj log` or
 
 ## 5. Verify
 
-Run the relevant suite at the stack tip. Also verify any intermediate commit
-whose content moved during a fold, split, or reorder.
+Verify once, after every edit and conflict resolution: run the relevant suite at
+the stack tip and every intermediate commit whose content moved during a
+fold, split, or reorder.
 
 After the final message rewrite, run any commit-message checks configured by the
 repository or user environment and fix every reported problem.
