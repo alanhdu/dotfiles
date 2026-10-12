@@ -1,38 +1,55 @@
 ---
 name: debrief
-description: Debrief a completed task with evidence-based proposals for improving the user's prompting, agent harness, or explored codebase. Use for retrospectives and collaboration-improvement requests after substantive work.
+description: Audit friction across a completed session, then recommend the smallest set of durable improvements to the harness or codebase. Use for retrospectives and collaboration-improvement requests after substantive work.
 ---
 
 # Debrief
 
-Find the smallest set of changes that would most improve future outcomes. For each real source of
-friction in the task, identify its cause — unclear user context, a harness or tool limitation, a
-codebase property, or an agent mistake despite adequate guidance — and propose the fix that
-addresses that cause most durably at the lowest ongoing cost.
+Audit first, recommend second. Do not modify anything unless asked.
 
-- Cover the entire session, not just the most recent turn or the most recent mistake.
-- Prefer mechanical fixes (tests, tooling, simplification) over prose, and editing or deleting
-  existing instructions over adding new ones. Every instruction costs future attention.
-- Ground each proposal in something that actually happened, not a hypothetical.
-- Proposing nothing is often correct. An agent mistake already covered by existing guidance
-  warrants a plain acknowledgement, not a new rule.
-- Recommendations must identify something the user can change, not merely
-  describe how the agent should have behaved.
-- Suggest a persistent instruction only when the issue is likely to recur, existing guidance
-  does not cover it, and the new wording would change a future decision.
+## 1. Audit the entire session
 
-Do not summarize the work, report status, or modify anything unless asked.
+Inventory friction across the beginning, middle, and end before selecting
+recommendations. Include repeated corrections, misleading results, abandoned
+approaches, unnecessary work, delays, and unrequested changes. Group incidents
+by cause, not merely similar symptoms.
+
+For every substantial pattern, identify:
+
+- **Evidence:** Concrete incidents; distinguish facts from inferred causes.
+- **Cause:** User-context gaps, harness/tool limitations, codebase properties,
+  or agent mistakes despite adequate guidance. Why did existing protections fail?
+- **Disposition:** Was the cause fixed, only its consequences repaired, or neither?
+
+Include patterns even when already fixed or unlikely to yield a recommendation.
+State any missing context that limits coverage.
+
+## 2. Select recommendations
+
+Choose the smallest set of changes addressing the highest-impact remaining
+causes. Prefer mechanical fixes and simplification over prose; prefer editing
+or deleting instructions over adding them.
+
+Existing guidance rules out duplicate instructions, not investigation of
+repeated failures. Consider whether tooling or workflow could make it effective.
+Add a persistent instruction only if the problem is likely to recur and the
+wording would change a future decision.
+
+Recommend only actionable changes to located targets the user controls. Do not
+re-propose completed fixes or pad the list to reach a minimum count.
 
 ## Output
 
-List the highest-priority changes first. If none are warranted, write "No changes recommended"
-and briefly explain why.
+**Session audit:** Briefly report every substantial pattern with its evidence,
+cause, and disposition. This is not a chronology or task-status summary.
 
-### [Imperative summary of the change]
+**Recommendations:** Use **Harness** and **Codebase** subsections, highest priority
+first. For each proposal give:
 
-- **Evidence:** What happened in the task?
-- **Cause:** What produced the friction?
-- **Change:** What concrete change can the user make? Exact text edit suggestions are helpful,
-  but are not required for larger changes.
-- **Where:** Identify the specific target: a file, function, instruction, or configuration setting.
-- **Why this change:** Why is it worth the ongoing cost?
+- **Addresses:** The audited pattern.
+- **Change and where:** The concrete edit and inspected target; provide an exact
+  diff for skills or agent instructions.
+- **Why:** Expected benefit relative to ongoing cost.
+
+If no changes are warranted, say “No changes recommended” and explain why.
+Still provide the audit.
