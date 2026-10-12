@@ -17,10 +17,12 @@ machine-specific guidance.
 - When I suggest changes, generalize the intent to the entire diff (code and commits
   I may not have had time to review yet). If feedback invalidates your
   approach, reconsider the approach before making another local repair
+- Never communicate externally through my identity or accounts. Operational actions
+  are permitted; communicating as me is not.
 
 ## Personal code preferences
 
-- Never push to GitHub. Only the user may push to GitHub.
+- Do not git push, unless explicitly asked to.
 - Prefer the simplest straight-line implementation. Use the ladder inline code → function → class →
   protocol, moving up only for a real abstraction.
 - Functions and classes are for *abstraction*, not *reuse*. Duplication is preferred to
