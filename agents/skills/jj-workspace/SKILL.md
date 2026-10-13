@@ -24,11 +24,13 @@ elsewhere.
 1. Create a unique temporary directory with
    `mktemp -d "${TMPDIR:-/tmp}/jj-workspace-<slug>.XXXXXX"`. Record the exact
    returned path.
-2. Add the workspace with
-   `jj --ignore-working-copy workspace add --no-colocate --name <slug>
-   --revision '<base>' <path>`. Use the existing target when continuing a
-   stack; otherwise use the named base or `trunk()`. Use `--colocate` instead
-   when Git metadata is needed (jj 0.46; Git 2.42+).
+2. Add the workspace without snapshotting the current one, then move it onto
+   the base:
+   `jj workspace add --ignore-working-copy --no-colocate --name <slug> <path>; jj -R <path> new '<base>'`.
+   With `--ignore-working-copy`, `add` ignores `--revision` and exits 1 after
+   creating the workspace on the root commit; `new` fixes both. Use the
+   existing target when continuing a stack; otherwise use the named base or
+   `trunk()`. Use `--colocate` instead when Git metadata is needed (Git 2.42+).
 3. Work inside it. Follow the repository's setup and verification instructions;
    do not assume a language, source layout, environment manager, or toolchain.
 4. Describe the change with a concise what-and-why message. Confirm with
