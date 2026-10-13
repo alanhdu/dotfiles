@@ -25,8 +25,10 @@ elsewhere.
    `mktemp -d "${TMPDIR:-/tmp}/jj-workspace-<slug>.XXXXXX"`. Record the exact
    returned path.
 2. Add the workspace with
-   `jj workspace add --name <slug> --revision '<base>' <path>`, using `trunk()`
-   for `<base>` if the user did not name one.
+   `jj --ignore-working-copy workspace add --no-colocate --name <slug>
+   --revision '<base>' <path>`. Use the existing target when continuing a
+   stack; otherwise use the named base or `trunk()`. Use `--colocate` instead
+   when Git metadata is needed (jj 0.46; Git 2.42+).
 3. Work inside it. Follow the repository's setup and verification instructions;
    do not assume a language, source layout, environment manager, or toolchain.
 4. Describe the change with a concise what-and-why message. Confirm with
@@ -53,6 +55,6 @@ rewriting or contaminating the task stack, then return to the task revision.
 
 ## Report
 
-Give the bookmark name and the commit it points to. If the repository has a Git
+Give the bookmark name and its jj change ID. If the repository has a Git
 remote and the user asks how to publish it, also give the appropriate push
 command. Do not push unless asked.

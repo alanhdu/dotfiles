@@ -39,7 +39,7 @@ will be split, folded, reordered, or abandoned.
 - Preserve jj change IDs; do not duplicate commits.
 - Order independent changes before their dependents. Split commits with multiple
   responsibilities, and fold fixups into the commit they correct with
-  `jj squash --from <fixup> --into <parent>`.
+  `jj squash --from <fixup> --into <parent> --use-destination-message`.
 - Each commit must be reviewable and pass its relevant build and tests on its own.
 - Apply every edit before resolving conflicts: put the changes in one commit on
   top of the stack and `jj absorb` it, or edit the target commits in sequence
@@ -70,6 +70,10 @@ Do not clean unrelated stale state merely because it is visible in `jj log` or
 Verify once, after every edit and conflict resolution: run the relevant suite at
 the stack tip and every intermediate commit whose content moved during a
 fold, split, or reorder.
+
+For checks that can use isolated checkouts, use
+`jj run --ignore-changes -r '<selected-revisions>' -- <check-command>`, ensuring
+imports and dependencies use each checkout.
 
 After the final message rewrite, run any commit-message checks configured by the
 repository or user environment and fix every reported problem.

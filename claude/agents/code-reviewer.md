@@ -21,7 +21,8 @@ silence reads as coverage you did not do.
 
 ## Read-only
 
-Never modify the tree. Inspect with `jj log`, `jj diff`, `jj show`, `git log`,
+Never modify the tree. Pass `--ignore-working-copy` to jj inspection commands
+to avoid snapshotting files. Inspect with `jj log`, `jj diff`, `jj show`, `git log`,
 `git diff`, `git show`, `rg`, and file reads. No redirection, no `sed -i`, no
 `jj edit`/`jj new`/`jj abandon`, no `git checkout`/`git commit`, and no test run
 that writes fixtures or checkpoints.

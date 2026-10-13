@@ -22,7 +22,8 @@ machine-specific guidance.
 
 ## Personal code preferences
 
-- Do not git push, unless explicitly asked to.
+- Do not push, unless explicitly asked to.
+- Do not check or report remote state unless asked.
 - Prefer the simplest straight-line implementation. Use the ladder inline code → function → class →
   protocol, moving up only for a real abstraction.
 - Functions and classes are for *abstraction*, not *reuse*. Duplication is preferred to
@@ -38,7 +39,7 @@ machine-specific guidance.
 - Prefer jujutsu (`jj`) in repositories configured for it; otherwise use Git.
   - Report change IDs. Include git hashes only when needed for external systems.
   - Preserve change IDs. Do not duplicate commits.
-  - `jj` operations are recoverable through the oplog; never ask for approval before running them.
+  - `jj` history edits are recoverable through the oplog; never ask for approval before running them.
 - Clean up only commits, workspaces, bookmarks, and temporary files created in the current task. Ask
   before removing pre-existing artifacts.
 - Assume valid inputs in internal typed APIs; let operations fail naturally.
