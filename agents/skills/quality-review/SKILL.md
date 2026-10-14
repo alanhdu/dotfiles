@@ -73,8 +73,10 @@ use the result when deciding what to change.
   - Use the ladder inline code → function → class → protocol.
   - Prefer duplicating two or three lines to a helper that only removes that
     duplication.
-- Does each function do one thing? Does a module now know something outside its
-  responsibility?
+- Trace new call boundaries. Flag forwarding-only layers, branch-selected algorithms,
+  and repeated computation.
+- For simplification tasks, distinguish documentation growth from code growth and
+  identify the complexity removed before reporting a clean review.
 - Is anything clever where straight-line code would work?
   - Is the code more complicated than the problem? Can it be shorter?
   - Are there footguns that a better API would prevent?

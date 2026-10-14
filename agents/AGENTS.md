@@ -43,6 +43,9 @@ machine-specific guidance.
 - Clean up only commits, workspaces, bookmarks, and temporary files created in the current task. Ask
   before removing pre-existing artifacts.
 - Assume valid inputs in internal typed APIs; let operations fail naturally.
+- Prefer keyword-only parameters when type checking cannot catch argument-order mistakes.
+  If the same data travels across interfaces, consider a TypedDict, dataclass, named tuple,
+  or an owning class according to the semantics and ownership of that data.
 
 
 ## Testing preferences
