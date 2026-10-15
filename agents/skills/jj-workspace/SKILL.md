@@ -57,6 +57,6 @@ rewriting or contaminating the task stack, then return to the task revision.
 
 ## Report
 
-Give the bookmark name and its jj change ID. If the repository has a Git
-remote and the user asks how to publish it, also give the appropriate push
-command. Do not push unless asked.
+Give the bookmark name and its tip change ID. For a stack, list each
+change ID with its scope and provide
+`jj diff --from <base> --to <bookmark>` for reviewing the complete result.
