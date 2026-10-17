@@ -1,16 +1,14 @@
 ---
 name: quality-audit
-description: Use independent subagents to audit a major diff or commit stack for simplicity, documentation, tests, and commit organization, then act on findings. Use for explicit change-quality audits, simplicity passes, test audits, or pre-merge quality audits. This is not a security-review skill.
+description: Use only when the user explicitly requests a quality audit, simplicity pass, test audit, or pre-merge quality review. Perform one bounded audit and act on its findings. This is not a security-review skill.
 ---
 
 # Quality audit
 
 Read the change with skeptical, independent eyes. Do not assume the code works,
-but do not manufacture findings or infer defects from missing context.
-
-These reviews are expensive. Invoke this skill automatically only for major
-changes; an explicit user request always applies. Keep the review focused on
-maintainability and change quality; do not present it as a security audit.
+but do not manufacture findings or infer defects from missing context. Keep the
+review focused on maintainability and change quality; do not present it as a
+security audit.
 
 ## Scope
 
@@ -51,8 +49,11 @@ file list, and its own questions. Do not seed a reviewer with your summary or
 conclusions.
 
 1. **Code quality** — simplicity and documentation, over the non-test files.
-2. **Tests** — changed tests and the relevant production changes, including
-   missing, redundant, or weak tests.
+2. **Tests** — changed tests and the relevant production changes: whether the
+   tests add useful confidence and diagnosis at proportionate complexity.
+   Require this subagent to read [the user's testing philosophy](references/test-review.md).
+   Consider deletion, simplification, consolidation, and property tests where
+   useful. A clean review need not propose any test changes.
 3. **Organization** — over the commit list and the paths, not the hunks.
 
 Require each reviewer to cover every assigned file and report every assigned
@@ -95,10 +96,8 @@ use the result when deciding what to change.
 
 - Apply the same simplicity standards to tests. Tests document behavior and
   catch regressions; focus on key behaviors, not coverage totals.
-- Every test should catch a plausible bug. Would a training run, loss curve, or
-  smoke job reveal the problem first and faster? If so, do not propose the test.
-  Flag tests that duplicate the implementation or only check a third-party
-  library.
+- Apply the [testing philosophy](references/test-review.md) before proposing
+  additions. Missing isolated coverage is not itself a finding.
 - Check for slow, elaborate unit tests where a cheap end-to-end smoke test would
   provide more value.
 - Treat a large collection of narrow unit tests as a warning sign. If many cases
