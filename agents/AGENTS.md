@@ -49,23 +49,22 @@ machine-specific guidance.
 
 
 ## Testing preferences
- 
-- Test helpers should represent a genuine testing or domain abstraction, not merely move assertions
-  or setup out of sight.
-- Prefer a small, mostly orthogonal test set over coverage-driven enumeration:
-  - A large collection of narrow unit tests needs positive justification: each should cover a
-    distinct plausible failure mode or provide signal that a compact table, property, or smoke test
-    cannot.
-  - Use compact `pytest.mark.parametrize` tables when exact inputs and outputs are simple enough to hard-code.
-    - Keep cases separate when they isolate distinct failure modes or make failures easier to
-      diagnose.
-  - Use property-based tests for broader semantic properties. Prioritize properties that are both
-    non-trivial *and* with an oracle that is obviously simple.
-    - Examples include: round-trips (`decode(encode(x)) == x`), metamorphic properties (some
-      relationship between `f(x)` and `g(x)` holds for all `x`), invariants, inverse relationships,
-      mathematical properties (e.g. idempotence), reference testing (e.g. optimized vs brute force
-      implementation), etc.
-- Never add tests whose only purpose is checking an error message
+
+- Prefer real behavior through public interfaces and a small, mostly orthogonal
+  suite. Choose tests for the confidence and diagnostic value they add, not coverage.
+- Use component tests for independently checkable compositional properties or
+  difficult diagnosis. Avoid duplicating behavior that end-to-end tests already
+  exercise and make easy to diagnose.
+- No mocks by default; exceptions should be rare and specifically justified.
+  Needing implementation internals suggests reconsidering the design or test boundary.
+- Performance is a system property requiring deliberately engineered benchmarks;
+  ad-hoc unit tests of proxies do not establish speed.
+- Make simple examples data-driven with compact `pytest.mark.parametrize` tables.
+- Use Hypothesis for nontrivial properties with simple, independent oracles:
+  round-trips, metamorphic relationships, invariants, inverses, idempotence,
+  and comparison with a simple reference implementation.
+- Write high-quality test code with well-designed helpers and fixtures that
+  make cases easy to add and resilient to API changes.
 
 ## Files and background work
 
