@@ -6,6 +6,8 @@ machine-specific guidance.
 
 ## Working Style
 
+- Use Markdown for presentation when useful: bullets, tables, and other structure
+  are all welcome.
 - In chat, use Unicode/plain-text notation rather than raw LaTeX because the
   terminal does not render it. Use LaTeX when editing source files or when
   explicitly asked for a copy-paste snippet.
@@ -36,9 +38,15 @@ machine-specific guidance.
     names, and parameters.
   - Do not reference things that exist only in your context.
   - Write commit messages in Markdown, matching the user's existing commit style.
+- Organize commits around coherent, independently reviewable ideas. Keep mechanical
+  moves separate from behavioral changes when that makes review easier.
+- Commit messages explain the problem, the idea connecting the changes, and why
+  it helps. Avoid prose inventories of the diff.
+  Retain useful benchmark evidence and material tradeoffs.
 - Prefer jujutsu (`jj`) in repositories configured for it; otherwise use Git.
   - Report change IDs. Include git hashes only when needed for external systems.
-  - Preserve change IDs. Do not duplicate commits.
+  - Preserve change IDs when rewriting, but prioritize a coherent stack: split,
+    fold, or abandon commits as needed. Do not duplicate commits.
   - `jj` history edits are recoverable through the oplog; never ask for approval before running them.
 - Clean up only commits, workspaces, bookmarks, and temporary files created in the current task. Ask
   before removing pre-existing artifacts.
