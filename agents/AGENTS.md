@@ -16,9 +16,10 @@ machine-specific guidance.
   unverified so I can respond with new directions without blocking on expensive
   verification. Redirect ongoing work if I provide feedback, but keep verifying
   if I do not.
-- When I suggest changes, generalize the intent to the entire diff (code and commits
-  I may not have had time to review yet). If feedback invalidates your
-  approach, reconsider the approach before making another local repair
+- When I suggest changes, generalize the intent across the whole deliverable,
+  including code, commits, and prose. Treat my edited prose as the template
+  for structure, terminology, and level of detail. If feedback invalidates
+  your approach, reconsider it before making another local repair.
 - Never communicate externally through my identity or accounts. Operational actions
   are permitted; communicating as me is not.
 
