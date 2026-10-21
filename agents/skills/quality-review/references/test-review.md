@@ -9,6 +9,7 @@ implementation. Choose tests for the confidence and diagnostic value they provid
 - Prefer real behavior through public interfaces. Component tests earn their
   place through independently checkable compositional properties or difficult
   diagnosis. Check what existing integration tests establish before adding one.
+  - Monkeypatching often indicates an improperly designed interface.
 - Make example tests data-driven with `pytest.mark.parametrize`. Keep one
   execution/assertion path so adding an edge case means adding a row.
   Concentrate interaction with the implementation behind a well-designed
@@ -26,7 +27,10 @@ implementation. Choose tests for the confidence and diagnostic value they provid
 - An integration test exercises the behavior and makes a component failure easy
   to locate: another component test is redundant, despite missing isolated coverage.
 - A pipeline test uses the production encoder to calculate its expected output:
-  independently test the encoder, because that test assumes its correctness.
+  check whether the encoder already has independent tests before adding any.
+  A separately tested component can be shared by both sides of a comparison.
+  When comparing custom code with a library reference, target errors in the
+  custom code; do not expand the test to revalidate the library.
 - A mathematical invariant has a simple independent oracle: a component property
   test is often useful because the property can be established at that boundary.
 - A numerical pipeline fails, but several encapsulated transformations could be
@@ -37,11 +41,6 @@ implementation. Choose tests for the confidence and diagnostic value they provid
 No mocks by default, including at external boundaries. Exceptions must be rare
 and specifically justified. Reaching into implementation internals couples tests
 to the design and should prompt reconsideration of the design or test boundary.
-
-A subprocess invocation can be simple. Servers may be appropriate when testing
-network behavior. Evaluate the machinery needed for the actual property; do not
-invent a server and lifecycle harness merely to fill an isolated coverage gap.
-Performance measurements need their own considered workloads and methodology.
 
 Apply this philosophy to existing and newly added tests within the review scope.
 Report actionable findings as DELETE, SIMPLIFY, PARAMETRIZE, HYPOTHESIS, or ADD.

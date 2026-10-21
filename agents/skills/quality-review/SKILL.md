@@ -56,8 +56,8 @@ conclusions.
    useful. A clean review need not propose any test changes.
 3. **Organization** — over the commit list and the paths, not the hunks.
 
-Require each reviewer to cover every assigned file and report every assigned
-dimension explicitly, including a one-line "clean" when it finds nothing.
+Require each reviewer to examine every assigned file and dimension. Do not
+stop after finding a few easy improvements. Identify any unreviewed scope.
 
 The reviewer is read-only and reports findings rather than editing. If a
 dimension genuinely requires code execution, run it in the parent session and
@@ -126,9 +126,16 @@ commit at a time.
 sibling skill's [`SKILL.md`](../restack/SKILL.md) and have it audit the stack
 against sections 2-4: reshape, messages, and task artifacts.
 
+Review every commit message against AGENTS.md from a future reader's
+perspective. Make the problem, justification, and supporting evidence clear.
+Resolve gaps through rewriting or additional verification, as appropriate.
+
 ## Act on findings
 
 Unless asked otherwise, act on the findings.
+
+Resolve every finding: fix it, reject it with a reason, or explicitly identify
+it as unresolved.
 
 - Treat a finding as evidence, not an order; state plainly which findings you reject and why.
 - Fix findings that are obviously correct. If you are uncertain about the
@@ -138,13 +145,10 @@ Unless asked otherwise, act on the findings.
   control workflow. Fix placement findings first, then absorb them into the
   commit where they belong.
 
-## Report
-
-Write `$audit_dir/report.md` with one row per change ID: reviewed files, findings,
-and disposition (`clean`, `fixed`, `rejected: <reason>`, or `unreviewed: <scope>`).
-Keep the chat report short: fixes, rejected findings and reasons, unreviewed scope,
-and the report path. Remove the task-owned audit directory when the user accepts
-the work or requests cleanup.
+Keep the final response focused on consequential changes, unresolved findings,
+unreviewed scope, and verification. Do not create a separate report unless asked.
+Remove the task-owned audit directory when the user accepts the work or requests
+cleanup.
 
 ## Handoff document
 
