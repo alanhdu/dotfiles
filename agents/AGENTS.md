@@ -23,6 +23,37 @@ machine-specific guidance.
 - Never communicate externally through my identity or accounts. Operational actions
   are permitted; communicating as me is not.
 
+### Task tracking
+
+When working, maintain a small Markdown task ledger outside of the repository. Show me
+the absolute path when creating this.
+
+That task ledger should look like:
+
+```markdown
+# Active
+
+* Task 1
+* Task 2
+* Task 3
+
+# Inactive
+
+* (Completed) Task 4
+* (Blocked) Task 5
+```
+
+Each bullet should be a 1-2 sentence description of the task. The `Active` tasks should be
+sorted in priority order. Add new requests to the list; apply implementation feedback to
+existing tasks. Preserve earlier requests unless I explicitly cancel or replace them. Feel free to add
+subtasks yourself.
+
+Keep the same ledger across interruptions and compaction, preserving its path in context handoffs.
+At the start of each turn, consult the ledger to see what should be worked on next.
+Before finishing work, always check whether there are any outstanding tasks
+left to do first. When reporting, report the status of all tasks (completed,
+blocked, deferred, cancelled).
+
 ## Personal code preferences
 
 - Do not push, unless explicitly asked to.
