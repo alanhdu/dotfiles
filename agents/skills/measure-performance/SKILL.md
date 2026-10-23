@@ -8,27 +8,37 @@ description: >-
 
 # Measure performance
 
-Choose the least intrusive evidence that answers the user's question. State
-the metric, workload, and comparison interval before interpreting a result.
+## Methodology and reporting
 
-1. Check existing logs, counters, and timestamps first. Derive throughput from
-   recorded work and elapsed wall time; distinguish data tokens from model
-   tokens and training time from evaluation or startup time. Compare equivalent
-   intervals and hardware.
-2. For CPU bottlenecks, sample the existing process with `py-spy top` or
-   `py-spy record`. For an apparent hang, start with `py-spy dump -p <pid>`
-   and inspect all relevant worker processes. A Python stack sample does not
-   measure time spent inside GPU kernels.
-3. For GPU behavior, inspect existing device telemetry (for example DCGM or
-   `nvidia-smi`) before using a GPU profiler. Use Nsight Systems or Nsight
-   Compute when kernel timing or SM activity is the unresolved question, and
-   account for profiler overhead.
-4. Keep the measured workload unchanged for the baseline. Add in-loop timers,
-   CUDA synchronizations, profiler hooks, or new metric logging only when
-   existing records and external tools cannot answer a specific question. If
-   instrumentation is needed, isolate it from the baseline and measure its
-   overhead.
+Separate reporting metrics (which you hand to the user) and proxy metrics
+(which can be cheaper metrics to guide internal work). Reporting metrics
+should either use standard, existing benchmarks OR must be validated by the
+user. Proxy metrics do not need to be approved by the user, but should never
+be used when reporting results. Unapproved proxies guide internal work only.
 
-Report the source, calculation, observed interval, and limits of the evidence.
-If the data cannot support a claim about utilization or a bottleneck, say what
-measurement would resolve it.
+## Measurement Procedure
+
+Prefer light-weight measurements that do NOT require changing proxy code (like
+`py-spy` or `nvidia-smi` or `htop`).  Use existing logs/counters/timestamps
+to calculate relevant metrics (e.g. throughput) where possible.
+
+Any changes to production code to profile has a high chance of changing the
+performance characteristics and must be done carefully (and avoided where
+possible)
+
+## Optimization Procedure
+
+Optimizations should be done in a profile-driven and hypothesis-driven way. General principles:
+
+* Always start by measuring the existing process. What are the bottlenecks? Where is time going?
+  Report this to the user first (including flamegraphs, tables, theoretical formulas, etc)
+* Always estimate the "best case" improvements for any change first (e.g. based on the measurements and 
+  simple roofline-like analyses). Prioritize the largest bottlenecks first (areas with the most
+  opportunity for improvement)
+* Ignore irrelevant optimizations that cannot possibly move-the-needle (e.g. <4% improvements),
+  The exception is if you can identify many such small optimziations that can plausibly "stack"
+  to yield a big improvement.
+* Every change should have a hypothesis attached to it: why do we expect this to improve performance?
+  What is the "best case" we can expect (based on the measurements and roofline-like analysis)?
+  Negative results (where we see no speed-ups) are important for updating our mental model and forming
+  better hypotheses in the future.
