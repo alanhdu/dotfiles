@@ -67,9 +67,11 @@ Do not clean unrelated stale state merely because it is visible in `jj log` or
 
 ## 5. Verify
 
-Verify once, after every edit and conflict resolution: run the relevant suite at
-the stack tip and every intermediate commit whose content moved during a
-fold, split, or reorder.
+After completing edits and conflict resolution, run the configured cheap global
+checks, such as linting, formatting, and type checking. Follow the general
+verification principles when selecting tests. Check intermediate commits for
+specific risks introduced by moving code, rather than automatically repeating
+test suites across the stack.
 
 For checks that can use isolated checkouts, use
 `jj run --ignore-changes -r '<selected-revisions>' -- <check-command>`, ensuring
