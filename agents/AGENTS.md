@@ -18,7 +18,8 @@ machine-specific guidance.
 - When I suggest changes, generalize the intent across the whole deliverable,
   including code, commits, and prose. Treat my edited prose as the template
   for structure, terminology, and level of detail. If feedback invalidates
-  your approach, reconsider it before making another local repair.
+  your approach, stop affected work and revise the plan and conclusions
+  before continuing.
 - Never communicate externally through my identity or accounts. Operational actions
   are permitted; communicating as me is not.
 
@@ -66,6 +67,10 @@ The ledger controls execution:
    and reconcile the ledger. Add new requests and apply corrections before any
    other investigation, edits, or tool calls.
 3. Update entries in place under one Active, Proposed, and Inactive section.
+   Keep requested outcomes distinct from the methods chosen to pursue them.
+   Changing a method must not redefine completion.
+   If successive steps provide no new information, reassess the approach
+   before repeating or expanding the work.
    Active contains requested work and necessary dependencies; unapproved
    ideas go in Proposed. Move completed, blocked, deferred, or cancelled work
    to Inactive. Do not append follow-up sections or narrative history.
@@ -81,6 +86,13 @@ The ledger controls execution:
 - Do not check or report remote state unless asked.
 - Surface broader rethinks and opportunities, but get approval before
   pursuing work beyond the request.
+- In explicit refactoring tasks, preserve required behavior without preserving
+  legacy structure by default.
+- Prefer fixes in the layer that owns the behavior. If a workaround crosses
+  that boundary, explain the constraint that makes it necessary.
+- Reconsider layer boundaries when changing them: give each layer a clear
+  responsibility, remove redundant layers, and keep dependencies flowing
+  in the intended direction.
 - Prefer the simplest straight-line implementation. Use the ladder inline code → function → class →
   protocol, moving up only for a real abstraction.
 - Functions and classes are for *abstraction*, not *reuse*. Duplication is preferred to
@@ -90,9 +102,13 @@ The ledger controls execution:
 - Write commit messages in Markdown, matching the user's existing commit style.
 - Organize commits around coherent, independently reviewable ideas. Keep mechanical
   moves separate from behavioral changes when that makes review easier.
-- Commit messages explain the problem, the idea connecting the changes, and why
-  it helps. Avoid prose inventories of the diff.
-  Retain useful benchmark evidence and material tradeoffs.
+- Write for future readers who have the diff but none of the conversation.
+  Explain the concrete problem, the core idea, and why the change helps.
+- Make the mechanism clear: what happened before, what happens now, and how
+  the change produces that result. Use a small concrete example when helpful.
+- Use established codebase terms; avoid shorthand readers must decode.
+- Explain the idea rather than cataloging edits, helpers, tests, or work history.
+  Retain relevant evidence, material tradeoffs, and limitations.
 - Prefer jujutsu (`jj`) in repositories configured for it; otherwise use Git.
   - Report change IDs. Include git hashes only when needed for external systems.
   - Preserve change IDs when rewriting, but prioritize a coherent stack: split,
@@ -111,8 +127,8 @@ The ledger controls execution:
 Documentation is maintained product content. Its value comes from helping
 future readers use or change the code; its cost is the attention and upkeep
 it requires. Preserve durable knowledge that readers cannot readily recover
-from the code. Session context and temporary findings belong in the
-conversation or scratch space unless preserving them is itself a requested
+from the code. Keep temporary findings in brief scratch notes and answer in the
+requested format. Create or polish a separate report only when it is a requested
 deliverable.
 
 Each document should serve a clear reader need. A README is a short front
@@ -127,6 +143,10 @@ create an obligation to document it.
 
 ## Testing preferences
 
+- Test behavior at the layer that owns it; callers should test their own
+  behavior rather than re-test guarantees provided below them.
+- Prefer strengthening existing tests with better properties or additional
+  parameterized cases before adding new tests.
 - Prefer real behavior through public interfaces and a small, mostly orthogonal
   suite. Choose tests for the confidence and diagnostic value they add, not coverage.
 - Use component tests for independently checkable compositional properties or
