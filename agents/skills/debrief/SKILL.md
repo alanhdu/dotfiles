@@ -7,28 +7,27 @@ description: Audit friction across a completed session, then recommend the small
 
 Audit first, recommend second. Do not modify anything unless asked.
 
-## 1. Audit the entire session
+## 1. Audit the full session
 
-Inventory friction across the beginning, middle, and end before selecting
-recommendations. Include repeated corrections, misleading results, abandoned
-approaches, unnecessary work, delays, and unrequested changes. Group incidents
-by cause, not merely similar symptoms.
+1. Read all messages and tool outcomes. List corrections, wrong turns,
+   frustrations, misleading results, unnecessary work, delays and unrequested
+   changes before selecting recommendations.
+2. Group incidents by underlying cause, not similar symptoms: missing context,
+   harness limitations, codebase problems, or agent mistakes despite adequate
+   guidance.
+3. For each group, cite evidence, distinguish observations from inferred causes,
+   explain why existing protections failed, and identify whether the cause was
+   fixed, only its consequences repaired, or neither.
 
-For every substantial pattern, identify:
-
-- **Evidence:** Concrete incidents; distinguish facts from inferred causes.
-- **Cause:** User-context gaps, harness/tool limitations, codebase properties,
-  or agent mistakes despite adequate guidance. Why did existing protections fail?
-- **Disposition:** Was the cause fixed, only its consequences repaired, or neither?
-
-Include patterns even when already fixed or unlikely to yield a recommendation.
-State any missing context that limits coverage.
+Include groups even when already fixed or unlikely to yield a recommendation.
+State any unavailable session context that limits the audit.
 
 ## 2. Select recommendations
 
 Choose the smallest set of changes addressing the highest-impact remaining
-causes. Prefer mechanical fixes and simplification over prose; prefer editing
-or deleting instructions over adding them.
+causes. Explain what generalizes beyond each incident; keep environment-specific
+details in their owning layer. Prefer mechanical fixes and simplification over
+prose; prefer editing or deleting instructions over adding them.
 
 Existing guidance rules out duplicate instructions, not investigation of
 repeated failures. Consider whether tooling or workflow could make it effective.

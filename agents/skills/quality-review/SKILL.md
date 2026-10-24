@@ -65,6 +65,8 @@ use the result when deciding what to change.
 
 ### 1. Simplicity
 
+- Do the layer boundaries make sense? Check for unnecessary legacy structure,
+  redundant responsibilities, and dependency inversions.
 - Explicitly requested generality is a requirement. Do not recommend narrowing
   it as a simplification.
 - Does each new abstraction express a real contract or extension point?

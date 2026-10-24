@@ -21,6 +21,8 @@ implementation. Choose tests for the confidence and diagnostic value they provid
   readable assertions, and short smoke tests.
 - Do not duplicate evidence already provided by type checking or other tests.
   More assertions and higher coverage do not by themselves justify a test.
+- Argue a missing test from a concrete, plausible bug and why current checks
+  miss it. Do not use mutation runs as evidence of test quality.
 
 ## Examples and boundaries
 
