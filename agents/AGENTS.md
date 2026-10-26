@@ -100,10 +100,10 @@ The ledger controls execution:
   - Do not create helper functions just because they save a couple lines of code. Only create them
     if they represent a coherent boundary.
 - Write commit messages in Markdown, matching the user's existing commit style.
-- Organize commits around coherent, independently reviewable ideas. Keep mechanical
-  moves separate from behavioral changes when that makes review easier.
-- Write for future readers who have the diff but none of the conversation.
-  Explain the concrete problem, the core idea, and why the change helps.
+- Before editing, assign each commit one user-visible purpose and map its code,
+  tests, and prose to that purpose; split independent capabilities.
+- Lead its message with that purpose. Review the diff against it, preserving
+  accepted content when changing commit boundaries.
 - Make the mechanism clear: what happened before, what happens now, and how
   the change produces that result. Use a small concrete example when helpful.
 - Use established codebase terms; avoid shorthand readers must decode.
