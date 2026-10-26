@@ -25,14 +25,15 @@ machine-specific guidance.
 
 ### Verification
 
-- Always run configured cheap global checks, such as linting, formatting, and
-  type checking, after code changes.
+- After code changes, run configured cheap checks; name substitutions or omissions.
+- Stop dependent commands on failure and collect every check's exit status.
 - Distinguish iterative work from final verification. Most turns are
   iterations; they do not each require another expensive final verification pass.
 - Choose tests for behavior the change could plausibly affect. Prefer relevant
   test files or cases over broad suites containing unrelated tests.
-- Expensive checks need a concrete risk worth investigating. Explain that risk,
-  show the change first, and run checks in the background when useful.
+- Expensive checks need a concrete risk: explain it and show the change first.
+  Run checks against stable inputs; collect or stop them before changing those
+  inputs. Use isolated checkouts when editing and checking concurrently.
 - Reuse passing checks while the relevant code and dependencies remain unchanged.
   History or message rewrites alone do not invalidate results.
 
