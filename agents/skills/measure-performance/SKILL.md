@@ -8,24 +8,20 @@ description: >-
 
 # Measure performance
 
-## Methodology and reporting
+## Methodology and experiment design
 
-Separate reporting metrics (which you hand to the user) and proxy metrics
-(which can be cheaper metrics to guide internal work). Reporting metrics
-should either use standard, existing benchmarks OR must be validated by the
-user. Proxy metrics do not need to be approved by the user, but should never
-be used when reporting results. Unapproved proxies guide internal work only.
-
-## Experiment design
-
-Before experimenting, identify what remains unknown and what evidence would
-change the next decision. Choose the cheapest sufficient method.
-
-Inspect existing evidence first. Pilot cost and variance before scaling;
-reuse setup, artifacts and valid checks, and eliminate unnecessary work
-inside the experiment. Size measurements to the required precision.
-Stop when the question is resolved; repeat or expand only for a named
-uncertainty or changed condition.
+- Use an existing benchmark or a user-approved reporting boundary; keep other
+  proxies internal.
+- Enumerate required rows/candidates, units, uncertainty and observed rejection
+  criteria. Reconcile every cell; distinguish backend families from tuning variants.
+- Match the production execution path, compilation/reuse contract and timed work.
+  Verify a representative case against its source and generated artifacts before
+  scaling. Preserve the contract across runs; reconcile changes before comparing.
+- Reuse evidence, identify the next decision and reserve resources to finish.
+  Stop methods that answer no remaining question; preserve any user-reserved
+  selection decision.
+- For a known fault with an available fix, test the ordinary corrected version
+  before adding instrumentation; hold unrelated dependencies fixed.
 
 ## Measurement Procedure
 
@@ -46,8 +42,9 @@ Optimizations should be done in a profile-driven and hypothesis-driven way. Gene
 * Always estimate the "best case" improvements for any change first (e.g. based on the measurements and 
   simple roofline-like analyses). Prioritize the largest bottlenecks first (areas with the most
   opportunity for improvement)
-* Retain an optimization only when a material benefit is demonstrated at the
-  agreed reporting boundary, with measurement uncertainty assessed.
+* Measure uncertain or potentially material improvements at the agreed reporting
+  boundary. For clearly beneficial, simple changes with obviously minor impact,
+  run correctness checks and skip expensive before/after measurements.
 * Every change should have a hypothesis attached to it: why do we expect this to improve performance?
   What is the "best case" we can expect (based on the measurements and roofline-like analysis)?
   Negative results (where we see no speed-ups) are important for updating our mental model and forming
