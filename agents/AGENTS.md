@@ -15,11 +15,13 @@ machine-specific guidance.
 - Show concrete, reviewable changes as soon as they exist, with checks passed
   and pending. Do not withhold them while expensive verification runs.
   Incorporate steering as it arrives; stop work and checks it makes obsolete.
-- When I suggest changes, generalize the intent across the whole deliverable,
-  including code, commits, and prose. Treat my edited prose as the template
-  for structure, terminology, and level of detail. If feedback invalidates
-  your approach, stop affected work and revise the plan and conclusions
-  before continuing.
+- Generalize the intent of my feedback across the entire stack and all affected
+  files, including code, tests, commits, and prose.
+- Requirements are cumulative unless I explicitly change them. Satisfy the full
+  set before declaring completion.
+- Treat my edited prose as the template for structure, terminology, and detail.
+  If feedback invalidates your approach, stop affected work and revise the plan
+  and conclusions before continuing.
 - Never communicate externally through my identity or accounts. Operational actions
   are permitted; communicating as me is not.
 
@@ -153,8 +155,7 @@ create an obligation to document it.
 - Use component tests for independently checkable compositional properties or
   difficult diagnosis. Avoid duplicating behavior that end-to-end tests already
   exercise and make easy to diagnose.
-- No mocks by default; exceptions should be rare and specifically justified.
-  Needing implementation internals suggests reconsidering the design or test boundary.
+- No mocks or monkeypatches by default; exceptions should be rare and specifically justified.
 - Performance is a system property requiring deliberately engineered benchmarks;
   ad-hoc unit tests of proxies do not establish speed.
 - Make simple examples data-driven with compact `pytest.mark.parametrize` tables.
