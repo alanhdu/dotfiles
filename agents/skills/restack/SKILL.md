@@ -34,7 +34,8 @@ behavior.
 Examine the existing commit stack and design a better commit structure. Present
 the proposed stack in order. For each commit, list its responsibility, exact
 files or hunks, and focused verification. Explicitly identify every commit that
-will be split, folded, reordered, or abandoned.
+will be split, folded, reordered, or abandoned. Then carry it out without
+waiting for approval; jj history edits are recoverable through the oplog.
 
 - Preserve jj change IDs; do not duplicate commits.
 - Order independent changes before their dependents. Split commits with multiple
@@ -52,24 +53,23 @@ Make each message succinct and useful to someone who did not see the work:
 explain what changed and why, follow the repository's style, and wrap paragraphs.
 
 ```text
-jj describe -r <commit>
+jj describe -r <commit> --stdin <<'EOF'
+<message>
+EOF
 ```
 
 ## 4. Clean up task artifacts
 
 - Fold or abandon task-scoped review-fix commits after incorporating them.
 - Abandon task-scoped experiment commits that were rejected.
-- Forget and remove temporary workspaces created during this task.
-- Delete only task-created bookmarks that are no longer needed.
-
-Do not clean unrelated stale state merely because it is visible in `jj log` or
-`jj workspace list`.
+- Forget temporary workspaces and delete bookmarks this task created and no
+  longer needs. Unrelated stale state visible in `jj log` or
+  `jj workspace list` is not yours to clean.
 
 ## 5. Verify
 
-After completing edits and conflict resolution, run the configured cheap global
-checks, such as linting, formatting, and type checking. Follow the general
-verification principles when selecting tests. Check intermediate commits for
+After completing edits and conflict resolution, verify as AGENTS.md describes.
+Check intermediate commits for
 specific risks introduced by moving code, rather than automatically repeating
 test suites across the stack.
 

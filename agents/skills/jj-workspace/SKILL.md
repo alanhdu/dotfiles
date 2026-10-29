@@ -38,10 +38,9 @@ elsewhere.
 5. Hand back the change under the requested bookmark. Do not create a new
    bookmark when the user named an existing one.
 6. Verify that the bookmark points at the intended commit.
-7. Once the user has explicitly accepted the result or requests cleanup, verify
-   that the bookmark points at the intended commit, forget the temporary
-   workspace with `jj workspace forget <slug>`, then remove only the exact
-   temporary directory returned by `mktemp`.
+7. Once the user has explicitly accepted the result or requests cleanup, forget
+   the temporary workspace with `jj workspace forget <slug>`, then remove only
+   the exact temporary directory returned by `mktemp`.
 
 ## Dependencies and baseline comparisons
 

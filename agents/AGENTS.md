@@ -1,7 +1,6 @@
 ## Machine-specific guidance
 
-
-Before starting work, read `~/.agents/AGENTS.local.md` if it exists and treat it as additional
+Before starting work, read @~/.agents/AGENTS.local.md if it exists and treat it as additional
 machine-specific guidance.
 
 ## Working Style
@@ -15,20 +14,26 @@ machine-specific guidance.
 - Show concrete, reviewable changes as soon as they exist, with checks passed
   and pending. Do not withhold them while expensive verification runs.
   Incorporate steering as it arrives; stop work and checks it makes obsolete.
-- Generalize the intent of my feedback across the entire stack and all affected
-  files, including code, tests, commits, and prose.
+- Generalize my requested changes across code, tests, commits, and prose. If I
+  correct how one function names or handles a concept, apply the correction to
+  its siblings, tests, docstrings, and commit message too.
+- Answer design questions before treating them as instructions to change code.
 - Requirements are cumulative unless I explicitly change them. Satisfy the full
   set before declaring completion.
 - Treat my edited prose as the template for structure, terminology, and detail.
-  If feedback invalidates your approach, stop affected work and revise the plan
+- If feedback invalidates your approach, stop affected work and revise the plan
   and conclusions before continuing.
+- If successive steps provide no new information, reassess the approach
+  before repeating or expanding the work.
 - Never communicate externally through my identity or accounts. Operational actions
   are permitted; communicating as me is not.
 
 ### Verification
 
-- After code changes, run configured cheap checks; name substitutions or omissions.
-- Stop dependent commands on failure and collect every check's exit status.
+- After code changes, run configured cheap checks. Say which checks you
+  substituted or skipped.
+- Do not run commands that depend on a failed step, but still run independent
+  checks and report each one's exit status.
 - Distinguish iterative work from final verification. Most turns are
   iterations; they do not each require another expensive final verification pass.
 - Choose tests for behavior the change could plausibly affect. Prefer relevant
@@ -41,7 +46,7 @@ machine-specific guidance.
 
 ### Task tracking
 
-Maintain a small Markdown task ledger outside of the repository. Dislayy the absolute path upon creation.
+Maintain a small Markdown task ledger outside of the repository. Display the absolute path upon creation.
 It should look like:
 
 ```markdown
@@ -66,14 +71,12 @@ The ledger controls execution:
 1. Rebuild the ledger when starting an independent task.
    For follow-ups, reconcile the existing ledger and retain unfinished work.
    Keep it limited to the current task.
-2. After every message (including interruptions and follow-usp), your first action is to read
+2. After every message (including interruptions and follow-ups), your first action is to read
    and reconcile the ledger. Add new requests and apply corrections before any
    other investigation, edits, or tool calls.
 3. Update entries in place under one Active, Proposed, and Inactive section.
    Keep requested outcomes distinct from the methods chosen to pursue them.
    Changing a method must not redefine completion.
-   If successive steps provide no new information, reassess the approach
-   before repeating or expanding the work.
    Active contains requested work and necessary dependencies; unapproved
    ideas go in Proposed. Move completed, blocked, deferred, or cancelled work
    to Inactive. Do not append follow-up sections or narrative history.
@@ -83,14 +86,15 @@ The ledger controls execution:
    work and repeat them at handoff. Without approval, leave them unpursued
    and continue the requested work.
 
-## Personal code preferences
+## Design
 
-- Do not push, unless explicitly asked to.
-- Do not check or report remote state unless asked.
-- Surface broader rethinks and opportunities, but get approval before
-  pursuing work beyond the request.
-- In explicit refactoring tasks, preserve required behavior without preserving
-  legacy structure by default.
+- Surface broader rethinks and opportunities as proposals.
+- Never rewrite code from scratch unless explicitly told to. Always prefer
+  evolving existing code. Existing code often contains many implicit
+  properties we want to preserve (e.g. style, documentation, implicit contracts, etc).
+  - In explicit refactoring tasks, the final state should not preserve
+    legacy behavior unless explicitly asked to, but changes should be made
+    incrementally (no "big bang rewrite commits").
 - Prefer fixes in the layer that owns the behavior. If a workaround crosses
   that boundary, explain the constraint that makes it necessary.
 - Reconsider layer boundaries when changing them: give each layer a clear
@@ -99,10 +103,25 @@ The ledger controls execution:
 - Prefer the simplest straight-line implementation. Use the ladder inline code → function → class →
   protocol, moving up only for a real abstraction.
 - Functions and classes are for *abstraction*, not *reuse*. Duplication is preferred to
-  muddled or unclear abstraction boundaries.
-  - Do not create helper functions just because they save a couple lines of code. Only create them
-    if they represent a coherent boundary.
-- Write commit messages in Markdown, matching the user's existing commit style.
+  muddled or unclear abstraction boundaries. Do not create helpers just because
+  they save a couple of lines.
+- Assume valid inputs in internal typed APIs; let operations fail naturally.
+  Check inputs only where an error would surface far from its cause or results
+  would be silently wrong.
+- Prefer keyword-only parameters when type checking cannot catch argument-order mistakes.
+  If the same data travels across interfaces, consider a TypedDict, dataclass, named tuple,
+  or an owning class according to the semantics and ownership of that data.
+
+## Commits and version control
+
+- Do not push, unless explicitly asked to.
+- Do not check or report remote state unless asked.
+- Prefer jujutsu (`jj`) in repositories configured for it; otherwise use Git.
+  - Report change IDs. Include git hashes only when needed for external systems.
+  - Preserve change IDs when rewriting, but prioritize a coherent stack: split,
+    fold, or abandon commits as needed. Do not duplicate commits.
+  - `jj` history edits are recoverable through the oplog; never ask for approval before running them.
+- Write commit messages in Markdown, matching my existing commit style.
 - Before editing, assign each commit one user-visible purpose and map its code,
   tests, and prose to that purpose; split independent capabilities.
 - Lead its message with that purpose. Review the diff against it, preserving
@@ -112,18 +131,6 @@ The ledger controls execution:
 - Use established codebase terms; avoid shorthand readers must decode.
 - Explain the idea rather than cataloging edits, helpers, tests, or work history.
   Retain relevant evidence, material tradeoffs, and limitations.
-- Prefer jujutsu (`jj`) in repositories configured for it; otherwise use Git.
-  - Report change IDs. Include git hashes only when needed for external systems.
-  - Preserve change IDs when rewriting, but prioritize a coherent stack: split,
-    fold, or abandon commits as needed. Do not duplicate commits.
-  - `jj` history edits are recoverable through the oplog; never ask for approval before running them.
-- Clean up only commits, workspaces, bookmarks, and temporary files created in the current task. Ask
-  before removing pre-existing artifacts.
-- Assume valid inputs in internal typed APIs; let operations fail naturally.
-- Prefer keyword-only parameters when type checking cannot catch argument-order mistakes.
-  If the same data travels across interfaces, consider a TypedDict, dataclass, named tuple,
-  or an owning class according to the semantics and ownership of that data.
-
 
 ## Documentation
 
@@ -167,8 +174,9 @@ create an obligation to document it.
 
 ## Files and background work
 
-- Put scratch data in a uniquely named temporary directory. Remove only scratch artifacts created
-  during the current task.
+- Put scratch data in a uniquely named temporary directory.
+- Clean up only commits, workspaces, bookmarks, and scratch files created in the
+  current task. Ask before removing pre-existing artifacts.
 - Keep me informed about background work and consume and report its results
   when it finishes. If automatic follow-up is unavailable, show the current
   result and block on completion without repeated polling or unrelated work.

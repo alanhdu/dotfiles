@@ -93,11 +93,11 @@ For reviewer dispatch, the parent may decide **only**:
 The parent must not author review questions, emphasis, summaries, rationales,
 hypotheses, acceptance criteria, expected findings, suggested fixes, or claims
 about passing checks. Do not put that material in scope files or task names.
-Review standards come from AGENTS.md and the explainers, not from the parent.
 
-Launch fresh-context, read-only subagents with `fork_turns="none"` where
-supported. Use a general-purpose role if a specialized role conflicts with this
-contract. If independent delegation is unavailable, disclose that limitation.
+Launch fresh-context, read-only subagents (Codex: `fork_turns="none"`; Claude
+Code: the `code-reviewer` agent type). Use a general-purpose role if a
+specialized role conflicts with this contract. If independent delegation is
+unavailable, disclose that limitation.
 
 Use this fixed dispatch envelope, substituting only the path and data fields:
 
@@ -110,10 +110,8 @@ Use absolute file or directory paths, including raw manifests or patches when
 needed. Directory assignments cover the complete requested inventory. Quotes are
 verbatim, with qualifications and corrections preserved; use an empty list when
 none apply. Do not paraphrase or select excerpts that reverse the user's
-meaning. Never assign a directory containing review reports or the parent's
-scratch notes. Every follow-up is subject to the same restrictions. Later
-reviewers receive the code and user quotes, never an earlier reviewer's
-conclusions.
+meaning. Never assign review reports, or a directory containing them or the
+parent's scratch notes. Every follow-up is subject to the same restrictions.
 
 ## Resolve findings and expose reports
 

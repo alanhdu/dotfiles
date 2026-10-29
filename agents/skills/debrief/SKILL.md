@@ -13,8 +13,9 @@ Audit first. Recommend changes; do not apply them.
 - **Targeted:** Selected mistakes, relevant instructions and consequences.
 
 Use requested scope; otherwise ask through the question UI.
-Full audits use a fresh subagent without inherited history
-(`fork_turns="none"`). Pass this skill, scope, unfiltered transcript and artifact paths;
+Full audits use a fresh subagent without inherited history (Codex:
+`fork_turns="none"`; Claude Code: any agent type except `fork`). Pass this
+skill, scope, unfiltered transcript and artifact paths;
 exclude parent summaries, inventories, diagnoses and suggestions. The subagent
 owns the audit and recommendations; relay all findings without filtering.
 If unavailable, disclose it; do not substitute a parent audit.
@@ -23,14 +24,18 @@ Targeted audits may run in the parent.
 ## 2. Audit before synthesis
 
 1. Read original messages/tool outcomes in scope; recover accessible history.
-   Summaries/ledgers cannot substitute. State gaps.
-2. Inventory every correction and substantial friction, including debrief failures.
-   Split multi-part/repeated corrections; cite source messages/tool results.
-   Distinguish errors from authorized changes.
-3. Recheck every user message in scope: inventory IDs or a reason for no correction.
-   Full audits cover the entire session. Verify coverage against the transcript,
-   programmatically where possible, before synthesizing.
-4. Group every ID by underlying cause. Cite evidence; explain failed protections,
+   Summaries/ledgers cannot substitute. State gaps. Raw transcripts are JSONL:
+   Codex under `~/.codex/sessions/`; Claude Code at
+   `~/.claude/projects/<cwd-slug>/<session-id>.jsonl`, with subagent
+   transcripts and persisted tool outputs under `<session-id>/`.
+2. Inventory every correction and substantial friction, including failures of
+   this debrief. Give each an ID (C1, C2, …) and cite its source messages or
+   tool results. Split multi-part or repeated corrections into separate IDs.
+   Distinguish errors from changes the user authorized.
+3. Check coverage: list every user message in scope with the IDs it raised, or
+   why it raised none. Full audits cover the entire session. Verify the list
+   against the transcript, programmatically where possible, before synthesizing.
+4. Group the IDs by underlying cause. Cite evidence; explain failed protections,
    including ignored guidance. Distinguish observations from inferred causes and
    root fixes from repaired consequences.
 
@@ -47,8 +52,9 @@ Do not re-propose completed fixes.
 
 ## Output
 
-**Session audit:** Briefly report every substantial pattern with its evidence,
-cause, and disposition. This is not a chronology or task-status summary.
+**Session audit:** Report every substantial pattern with its evidence,
+cause, and disposition. Do not substitute a link to the report or a status
+question for it.
 
 **Recommendations:** Use **Harness** and **Codebase** subsections, highest priority
 first. For each proposal give:

@@ -6,26 +6,45 @@ concerns the design and the reader's work, not an arbitrary line count.
 
 ## Implementation checklist
 
-- [ ] Straight-line code is used where it expresses the behavior clearly.
-      Control flow makes unconditional work and loop exit conditions apparent.
-- [ ] Each function or class represents an abstraction, not merely reuse. A
-      helper should express a coherent concept or contract; removing duplicate
-      lines alone does not justify one.
-- [ ] New abstractions earn their complexity. Consider missing, misplaced, and
-      unnecessary abstractions; removing all abstractions is not the objective.
-- [ ] Required generality is preserved. Avoid special cases based on exact
-      object identity, implementation classes, or one benchmark's settings where
-      the intended behavior is general. One implementation does not invalidate
-      an extension point.
-- [ ] Internal typed APIs rely on valid inputs and owning-layer guarantees
-      rather than speculative defensive branches. Check actual callers when
-      changing APIs.
-- [ ] The simplification removes complexity rather than hiding it, moving it to
-      callers, or compressing it into opaque expressions. Do not code golf.
+- [ ] [Push ifs up and fors down](https://matklad.github.io/2023/11/15/push-ifs-up-and-fors-down.html)
+      - Excessive branching (e.g. >=4 branches) is evidence that an abstraction
+        is needed: promote the varying behavior up the inline code →
+        function → class → protocol ladder, such as to polymorphism.
+- [ ] Defensive checks exist only where an error would otherwise surface far
+      from its cause (e.g. validating user input) or the code would silently
+      return incorrect results. Do not check or coerce what types enforce or
+      what would already fail with an obvious error, such as a dtype mismatch;
+      document the intended input and let the caller provide it.
+- [ ] We avoid deep indentation by introducing local variables where necessary.
+      Avoid multiple consecutive new lines of just closing delimiters (like `),\n]\n}`).
+- [ ] Code density is appropriate. Blocks of >15 lines of code are broken up with
+      1-line comments and/or new lines.
+- [ ] Functions that are called once are inlined, *unless* they represent a
+      very important abstraction boundary (e.g. that is independently checked
+      in tests).
+- [ ] All parameters of every function/class compose. Setting a parameter does
+      not magically cause other parameters to be ignored.
 
 If a problem comes from misplaced responsibilities, identify that boundary
 instead of offering only a local workaround. Flag code likely to be replaced by
 an architectural correction rather than polishing its details.
+
+## Example: which defensive checks earn their place
+
+An attention function starts with `q = q.float().contiguous()`, then
+`k = k.to(q.dtype)` and `v = v.to(q.dtype)`, and its callers cast again before
+calling it. The `Tensor` type does not enforce dtype, but a mismatch already
+fails in the matmul with an obvious error. Remove the casts, document the
+expected dtype and layout, and let callers pass it.
+
+Two checks in the same codebase do earn their place:
+
+- **The error would surface far away.** A user-written `run_spec.yaml` without
+  a `name` would otherwise fail at W&B initialization, after the image build
+  and queue wait. Reject it when parsing the spec.
+- **The result would be silently wrong.** A loss computed from `logits` of shape
+  `(B, 1)` and `labels` of shape `(B,)` broadcasts to `(B, B)` and returns a
+  plausible scalar. Check the shapes there.
 
 ## Example: similar optimization loops
 

@@ -4,24 +4,26 @@ Assess the resulting stack once the code is settled.
 
 Inspect ordered messages and every commit's parent-relative patch, including
 changes later removed or overwritten. A clean final tree does not establish
-independent mergeability. For jj, sections 2–4 of the sibling
-[restack skill](../../restack/SKILL.md) supply the commit-structure bar;
-appraise without executing its rewriting workflow.
+independent mergeability.
 
-### Structure checklist
+## Structure review
 
-- [ ] Each commit has one coherent responsibility and is independently
-      reviewable and mergeable, with prerequisites before their users.
-- [ ] Necessary implementation and tests are present at each intermediate state.
-      Identify a concrete dependency or failure when questioning this.
-- [ ] Mechanical moves and behavioral changes are separate when that aids
-      review. Unrelated renaming, formatting churn, and drive-by changes do not
-      obscure the idea.
+For each commit, return a compact table that accounts for every changed file.
+`commit | purpose | changed symbols/path groups | disposition`.
+
+Then, ensure
+- [ ] Every commit has one coherent responsibility. Independent changes are in separate commits.
+  - Mechanical moves and behavioral changes are separate when that aids
+    review.
+- [ ] Every commit avoids churn (e.g. reformatting, renaming, etc) unless required by the change
+- [ ] Commits are ordered properly: prerequisite commits and "easy" commits
+      (e.g. small fixes, uncontroversial bugs) come first so they can be merged
+       first.
 - [ ] Fixups are folded into their owning commits. Rejected experiments and task
       artifacts are excluded; maintained product content is not mistaken for an
       artifact.
 
-### Example: an extraction and its motivating adoption
+## Example: an extraction and its motivating adoption
 
 One commit extracts an existing numerical operation behind a shared interface
 without changing behavior. The next adopts it in a second algorithm. Both pass
@@ -31,7 +33,7 @@ followed by the adoption: the changes remain separately reviewable while the
 reason for the extraction stays close. Independent mergeability alone would not
 justify scattering them across the stack.
 
-### Message checklist
+## Message checklist
 
 - [ ] Follow AGENTS.md and the repository's existing format, including subject
       conventions and wrapping. Identify configured message checks for the
