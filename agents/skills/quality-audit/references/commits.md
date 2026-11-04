@@ -11,14 +11,13 @@ independent mergeability.
 For each commit, return a compact table that accounts for every changed file.
 `commit | purpose | changed symbols/path groups | disposition`.
 
-Then, ensure
-- [ ] Every commit has one coherent responsibility. Independent changes are in separate commits.
-  - Mechanical moves and behavioral changes are separate when that aids
-    review.
-- [ ] Every commit avoids churn (e.g. reformatting, renaming, etc) unless required by the change
-- [ ] Commits are ordered properly: prerequisite commits and "easy" commits
-      (e.g. small fixes, uncontroversial bugs) come first so they can be merged
-       first.
+Then ensure:
+
+- [ ] Each commit has one responsibility. Separate independent changes, and
+      mechanical moves from behavior changes when that aids review.
+- [ ] Every commit avoids churn (e.g. reformatting, renaming) unless required by the change.
+- [ ] Prerequisites and independent small fixes come first so they can merge
+      first.
 - [ ] Fixups are folded into their owning commits. Rejected experiments and task
       artifacts are excluded; maintained product content is not mistaken for an
       artifact.

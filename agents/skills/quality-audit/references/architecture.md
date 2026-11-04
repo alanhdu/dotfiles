@@ -11,12 +11,10 @@
       helpers that merely split one operation across files, making readers
       reconstruct its state and control flow across boundaries. Invariants,
       contracts, and implementations are not repeated across boundaries.
-- [ ] Flag all "False" abstractions that are really just reusing code.
-      Every field and parameter in a shared abstraction should have a
-      meaningful interpretation in every supported use case. If one use case
-      must carry a field solely because another needs it, reconsider the
-      boundary. Prefer separate representations and some duplication over
-      forcing them into one shape.
+- [ ] Flag "false" abstractions that merely reuse code: every shared field
+      and parameter has meaning in every supported use case. Prefer separate
+      representations and some duplication over fields carried solely for
+      another use case.
 - [ ] Dependencies flow in the intended direction. A layer does not reach into
       another's implementation to recover information its interface should
       supply.
@@ -53,7 +51,6 @@ carry and ignore them. Sharing saves two duplicated scalar fields and costs
 every reader of the SFT trainer a question about rewards. Recommend separate
 configs. A common base class for `lr` and `batch_size` is also unwarranted
 unless some caller treats both trainers uniformly.
-
 
 ### Placement depends on future intentions
 

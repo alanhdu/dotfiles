@@ -34,9 +34,14 @@ are claims to assess against the code.
   inspect.
 - Do not read the parent's conversation or scratch notes, or other review
   reports. These are not repository context or raw scope evidence.
-- Stay read-only. Do not edit code, write reports to disk, rewrite history, or
-  run checks. In jj inspection commands, use `--ignore-working-copy`. If
-  execution is needed, identify what the parent should verify.
+- Other reviewers read the same code in parallel, so do not edit it or rewrite
+  history; your edits would mislead them. In jj inspection commands, use
+  `--ignore-working-copy`. To probe behavior, use your own temporary workspace
+  or checkout and remove it when done. Do not write reports to disk; the parent
+  saves your response.
+- Leave suite-wide checks to the parent so parallel reviewers do not each run
+  them. Small, targeted runs that do not interfere with other work are fine;
+  otherwise identify what the parent should verify.
 - Finish the assignment rather than stopping at a few easy improvements. Do not
   manufacture findings, infer defects from missing context, or use a finding
   quota.

@@ -9,9 +9,8 @@ description:
 
 # Quality audit
 
-Get independent appraisals using the user's standards in AGENTS.md and the
-review explainers. The parent coordinates the audit and resolves findings;
-reviewers form their own judgments. A clean review is valid.
+The parent coordinates independent appraisals against AGENTS.md and the review
+explainers, then resolves findings. A review with no findings is a valid result.
 
 ## Scope
 
@@ -35,8 +34,6 @@ Keep a raw scope manifest and any patches under `scope/` in a unique temporary
 audit directory, separate from assignments and reports. Record paths and
 versions mechanically, without the parent's commentary. Give reviewers access to
 this evidence and repository context, even when their file assignments differ.
-Keep code stable during each review stage; use a snapshot or isolated checkout
-if other work must continue.
 
 ## Select reviewers and order the work
 
@@ -51,11 +48,10 @@ below; a tests-only request needs only tests. Each reviewer reads the shared
 | `tests`        | Plausible missed bugs and a simpler, more orthogonal suite               | [test review](references/test-review.md)                     |
 | `commits`      | Independently mergeable commits and useful, correctly formatted messages | [commits](references/commits.md)                             |
 
-Review existing code without adding the commits lens unless commit history is
-part of the request. Choose reviewer count and file assignments to fit the work:
-combine lenses for small scopes or split large scopes by coherent component or
-commit group. Preserve a view across component boundaries. When architecture is
-included, give it a distinct appraisal of the whole affected path.
+Include commits for existing code only when history is requested. Combine lenses
+for small scopes or split large scopes by component or commit group, preserving
+a view across boundaries. Architecture needs a distinct appraisal of the whole
+affected path.
 
 Order reviews by what could invalidate later work:
 
@@ -77,14 +73,14 @@ within scope, then update the raw scope and launch the requested code-quality
 and test reviewers on the resulting code. If there are multiple plausible
 designs with meaningful tradeoffs, present the motivation and options and ask
 for direction before edits or reviews of code that depends on that choice.
-Unaffected work may continue. If the user explicitly asks for findings without
-edits, stop at findings. "Only" restricting files or lenses does not itself
-prohibit fixes within that scope. Do not re-review settled stages merely because
-a later stage ran.
+Unaffected work may continue. Do not re-review settled stages merely because a
+later stage ran.
 
 ## Dispatch: three decisions only
 
-For reviewer dispatch, the parent may decide **only**:
+Any framing the parent adds anchors reviewers on the parent's view, which
+defeats an independent appraisal. For reviewer dispatch, the parent may decide
+**only**:
 
 1. Which reviewers and lenses to launch.
 2. Which files each reviewer examines, including raw scope artifacts.
@@ -94,10 +90,10 @@ The parent must not author review questions, emphasis, summaries, rationales,
 hypotheses, acceptance criteria, expected findings, suggested fixes, or claims
 about passing checks. Do not put that material in scope files or task names.
 
-Launch fresh-context, read-only subagents (Codex: `fork_turns="none"`; Claude
-Code: the `code-reviewer` agent type). Use a general-purpose role if a
-specialized role conflicts with this contract. If independent delegation is
-unavailable, disclose that limitation.
+Launch fresh-context subagents that do not edit the shared code (Codex:
+`fork_turns="none"`; Claude Code: the `code-reviewer` agent type). Use a
+general-purpose role if a specialized role conflicts with this contract. If
+independent delegation is unavailable, disclose that limitation.
 
 Use this fixed dispatch envelope, substituting only the path and data fields:
 
@@ -118,18 +114,19 @@ parent's scratch notes. Every follow-up is subject to the same restrictions.
 Save each dispatched assignment and each complete original response as Markdown
 under `reports/` in the audit directory. Link every reviewer report when it
 becomes available and again at handoff, including clean reviews and findings the
-parent rejects. Do not replace, edit, or truncate reports to fit the parent's
-summary. Retain them for follow-up; copying them into chat is unnecessary.
+parent rejects. The user checks the parent's dispositions against them, so do
+not replace, edit, or truncate reports to fit the parent's summary. Retain them
+for follow-up; copying them into chat is unnecessary.
 
 Give every finding a disposition: fixed, rejected with a reason, or unresolved.
 The parent may summarize and disagree, but its decisions remain separate from
-the original reports. Run investigations and checks in the parent; keep their
-results distinct from the reviewer's evidence. Unless asked for findings without
-edits, act on accepted findings within scope, subject to the architectural
-decision above. Use the restack skill for accepted jj commit-shape fixes.
+the original reports. Keep the parent's investigations and checks distinct from
+the reviewer's evidence. Unless asked for findings without edits, act on
+accepted findings within scope, subject to the architectural decision above.
+"Only" restricting files or lenses does not itself prohibit fixes within that
+scope. Use the restack skill for accepted jj commit-shape fixes.
 
-Run configured cheap global checks and focused verification for changes made,
-reusing still-valid results. Report consequential changes, open decisions,
-unreviewed scope, independence limitations, verification, and links to all
-reports. For a requested handoff document, use
+Verify changes under AGENTS.md, including configured cheap global checks. Report
+consequential changes, open decisions, unreviewed scope, independence limitations,
+verification, and all report links. For a requested handoff document, use
 [the handoff guidance](references/handoff.md).

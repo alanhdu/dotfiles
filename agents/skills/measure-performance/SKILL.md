@@ -11,8 +11,8 @@ description: >-
 ## Measure without perturbing
 
 Prefer measurements that do not change what they measure: sampling profilers
-like `py-spy`, `nvidia-smi`, `htop`, and existing logs, counters, and timestamps
-(e.g. throughput from step-time logs).
+like `py-spy`, utilization tools like `nvidia-smi` and `htop`, and existing logs,
+counters, and timestamps (e.g. throughput from step-time logs).
 
 Adding timers, synchronization, or logging to production code can change its
 performance characteristics. Do it only when nothing lighter answers the
@@ -31,23 +31,17 @@ supporting evidence for an end-to-end number.
 
 ## Work from profiles and hypotheses
 
-Optimizations should be done in a profile-driven and hypothesis-driven way.
-General principles:
-
 - Always start by measuring the existing process. What are the bottlenecks?
   Where is time going? Report this to the user first (including flamegraphs,
   tables, theoretical formulas, etc).
-- Always estimate the "best case" improvements for any change first (e.g. based
-  on the measurements and simple roofline-like analyses). Prioritize the
-  largest bottlenecks first (areas with the most opportunity for improvement).
+- Attach a hypothesis to every change before making it: why should it improve
+  performance, and what is the "best case" based on the measurements and simple
+  roofline-like analysis? Prioritize the largest opportunities first.
 - Measure uncertain or potentially material improvements at the agreed reporting
   boundary. For clearly beneficial, simple changes with obviously minor impact,
   run correctness checks and skip expensive before/after measurements.
-- Every change should have a hypothesis attached to it: why do we expect this to
-  improve performance? What is the "best case" we can expect (based on the
-  measurements and roofline-like analysis)? Negative results (where we see no
-  speed-ups) are important for updating our mental model and forming better
-  hypotheses in the future.
+- Negative results (where we see no speed-ups) are important for updating our
+  mental model and forming better hypotheses in the future.
 
 ## Example: a slow training run
 

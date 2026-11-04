@@ -5,178 +5,97 @@ machine-specific guidance.
 
 ## Working Style
 
-- Use Markdown for presentation when useful: bullets, tables, and other structure
-  are all welcome.
-- In chat, use Unicode/plain-text notation rather than raw LaTeX because the
-  terminal does not render it. Use LaTeX when editing source files or when
-  explicitly asked for a copy-paste snippet.
-- Ask questions that need my answer through the question UI, not inside long prose.
-- Show concrete, reviewable changes as soon as they exist, with checks passed
-  and pending. Do not withhold them while expensive verification runs.
-  Incorporate steering as it arrives; stop work and checks it makes obsolete.
-- Generalize my requested changes across code, tests, commits, and prose. If I
-  correct how one function names or handles a concept, apply the correction to
-  its siblings, tests, docstrings, and commit message too.
-- Answer design questions before treating them as instructions to change code.
-- Requirements are cumulative unless I explicitly change them. Satisfy the full
-  set before declaring completion.
-- Treat my edited prose as the template for structure, terminology, and detail.
-- If feedback invalidates your approach, stop affected work and revise the plan
-  and conclusions before continuing.
-- If successive steps provide no new information, reassess the approach
-  before repeating or expanding the work.
-- Never communicate externally through my identity or accounts. Operational actions
-  are permitted; communicating as me is not.
+- Ask questions that need my answer through the question UI and restate them in the chat reply, since the dialog can hide context.
+- Treat my questions as questions, not implicit criticism. I often ask to understand how something works, and changing things in response makes it impossible to converge on a shared understanding. Answer so I can weigh the tradeoffs before implementation that the discussion may overturn; act directly only on clear improvements, and when unsure, answer and wait.
+- Use Markdown for presentation when useful: bullets, tables, and other structure are all welcome.
+- Write math as LaTeX where it renders (e.g. Markdown docs, matplotlib labels) and as Unicode/plain text elsewhere, including chat (the terminal does not render LaTeX) and, preferably, code comments.
+- Show concrete, reviewable changes as soon as they exist (with checks passed and pending) so I can give steering guidance quickly.
+  - Distinguish iterative work from final verification. Most turns are iterations; they do not each require another expensive final verification pass.
+- Requirements are cumulative unless I explicitly change them. Satisfy the full set before declaring completion.
+- Apply my corrections to every analogous place (siblings, tests, docs, commit messages), not just the instance I pointed at.
+- Never communicate externally through my identity or accounts. Operational actions are permitted; communicating as me is not.
+  - Do not push or pull from remote sources unless explicitly asked: pushing publishes as me, and pulling or fetching moves the base I am reasoning about.
+- Put scratch data in a uniquely named temporary directory, so concurrent agents do not collide and the repository stays clean.
+- Avoid introducing new jargon or shorthand unless I introduced the term first or it already exists in the codebase/context.
+- Summarize results succinctly in chat and keep temporary findings in brief scratch notes. I rarely read detailed reports, so write one only when I ask for it.
 
-### Verification
-
-- After code changes, run configured cheap checks. Say which checks you
-  substituted or skipped.
-- Do not run commands that depend on a failed step, but still run independent
-  checks and report each one's exit status.
-- Distinguish iterative work from final verification. Most turns are
-  iterations; they do not each require another expensive final verification pass.
-- Choose tests for behavior the change could plausibly affect. Prefer relevant
-  test files or cases over broad suites containing unrelated tests.
-- Expensive checks need a concrete risk: explain it and show the change first.
-  Run checks against stable inputs; collect or stop them before changing those
-  inputs. Use isolated checkouts when editing and checking concurrently.
-- Reuse passing checks while the relevant code and dependencies remain unchanged.
-  History or message rewrites alone do not invalidate results.
+## Coding workflow
 
 ### Task tracking
 
-Maintain a small Markdown task ledger outside of the repository. Display the absolute path upon creation.
-It should look like:
+Maintain a small Markdown task ledger outside of the repository. Display the absolute path upon creation. Use these sections:
 
 ```markdown
 # Active
 
-* Task 1
-* Task 2
-* Task 3
+* Requested work or necessary dependency
 
 # Proposed
 
-* Idea awaiting approval
+* Unapproved idea, surfaced to me at the end of the turn
 
 # Inactive
 
-* (Completed) Task 4
-* (Blocked) Task 5
+* (Completed/Blocked/Deferred/Cancelled) Task
 ```
 
-The ledger controls execution:
+The ledger lets me steer mid-task without earlier requests being forgotten or the work ending early, and shows me what is finished versus still in progress. It controls execution:
 
-1. Rebuild the ledger when starting an independent task.
-   For follow-ups, reconcile the existing ledger and retain unfinished work.
-   Keep it limited to the current task.
-2. After every message (including interruptions and follow-ups), your first action is to read
-   and reconcile the ledger. Add new requests and apply corrections before any
-   other investigation, edits, or tool calls.
-3. Update entries in place under one Active, Proposed, and Inactive section.
-   Keep requested outcomes distinct from the methods chosen to pursue them.
-   Changing a method must not redefine completion.
-   Active contains requested work and necessary dependencies; unapproved
-   ideas go in Proposed. Move completed, blocked, deferred, or cancelled work
-   to Inactive. Do not append follow-up sections or narrative history.
-4. Keep the same ledger across interruptions and compaction, preserving its path in context handoffs.
-5. Before handoff, reconcile the ledger and report every task’s status,
-   including proposals and pending checks. Surface proposals promptly during
-   work and repeat them at handoff. Without approval, leave them unpursued
-   and continue the requested work.
+1. Rebuild the ledger only when starting an independent task. Otherwise keep the same ledger and its unfinished work, including across interruptions and compaction, and preserve its path in context handoffs.
+2. After every message (including interruptions and follow-ups), read and reconcile the ledger before any other investigation, edits, or tool calls.
+3. Update entries in place under one Active, Proposed, and Inactive section. Do not append other sections or narrative history.
+4. Before handoff, reconcile the ledger and report every task’s status, highlighting pending proposals, blocked tasks, and pending checks. You should have no active tasks. Defer a task only when I deferred it or it waits on my answer, never to end early.
 
-## Design
+### Verification
 
-- Surface broader rethinks and opportunities as proposals.
-- Never rewrite code from scratch unless explicitly told to. Always prefer
-  evolving existing code. Existing code often contains many implicit
-  properties we want to preserve (e.g. style, documentation, implicit contracts, etc).
-  - In explicit refactoring tasks, the final state should not preserve
-    legacy behavior unless explicitly asked to, but changes should be made
-    incrementally (no "big bang rewrite commits").
-- Prefer fixes in the layer that owns the behavior. If a workaround crosses
-  that boundary, explain the constraint that makes it necessary.
-- Reconsider layer boundaries when changing them: give each layer a clear
-  responsibility, remove redundant layers, and keep dependencies flowing
-  in the intended direction.
-- Prefer the simplest straight-line implementation. Use the ladder inline code → function → class →
-  protocol, moving up only for a real abstraction.
-- Functions and classes are for *abstraction*, not *reuse*. Duplication is preferred to
-  muddled or unclear abstraction boundaries. Do not create helpers just because
-  they save a couple of lines.
-- Assume valid inputs in internal typed APIs; let operations fail naturally.
-  Check inputs only where an error would surface far from its cause or results
-  would be silently wrong.
-- Prefer keyword-only parameters when type checking cannot catch argument-order mistakes.
-  If the same data travels across interfaces, consider a TypedDict, dataclass, named tuple,
-  or an owning class according to the semantics and ownership of that data.
+- After code changes, run configured cheap checks. Say which checks you substituted or skipped.
+  - Choose tests for behavior the change could plausibly affect, preferring relevant files or cases over broad suites.
+  - Reuse passing checks while the relevant code and dependencies remain unchanged. History or message rewrites alone do not invalidate results.
+  - Expensive checks need a concrete risk: explain it and show the change first. Run checks against stable inputs; collect or stop them before changing those inputs. Use isolated checkouts when editing and checking concurrently.
 
-## Commits and version control
+## Coding Preferences
 
-- Do not push, unless explicitly asked to.
-- Do not check or report remote state unless asked.
+### Commits and version control
+
 - Prefer jujutsu (`jj`) in repositories configured for it; otherwise use Git.
-  - Report change IDs. Include git hashes only when needed for external systems.
-  - Preserve change IDs when rewriting, but prioritize a coherent stack: split,
-    fold, or abandon commits as needed. Do not duplicate commits.
+  - Report change IDs, which survive rewrites. Include git hashes only when needed for external systems.
+  - Preserve change IDs when rewriting, but prioritize a coherent stack: split, fold, or abandon commits as needed. Do not duplicate commits.
   - `jj` history edits are recoverable through the oplog; never ask for approval before running them.
+- As a rough rule of thumb, each commit should be entirely mechanical (e.g. a codemod or moving code without edits) or under 400 changed lines. Many exceptions are valid; judge coherence and reviewability.
 - Write commit messages in Markdown, matching my existing commit style.
-- Before editing, assign each commit one user-visible purpose and map its code,
-  tests, and prose to that purpose; split independent capabilities.
-- Lead its message with that purpose. Review the diff against it, preserving
-  accepted content when changing commit boundaries.
-- Make the mechanism clear: what happened before, what happens now, and how
-  the change produces that result. Use a small concrete example when helpful.
-- Use established codebase terms; avoid shorthand readers must decode.
-- Explain the idea rather than cataloging edits, helpers, tests, or work history.
-  Retain relevant evidence, material tradeoffs, and limitations.
+  - Lead with the purpose/motivation. Explain the idea and avoid cataloguing edits or work history.
 
-## Documentation
+### Design
 
-Documentation is maintained product content. Its value comes from helping
-future readers use or change the code; its cost is the attention and upkeep
-it requires. Preserve durable knowledge that readers cannot readily recover
-from the code. Keep temporary findings in brief scratch notes and answer in the
-requested format. Create or polish a separate report only when it is a requested
-deliverable.
+- Functions and classes are for *abstraction*, not *reuse*. Duplication is preferred to muddled or unclear abstraction boundaries.
+- Prefer the simplest straight-line implementation. Use the ladder inline code → function → class → protocol, moving up only when the new unit owns an independent decision, invariant, or contract.
+- Prefer fixes in the abstraction that owns the behavior. If a workaround crosses that boundary, explain the constraint that makes it necessary.
+- Always evolve existing code instead of rewriting from scratch. Existing code often contains many implicit properties we want to preserve (e.g. style, documentation, implicit contracts, etc).
+  - In explicit redesign tasks, justify the final state from first principles rather than the previous design, and drop legacy behavior unless asked to keep it. Still get there incrementally (no "big bang rewrites").
 
-Each document should serve a clear reader need. A README is a short front
-door: orientation and a starting point. API contracts belong near their
-definitions; detailed explanations belong where readers need that detail.
-Choose placement and depth from the document's purpose, rather than treating
-a README as somewhere to put everything worth saying.
+### Coding Style
 
-Prefer the smallest explanation that preserves necessary understanding.
-More documentation is not inherently better, and completing work does not
-create an obligation to document it.
+- Assume valid inputs in internal APIs and let operations fail naturally. Check inputs only where an error would surface far from its cause or results would be silently wrong.
+- Prefer keyword-only parameters when type checking cannot catch argument-order mistakes.
+- When the same data travels across several interfaces, consider a typed container for it to reduce plumbing.
+- Pull ifs up and fors down: centralize control flow in callers and let callees operate on whole batches.
 
-## Testing preferences
+### Documentation
 
-- Test behavior at the layer that owns it; callers should test their own
-  behavior rather than re-test guarantees provided below them.
-- Prefer strengthening existing tests with better properties or additional
-  parameterized cases before adding new tests.
-- Prefer real behavior through public interfaces and a small, mostly orthogonal
-  suite. Choose tests for the confidence and diagnostic value they add, not coverage.
-- Use component tests for independently checkable compositional properties or
-  difficult diagnosis. Avoid duplicating behavior that end-to-end tests already
-  exercise and make easy to diagnose.
-- No mocks or monkeypatches by default; exceptions should be rare and specifically justified.
-- Performance is a system property requiring deliberately engineered benchmarks;
-  ad-hoc unit tests of proxies do not establish speed.
-- Make simple examples data-driven with compact `pytest.mark.parametrize` tables.
-- Use Hypothesis for nontrivial properties with simple, independent oracles:
-  round-trips, metamorphic relationships, invariants, inverses, idempotence,
-  and comparison with a simple reference implementation.
-- Write high-quality test code with well-designed helpers and fixtures that
-  make cases easy to add and resilient to API changes.
+- Write documentation and commit messages for future readers who lack the context of the current task.
+- More documentation is not better, since it drains attention and requires upkeep.
+  - Preserve durable knowledge that readers cannot readily recover from the code.
+- Choose placement and depth from the document's purpose. Avoid duplication between documentation sources.
+  - API contracts belong near their definitions; detailed explanations belong where readers need that detail.
 
-## Files and background work
+### Testing preferences
 
-- Put scratch data in a uniquely named temporary directory.
-- Clean up only commits, workspaces, bookmarks, and scratch files created in the
-  current task. Ask before removing pre-existing artifacts.
-- Keep me informed about background work and consume and report its results
-  when it finishes. If automatic follow-up is unavailable, show the current
-  result and block on completion without repeated polling or unrelated work.
+The overall goal is to have a small and mostly orthogonal test suite. Hold test code to the same design and readability bar as product code; in particular, helpers and fixtures should make new cases easy to add.
+
+- Bias towards end-to-end tests rather than component-level tests: they check behavior users rely on and survive refactoring. Component tests are justified for independently checkable compositional properties or failures that are difficult to diagnose in the end-to-end test.
+  - Test through public interfaces. Mocks and monkeypatches couple tests to the implementation, so exceptions should be rare and specifically justified.
+- Test behavior at the layer that owns it. Callers should test their own behavior rather than re-test guarantees provided below them.
+- Prefer data-driven parameterized tests (`pytest.mark.parametrize` in Python) or property-based testing (via `hypothesis` in Python) over independent test functions, so a new case costs a line rather than a test.
+  - Properties should have simple, independent oracles. For example: round-trips, metamorphic relationships, invariants, inverses, idempotence, and comparison with a simple reference implementation.
+  - Bias towards strengthening existing tests with better properties or additional parameterized cases before adding new tests. If this is impossible, the test suite may be poorly designed.
+- Avoid test-driven ossification where refactoring an API requires completely rewriting the tests.

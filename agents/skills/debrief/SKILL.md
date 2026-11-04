@@ -13,13 +13,13 @@ Audit first. Recommend changes; do not apply them.
 - **Targeted:** Selected mistakes, relevant instructions and consequences.
 
 Use requested scope; otherwise ask through the question UI.
-Full audits use a fresh subagent without inherited history (Codex:
+The parent's account of its own session is anchored on its interpretation at
+the time, so audits use a fresh subagent without inherited history (Codex:
 `fork_turns="none"`; Claude Code: any agent type except `fork`). Pass this
 skill, scope, unfiltered transcript and artifact paths;
 exclude parent summaries, inventories, diagnoses and suggestions. The subagent
 owns the audit and recommendations; relay all findings without filtering.
 If unavailable, disclose it; do not substitute a parent audit.
-Targeted audits may run in the parent.
 
 ## 2. Audit before synthesis
 
@@ -33,8 +33,8 @@ Targeted audits may run in the parent.
    tool results. Split multi-part or repeated corrections into separate IDs.
    Distinguish errors from changes the user authorized.
 3. Check coverage: list every user message in scope with the IDs it raised, or
-   why it raised none. Full audits cover the entire session. Verify the list
-   against the transcript, programmatically where possible, before synthesizing.
+   why it raised none. Verify the list against the transcript, programmatically
+   where possible, before synthesizing.
 4. Group the IDs by underlying cause. Cite evidence; explain failed protections,
    including ignored guidance. Distinguish observations from inferred causes and
    root fixes from repaired consequences.

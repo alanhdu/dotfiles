@@ -5,19 +5,16 @@ description: Make a code change in an isolated, temporary jj workspace and hand 
 
 # Isolated jj workspace workflow
 
-Make a change in a temporary jj workspace, then hand it back as a bookmark
-without touching the user's working copy. Workspaces share one repository and
-store, so commits made in the temporary workspace are immediately visible
-elsewhere.
+Work in a temporary jj workspace without touching the user's working copy.
+Hand back a local bookmark; commits are visible from every workspace.
 
 ## Conventions
 
 - Follow the repository's bookmark naming convention. If none is discoverable,
-  use a short descriptive name and avoid embedding personal information.
-- Split work into atomic, focused commits and exclude incidental changes.
-- Never push unless asked; deliver a local bookmark.
-- Preserve the logical identity and topology implied by the user's requested
-  operation. Do not create parallel bookmarks or commits unnecessarily.
+  use a short descriptive name. Bookmarks may be published as Git branches, so
+  keep secrets and private information out of them; a public username is fine.
+- Preserve the requested stack and bookmarks; avoid unnecessary parallel commits
+  or bookmarks.
 
 ## Steps
 
@@ -33,12 +30,11 @@ elsewhere.
    `trunk()`. Use `--colocate` instead when Git metadata is needed (Git 2.42+).
 3. Work inside it. Follow the repository's setup and verification instructions;
    do not assume a language, source layout, environment manager, or toolchain.
-4. Describe the change with a concise what-and-why message. Confirm with
-   `jj status` that only intended files changed.
-5. Hand back the change under the requested bookmark. Do not create a new
-   bookmark when the user named an existing one.
-6. Verify that the bookmark points at the intended commit.
-7. Once the user has explicitly accepted the result or requests cleanup, forget
+4. Describe the change and confirm with `jj status` that only intended files
+   changed.
+5. Set the requested bookmark to the intended commit and verify its target;
+   reuse an existing bookmark when named.
+6. Once the user has explicitly accepted the result or requests cleanup, forget
    the temporary workspace with `jj workspace forget <slug>`, then remove only
    the exact temporary directory returned by `mktemp`.
 

@@ -6,22 +6,21 @@ concerns the design and the reader's work, not an arbitrary line count.
 
 ## Implementation checklist
 
-- [ ] [Push ifs up and fors down](https://matklad.github.io/2023/11/15/push-ifs-up-and-fors-down.html)
-      - Excessive branching (e.g. >=4 branches) is evidence that an abstraction
-        is needed: promote the varying behavior up the inline code →
-        function → class → protocol ladder, such as to polymorphism.
-- [ ] Defensive checks exist only where an error would otherwise surface far
-      from its cause (e.g. validating user input) or the code would silently
-      return incorrect results. Do not check or coerce what types enforce or
-      what would already fail with an obvious error, such as a dtype mismatch;
-      document the intended input and let the caller provide it.
-- [ ] We avoid deep indentation by introducing local variables where necessary.
-      Avoid multiple consecutive new lines of just closing delimiters (like `),\n]\n}`).
-- [ ] Code density is appropriate. Blocks of >15 lines of code are broken up with
-      1-line comments and/or new lines.
-- [ ] Functions that are called once are inlined, *unless* they represent a
-      very important abstraction boundary (e.g. that is independently checked
-      in tests).
+- [ ] Control flow follows AGENTS.md's "pull ifs up and fors down". Many
+      branches (rule of thumb: four or more) suggest the varying behavior wants
+      to move up the inline code → function → class → protocol ladder, such as
+      to polymorphism.
+- [ ] No checks or coercions of what types enforce or what would already fail
+      with an obvious error, such as a dtype mismatch; document the intended
+      input and let the caller provide it. Keep the checks AGENTS.md calls for
+      (see the examples below).
+- [ ] Local variables keep indentation shallow and avoid consecutive lines of
+      only closing delimiters (like `),\n]\n}`).
+- [ ] Long blocks (rule of thumb: over 15 lines) are broken up with one-line
+      comments or blank lines so readers can follow the steps.
+- [ ] Single-use functions are inlined unless they mark an important
+      abstraction boundary (e.g. one independently checked in tests); otherwise
+      readers must jump around to follow one operation.
 - [ ] All parameters of every function/class compose. Setting a parameter does
       not magically cause other parameters to be ignored.
 
@@ -68,9 +67,8 @@ considerations matter together:
   loops driving a shared state machine or stepping abstraction over a framework
   driving callbacks.
 
-The judgment could favor sharing while rejecting the proposed callback
-interface. It does not require introducing a state-machine class; the
-representation should earn its complexity too.
+Sharing may be warranted while callbacks or a state-machine class are not;
+each abstraction must earn its complexity.
 
 ## Documentation checklist
 

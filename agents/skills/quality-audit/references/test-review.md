@@ -17,25 +17,17 @@ review.
 - [ ] Tests exercise public interfaces at stable boundaries and avoid
       [test-driven ossification](https://matklad.github.io/2021/05/31/how-to-test.html):
       changing the implementation should not require rewriting dozens of tests.
-- [ ] Every test lives at the right layer. Prefer end-to-end tests of the whole
-      pipeline; component tests earn their place through independently
-      checkable compositional properties or difficult diagnosis. Assuming
-      lower-layer guarantees hold, identify what the caller still needs to
-      establish. Do not re-test a component's guarantees in each consumer.
+- [ ] Assuming lower-layer guarantees hold, identify what each caller's tests
+      still need to establish. Apply AGENTS.md's test-layer preferences.
 - [ ] Every test function and case earns its place through useful bug detection
       or diagnosis, not more assertions or coverage. It does not duplicate
       evidence from type checking or other tests; added cases target realistic,
       consequential bugs.
-- [ ] Examples are data-driven (e.g. with `pytest.mark.parametrize`). Existing
-      properties, generators, and tables are extended before tests are added;
-      every new test function justifies why it cannot join one. If extending
-      needs substantial machinery, reconsider the test design.
-- [ ] Hypothesis is used where a useful property has a simple, independent
-      oracle: round-trips, invariants, metamorphic relationships, or comparison
-      with a simple reference implementation. Generation targets inputs and
-      states likely to reveal plausible bugs, not low-value dimensions such as
-      arbitrary seeds. Use a compact table when a property's oracle becomes
-      complex.
+- [ ] Examples use compact parameter tables. If extending one needs
+      substantial machinery, reconsider the test design.
+- [ ] Hypothesis properties have simple, independent oracles. Generation
+      targets plausible bugs rather than low-value dimensions such as arbitrary
+      seeds. Use a compact table when a property's oracle becomes complex.
 - [ ] Examples, strategies, fixtures, and helpers use the simplest setup and
       readable assertions that establish the intended behavior. They make
       adding cases easy and stay resilient to implementation changes, without
@@ -46,7 +38,10 @@ review.
       suggest the design change that makes the code testable through its
       public interface.
 - [ ] Performance assertions measure the intended system behavior, rather than
-      implementation proxies. Do not run mutation tests to assess suite quality.
+      implementation proxies.
+- [ ] Do not run generic mutation tests to assess suite quality: they say more
+      about the generated mutations than about the suite, and they are slow.
+      Targeted, hypothesis-driven mutations are fine.
 
 ## Examples and boundaries
 

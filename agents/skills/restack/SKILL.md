@@ -5,18 +5,13 @@ description: In a jj repository, rebase and reshape a stack into atomic, indepen
 
 # Restack
 
-Leave a stack that can be merged one commit at a time. Each commit should be
-a single atomic, reviewable unit.
-
-This workflow is for jj repositories. Determine the working-copy arrangement
-before rewriting anything. Do not assume jj is colocated with Git or that a
-workspace has a particular name. Preserve any workspace the user has identified
-as protected.
+Leave atomic, reviewable commits that can merge independently. Inspect the
+workspace arrangement before rewriting; do not assume Git colocation or
+workspace names. Preserve workspaces the user identified as protected.
 
 ## 1. Rebase
 
-Unless otherwise prompted, rebase onto `trunk()`. Do not fetch merely to update
-the base; the repository's configured trunk is the intended target.
+Unless otherwise prompted, rebase onto `trunk()`.
 
 ```text
 jj rebase -d 'trunk()' -s <root-of-stack>
@@ -35,22 +30,23 @@ Examine the existing commit stack and design a better commit structure. Present
 the proposed stack in order. For each commit, list its responsibility, exact
 files or hunks, and focused verification. Explicitly identify every commit that
 will be split, folded, reordered, or abandoned. Then carry it out without
-waiting for approval; jj history edits are recoverable through the oplog.
+waiting.
 
-- Preserve jj change IDs; do not duplicate commits.
-- Order independent changes before their dependents. Split commits with multiple
+- Order independent changes before their dependents. Put purely mechanical
+  moves and renames before the commits that use them: they can merge without
+  reviewers understanding the full refactor. Split commits with multiple
   responsibilities, and fold fixups into the commit they correct with
   `jj squash --from <fixup> --into <parent> --use-destination-message`.
-- Each commit must be reviewable and pass its relevant build and tests on its own.
+- Each commit should build and pass its relevant tests on its own; step 5 says
+  how much of that to verify.
 - Apply every edit before resolving conflicts: put the changes in one commit on
   top of the stack and `jj absorb` it, or edit the target commits in sequence
   without testing in between. Then resolve each conflicted descendant once,
-  bottom-up, leaving commits that rename or move files for last.
+  bottom-up.
 
 ## 3. Rewrite messages
 
-Make each message succinct and useful to someone who did not see the work:
-explain what changed and why, follow the repository's style, and wrap paragraphs.
+Follow AGENTS.md's commit-message guidance and wrap paragraphs.
 
 ```text
 jj describe -r <commit> --stdin <<'EOF'
