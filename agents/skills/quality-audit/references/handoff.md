@@ -9,10 +9,13 @@ and any automatic snapshots.
 
 Anchor the report so it survives a tree that has moved:
 
-- Record the review base: bookmark or branch, full commit ID, and the exact
-  diff-stat command and output.
+- Record the review base and tip: bookmark or branch, full commit IDs, jj change
+  IDs when available, and the exact diff-stat command and output.
+  - Change IDs follow rewrites; commit IDs identify the reviewed snapshots.
 - Locate each finding by file path and symbol name, plus the property that is
   wrong. Do not rely on line numbers, hunks, or change IDs.
+  - Revision IDs identify reviewed code but cannot locate an issue after it
+    moves.
 - State what each open finding assumes so the reader can check whether it still
   applies.
 

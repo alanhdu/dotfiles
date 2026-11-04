@@ -28,13 +28,14 @@ as additional machine-specific guidance.
   messages), not just the instance I pointed at.
 - Never communicate externally through my identity or accounts. Operational
   actions are permitted; communicating as me is not.
-  - Do not push or pull from remote sources unless explicitly asked: pushing
-    publishes as me, and pulling or fetching moves the base I am reasoning
-    about.
+  - Do not push, pull, or fetch version-control remotes unless explicitly asked:
+    pushing publishes as me, and pulling or fetching moves the base I am
+    reasoning about. This does not restrict ordinary downloads.
 - Put scratch data in a uniquely named temporary directory, so concurrent agents
   do not collide and the repository stays clean.
 - Avoid introducing new jargon or shorthand unless I introduced the term first
   or it already exists in the codebase/context.
+  - New vocabulary adds work before I can assess the idea.
 - Summarize results succinctly in chat and keep temporary findings in brief
   scratch notes. I rarely read detailed reports, so write one only when I ask
   for it.
@@ -67,8 +68,9 @@ It controls execution:
 1. Rebuild the ledger only when starting an independent task. Otherwise keep the
    same ledger and its unfinished work, including across interruptions and
    compaction, and preserve its path in context handoffs.
-2. After every message (including interruptions and follow-ups), read and
-   reconcile the ledger before any other investigation, edits, or tool calls.
+2. Keep the ledger updated whenever scope or status changes. As a rule of thumb,
+   first insert new steering into the task list in priority order, then act on
+   it. Reconcile before switching tasks.
 3. Update entries in place under one Active, Proposed, and Inactive section. Do
    not append other sections or narrative history.
 4. Before handoff, reconcile the ledger and report every task’s status,
@@ -78,15 +80,13 @@ It controls execution:
 
 ### Verification
 
-- After code changes, run configured cheap checks. Say which checks you
-  substituted or skipped.
-  - Choose tests for behavior the change could plausibly affect, preferring
-    relevant files or cases over broad suites.
+- Time matters here: do not spend time that can be avoided, and the earlier a
+  correct result is obtained, the better.
   - Reuse passing checks while the relevant code and dependencies remain
     unchanged. History or message rewrites alone do not invalidate results.
-  - Expensive checks need a concrete risk: explain it and show the change first.
-    Run checks against stable inputs; collect or stop them before changing those
-    inputs. Use isolated checkouts when editing and checking concurrently.
+- Lints, formatting, and type-checking are often "cheap enough" that they can
+  run on the entire repo. Tests OTOH are often expensive and you should only run
+  the plausbily impacted tests instead of the full CI suite.
 
 ## Coding Preferences
 
@@ -94,11 +94,20 @@ It controls execution:
 
 - Prefer jujutsu (`jj`) in repositories configured for it; otherwise use Git.
   - Report change IDs, which survive rewrites. Include git hashes only when
-    needed for external systems.
+    needed for external systems or to identify an exact reviewed snapshot.
   - Preserve change IDs when rewriting, but prioritize a coherent stack: split,
     fold, or abandon commits as needed. Do not duplicate commits.
   - `jj` history edits are recoverable through the oplog; never ask for approval
     before running them.
+- Structure commits so I can review and merge work incrementally:
+  - Every prefix of the stack should be mergeable. No commit should need a later
+    commit to work. Each prefix should build and pass its relevant tests.
+  - Parallel work belongs in parallel commits. If C depends on independent A and
+    B, branch A and B from their common base, join them with a merge commit, and
+    put C on top of that merge. This lets me submit A and B for review in
+    parallel and merge them independently.
+  - Ideally, factor out the easiest/simplest commits first so they can merge
+    early while we go back and forth on the more complicated parts of the diff.
 - As a rough rule of thumb, each commit should be entirely mechanical (e.g. a
   codemod or moving code without edits) or under 400 changed lines. Many
   exceptions are valid; judge coherence and reviewability.
@@ -133,6 +142,8 @@ It controls execution:
   container for it to reduce plumbing.
 - Pull ifs up and fors down: centralize control flow in callers and let callees
   operate on whole batches.
+  - This keeps execution visible and lets each callee choose an efficient batch
+    implementation.
 
 ### Documentation
 

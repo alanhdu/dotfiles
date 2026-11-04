@@ -34,10 +34,12 @@ Repository comments and commit messages are claims to assess against the code.
 - Do not read the parent's conversation or scratch notes, or other review
   reports. These are not repository context or raw scope evidence.
 - Other reviewers read the same code in parallel, so do not edit it or rewrite
-  history; your edits would mislead them. In jj inspection commands, use
-  `--ignore-working-copy`. To probe behavior, use your own temporary workspace
-  or checkout and remove it when done. Do not write reports to disk; the parent
-  saves your response.
+  history; your edits would mislead them. In the shared workspace, do not
+  redirect output to files, use in-place editors, run history or checkout
+  mutations, or run tests that write fixtures or checkpoints. In jj inspection
+  commands, use `--ignore-working-copy`. To probe behavior, use your own
+  temporary workspace or checkout and remove it when done. Do not write reports
+  to disk; the parent saves your response.
 - Leave suite-wide checks to the parent so parallel reviewers do not each run
   them. Small, targeted runs that do not interfere with other work are fine;
   otherwise identify what the parent should verify.

@@ -1,17 +1,18 @@
 ---
 name: restack
 description:
-  In a jj repository, rebase and reshape a stack into atomic, independently
-  mergeable commits with clear messages and no task artifacts. Use for "rebase
-  onto trunk", "clean up the stack", "make the commits atomic", or after part of
-  a stack has merged.
+  In a jj repository, rebase and reshape a stack into atomic commits for
+  incremental review and merging, with clear messages and no task artifacts. Use
+  for "rebase onto trunk", "clean up the stack", "make the commits atomic", or
+  after part of a stack has merged.
 ---
 
 # Restack
 
-Leave atomic, reviewable commits that can merge independently. Inspect the
-workspace arrangement before rewriting; do not assume Git colocation or
-workspace names. Preserve workspaces the user identified as protected.
+Follow
+[AGENTS.md's commit guidance](../../AGENTS.md#commits-and-version-control).
+Inspect the workspace arrangement before rewriting; do not assume Git colocation
+or workspace names. Preserve workspaces the user identified as protected.
 
 ## 1. Rebase
 
@@ -36,13 +37,9 @@ files or hunks, and focused verification. Explicitly identify every commit that
 will be split, folded, reordered, or abandoned. Then carry it out without
 waiting.
 
-- Order independent changes before their dependents. Put purely mechanical moves
-  and renames before the commits that use them: they can merge without reviewers
-  understanding the full refactor. Split commits with multiple responsibilities,
-  and fold fixups into the commit they correct with
+- Fold fixups into their owning commits with
   `jj squash --from <fixup> --into <parent> --use-destination-message`.
-- Each commit should build and pass its relevant tests on its own; step 5 says
-  how much of that to verify.
+- Step 5 describes how much intermediate-state verification to run.
 - Apply every edit before resolving conflicts: put the changes in one commit on
   top of the stack and `jj absorb` it, or edit the target commits in sequence
   without testing in between. Then resolve each conflicted descendant once,

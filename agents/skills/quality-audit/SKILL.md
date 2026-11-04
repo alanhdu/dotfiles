@@ -41,12 +41,12 @@ Choose only the requested lenses. A full audit covers the applicable lenses
 below; a tests-only request needs only tests. Each reviewer reads the shared
 [reviewer contract](references/reviewer.md) and only its assigned explainers.
 
-| Lens           | Focus                                                                    | Explainer                                                    |
-| -------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------ |
-| `architecture` | Responsibilities, layering, state ownership, and module placement        | [architecture](references/architecture.md)                   |
-| `code-quality` | Implementation, APIs, comments, and docstrings                           | [code quality and documentation](references/code-quality.md) |
-| `tests`        | Plausible missed bugs and a simpler, more orthogonal suite               | [test review](references/test-review.md)                     |
-| `commits`      | Independently mergeable commits and useful, correctly formatted messages | [commits](references/commits.md)                             |
+| Lens           | Focus                                                                | Explainer                                                    |
+| -------------- | -------------------------------------------------------------------- | ------------------------------------------------------------ |
+| `architecture` | Responsibilities, layering, state ownership, and module placement    | [architecture](references/architecture.md)                   |
+| `code-quality` | Implementation, APIs, comments, and docstrings                       | [code quality and documentation](references/code-quality.md) |
+| `tests`        | Plausible missed bugs and a simpler, more orthogonal suite           | [test review](references/test-review.md)                     |
+| `commits`      | Incremental review and merging; useful, correctly formatted messages | [commits](references/commits.md)                             |
 
 Include commits for existing code only when history is requested. Combine lenses
 for small scopes or split large scopes by component or commit group, preserving
