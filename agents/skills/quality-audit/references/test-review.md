@@ -1,19 +1,18 @@
 # Test review
 
-Look over the tests for opportunities to simplify them and strengthen their
-bug detection. When the benefit of extra testing is small, prefer simplicity.
+Look over the tests for opportunities to simplify them and strengthen their bug
+detection. When the benefit of extra testing is small, prefer simplicity.
 
 Report simplification before missed bugs, using DELETE, SIMPLIFY, PARAMETRIZE,
-HYPOTHESIS or ADD. For ADD, explain why an existing property, parameter table
-or generator cannot absorb the case clearly (this is often a signal of a poorly
-designed test suite). Do not add test machinery merely to make a gap
-observable. A justified decision to leave a gap untested is a successful
-review.
+HYPOTHESIS or ADD. For ADD, explain why an existing property, parameter table or
+generator cannot absorb the case clearly (this is often a signal of a poorly
+designed test suite). Do not add test machinery merely to make a gap observable.
+A justified decision to leave a gap untested is a successful review.
 
 ## Checklist
 
-- [ ] The suite conforms to the testing preferences in AGENTS.md; this
-      checklist elaborates them.
+- [ ] The suite conforms to the testing preferences in AGENTS.md; this checklist
+      elaborates them.
 - [ ] Tests exercise public interfaces at stable boundaries and avoid
       [test-driven ossification](https://matklad.github.io/2021/05/31/how-to-test.html):
       changing the implementation should not require rewriting dozens of tests.
@@ -23,20 +22,20 @@ review.
       or diagnosis, not more assertions or coverage. It does not duplicate
       evidence from type checking or other tests; added cases target realistic,
       consequential bugs.
-- [ ] Examples use compact parameter tables. If extending one needs
-      substantial machinery, reconsider the test design.
-- [ ] Hypothesis properties have simple, independent oracles. Generation
-      targets plausible bugs rather than low-value dimensions such as arbitrary
-      seeds. Use a compact table when a property's oracle becomes complex.
+- [ ] Examples use compact parameter tables. If extending one needs substantial
+      machinery, reconsider the test design.
+- [ ] Hypothesis properties have simple, independent oracles. Generation targets
+      plausible bugs rather than low-value dimensions such as arbitrary seeds.
+      Use a compact table when a property's oracle becomes complex.
 - [ ] Examples, strategies, fixtures, and helpers use the simplest setup and
-      readable assertions that establish the intended behavior. They make
-      adding cases easy and stay resilient to implementation changes, without
-      building a new harness for trivial behavior. Smoke tests stay short.
+      readable assertions that establish the intended behavior. They make adding
+      cases easy and stay resilient to implementation changes, without building
+      a new harness for trivial behavior. Smoke tests stay short.
 - [ ] No mocks or monkeypatching, including of configuration or external
-      integrations, without a concrete justification; the boundary itself is
-      not one. Mocks and reaching into internals couple tests to the design:
-      suggest the design change that makes the code testable through its
-      public interface.
+      integrations, without a concrete justification; the boundary itself is not
+      one. Mocks and reaching into internals couple tests to the design: suggest
+      the design change that makes the code testable through its public
+      interface.
 - [ ] Performance assertions measure the intended system behavior, rather than
       implementation proxies.
 - [ ] Do not run generic mutation tests to assess suite quality: they say more

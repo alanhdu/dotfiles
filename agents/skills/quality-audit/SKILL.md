@@ -127,6 +127,6 @@ accepted findings within scope, subject to the architectural decision above.
 scope. Use the restack skill for accepted jj commit-shape fixes.
 
 Verify changes under AGENTS.md, including configured cheap global checks. Report
-consequential changes, open decisions, unreviewed scope, independence limitations,
-verification, and all report links. For a requested handoff document, use
-[the handoff guidance](references/handoff.md).
+consequential changes, open decisions, unreviewed scope, independence
+limitations, verification, and all report links. For a requested handoff
+document, use [the handoff guidance](references/handoff.md).

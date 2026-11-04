@@ -1,6 +1,8 @@
 ---
 name: jj
-description: Use when operating in a jj repository to avoid importing Git assumptions into jj commands and workflows.
+description:
+  Use when operating in a jj repository to avoid importing Git assumptions into
+  jj commands and workflows.
 ---
 
 # jj
@@ -21,8 +23,8 @@ template, or revset, check the installed version's `jj <command> --help` or
   reusing an obsolete one revives it as a divergent copy.
 - Workspaces share one graph. A rewrite rebases every descendant, including
   other workspaces' `@`.
-- Every operation is in `jj op log`. Recover with `jj undo` or
-  `jj op restore`, not by hand.
+- Every operation is in `jj op log`. Recover with `jj undo` or `jj op restore`,
+  not by hand.
 
 ## Observed mistakes
 
@@ -33,16 +35,16 @@ From about 20k jj calls in past Claude and Codex sessions:
   into a divergent sibling, and removes them from disk. Before rewriting, check
   `jj log -r '(<revs>):: & working_copies()'`. If another workspace's `@`
   appears, stack on top or ask.
-- **Leaving divergence.** Fix it with `jj converge --no-interactive`, then confirm
-  `jj log -r 'divergent()'` is empty.
+- **Leaving divergence.** Fix it with `jj converge --no-interactive`, then
+  confirm `jj log -r 'divergent()'` is empty.
 - **Git syntax.** `jj grep`, `jj diff --check`, `rev:path`, `jj op undo`,
   `jj diff -r A --to B`, `jj show <rev> -- <path>`, and `--stat --summary` all
   fail. Use `rg`, `jj file show -r`, `jj undo`, `--from A --to B`, and
   `jj diff -r <rev> <paths>`.
-- **Template contexts.** The `evolog` template is a `CommitEvolutionEntry`, so use
-  `commit.commit_id()`, not `commit_id`.
-- **`jj resolve --list` exits nonzero when there are no conflicts**, which breaks
-  `&&` chains. Use `jj log -r 'conflicts()'`.
+- **Template contexts.** The `evolog` template is a `CommitEvolutionEntry`, so
+  use `commit.commit_id()`, not `commit_id`.
+- **`jj resolve --list` exits nonzero when there are no conflicts**, which
+  breaks `&&` chains. Use `jj log -r 'conflicts()'`.
 - **Editors.** `squash` and `describe` open an editor without `-m` (or
   `--use-destination-message` for `squash`).
 - **Forcing bookmarks.** "Refusing to move bookmark backwards or sideways" means

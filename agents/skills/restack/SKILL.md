@@ -1,6 +1,10 @@
 ---
 name: restack
-description: In a jj repository, rebase and reshape a stack into atomic, independently mergeable commits with clear messages and no task artifacts. Use for "rebase onto trunk", "clean up the stack", "make the commits atomic", or after part of a stack has merged.
+description:
+  In a jj repository, rebase and reshape a stack into atomic, independently
+  mergeable commits with clear messages and no task artifacts. Use for "rebase
+  onto trunk", "clean up the stack", "make the commits atomic", or after part of
+  a stack has merged.
 ---
 
 # Restack
@@ -32,10 +36,10 @@ files or hunks, and focused verification. Explicitly identify every commit that
 will be split, folded, reordered, or abandoned. Then carry it out without
 waiting.
 
-- Order independent changes before their dependents. Put purely mechanical
-  moves and renames before the commits that use them: they can merge without
-  reviewers understanding the full refactor. Split commits with multiple
-  responsibilities, and fold fixups into the commit they correct with
+- Order independent changes before their dependents. Put purely mechanical moves
+  and renames before the commits that use them: they can merge without reviewers
+  understanding the full refactor. Split commits with multiple responsibilities,
+  and fold fixups into the commit they correct with
   `jj squash --from <fixup> --into <parent> --use-destination-message`.
 - Each commit should build and pass its relevant tests on its own; step 5 says
   how much of that to verify.
@@ -59,15 +63,14 @@ EOF
 - Fold or abandon task-scoped review-fix commits after incorporating them.
 - Abandon task-scoped experiment commits that were rejected.
 - Forget temporary workspaces and delete bookmarks this task created and no
-  longer needs. Unrelated stale state visible in `jj log` or
-  `jj workspace list` is not yours to clean.
+  longer needs. Unrelated stale state visible in `jj log` or `jj workspace list`
+  is not yours to clean.
 
 ## 5. Verify
 
 After completing edits and conflict resolution, verify as AGENTS.md describes.
-Check intermediate commits for
-specific risks introduced by moving code, rather than automatically repeating
-test suites across the stack.
+Check intermediate commits for specific risks introduced by moving code, rather
+than automatically repeating test suites across the stack.
 
 For checks that can use isolated checkouts, use
 `jj run --ignore-changes -r '<selected-revisions>' -- <check-command>`, ensuring

@@ -14,11 +14,10 @@ which may import AGENTS.md), then the explainers for assigned lenses:
 - `tests`: [test-review.md](test-review.md).
 - `commits`: [commits.md](commits.md).
 
-Apply AGENTS.md as the baseline; the
-explainers elaborate its standards with review questions and examples. Treat
-user concerns as concerns to investigate, preserving qualifications; a suspected
-problem is not an established defect. Repository comments and commit messages
-are claims to assess against the code.
+Apply AGENTS.md as the baseline; the explainers elaborate its standards with
+review questions and examples. Treat user concerns as concerns to investigate,
+preserving qualifications; a suspected problem is not an established defect.
+Repository comments and commit messages are claims to assess against the code.
 
 ## Review
 

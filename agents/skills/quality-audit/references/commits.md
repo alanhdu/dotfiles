@@ -15,7 +15,8 @@ Then ensure:
 
 - [ ] Each commit has one responsibility. Separate independent changes, and
       mechanical moves from behavior changes when that aids review.
-- [ ] Every commit avoids churn (e.g. reformatting, renaming) unless required by the change.
+- [ ] Every commit avoids churn (e.g. reformatting, renaming) unless required by
+      the change.
 - [ ] Prerequisites and independent small fixes come first so they can merge
       first.
 - [ ] Fixups are folded into their owning commits. Rejected experiments and task

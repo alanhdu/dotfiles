@@ -18,9 +18,9 @@ concerns the design and the reader's work, not an arbitrary line count.
       only closing delimiters (like `),\n]\n}`).
 - [ ] Long blocks (rule of thumb: over 15 lines) are broken up with one-line
       comments or blank lines so readers can follow the steps.
-- [ ] Single-use functions are inlined unless they mark an important
-      abstraction boundary (e.g. one independently checked in tests); otherwise
-      readers must jump around to follow one operation.
+- [ ] Single-use functions are inlined unless they mark an important abstraction
+      boundary (e.g. one independently checked in tests); otherwise readers must
+      jump around to follow one operation.
 - [ ] All parameters of every function/class compose. Setting a parameter does
       not magically cause other parameters to be ignored.
 
@@ -38,9 +38,9 @@ expected dtype and layout, and let callers pass it.
 
 Two checks in the same codebase do earn their place:
 
-- **The error would surface far away.** A user-written `run_spec.yaml` without
-  a `name` would otherwise fail at W&B initialization, after the image build
-  and queue wait. Reject it when parsing the spec.
+- **The error would surface far away.** A user-written `run_spec.yaml` without a
+  `name` would otherwise fail at W&B initialization, after the image build and
+  queue wait. Reject it when parsing the spec.
 - **The result would be silently wrong.** A loss computed from `logits` of shape
   `(B, 1)` and `labels` of shape `(B,)` broadcasts to `(B, B)` and returns a
   plausible scalar. Check the shapes there.
@@ -67,8 +67,8 @@ considerations matter together:
   loops driving a shared state machine or stepping abstraction over a framework
   driving callbacks.
 
-Sharing may be warranted while callbacks or a state-machine class are not;
-each abstraction must earn its complexity.
+Sharing may be warranted while callbacks or a state-machine class are not; each
+abstraction must earn its complexity.
 
 ## Documentation checklist
 

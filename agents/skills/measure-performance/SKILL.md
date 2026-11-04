@@ -11,8 +11,8 @@ description: >-
 ## Measure without perturbing
 
 Prefer measurements that do not change what they measure: sampling profilers
-like `py-spy`, utilization tools like `nvidia-smi` and `htop`, and existing logs,
-counters, and timestamps (e.g. throughput from step-time logs).
+like `py-spy`, utilization tools like `nvidia-smi` and `htop`, and existing
+logs, counters, and timestamps (e.g. throughput from step-time logs).
 
 Adding timers, synchronization, or logging to production code can change its
 performance characteristics. Do it only when nothing lighter answers the
