@@ -6,59 +6,63 @@ description:
 
 # Debrief
 
-Audit first. Recommend changes; do not apply them.
+Recommend durable improvements to both the harness and the codebase based on
+your experiences and findings.
 
-## 1. Scope and reviewer
+## 1. Audit before synthesis
 
-- **Full:** Entire session, including this debrief.
-- **Targeted:** Selected mistakes, relevant instructions and consequences.
+1. Extract summaries of the transcript using the `transcript.py`:
 
-Use requested scope; otherwise ask through the question UI. The parent's account
-of its own session is anchored on its interpretation at the time, so audits use
-a fresh subagent without inherited history (Codex: `fork_turns="none"`; Claude
-Code: any agent type except `fork`). Pass this skill, scope, unfiltered
-transcript and artifact paths; exclude parent summaries, inventories, diagnoses
-and suggestions. The subagent owns the audit and recommendations; relay all
-findings without filtering. If unavailable, disclose it; do not substitute a
-parent audit.
+   ```sh
+   python transcript.py <codex/claude> SESSION.jsonl CONTINUATION.jsonl --format=conversation > "$task_dir/conversation.md"
+   python transcript.py <codex/claude> SESSION.jsonl CONTINUATION.jsonl --format=index > "$task_dir/index.tsv"
+   ```
 
-## 2. Audit before synthesis
+   Use Python 3.11+ with Pydantic 2 already installed (for example, a project’s
+   `.venv/bin/python`), otherewise use `uv run` (which requires a writeable
+   cache and network access on a cache miss).
+   
+   Save outputs beside the existing task scratch directory and inspect the saved
+   outputs to avoid overflowing the tool-call output budget.
 
-1. Read original messages/tool outcomes in scope; recover accessible history.
-   Summaries/ledgers cannot substitute. State gaps. Raw transcripts are JSONL:
-   Codex under `~/.codex/sessions/`; Claude Code at
-   `~/.claude/projects/<cwd-slug>/<session-id>.jsonl`, with subagent transcripts
-   and persisted tool outputs under `<session-id>/`.
-2. Inventory every correction and substantial friction, including failures of
-   this debrief. Give each an ID (C1, C2, …) and cite its source messages or
-   tool results. Split multi-part or repeated corrections into separate IDs.
-   Distinguish errors from changes the user authorized.
-3. Check coverage: list every user message in scope with the IDs it raised, or
-   why it raised none. Verify the list against the transcript, programmatically
-   where possible, before synthesizing.
-4. Group the IDs by underlying cause. Cite evidence; explain failed protections,
-   including ignored guidance. Distinguish observations from inferred causes and
-   root fixes from repaired consequences.
+   Outputs declare each source path once as `file1`, `file2`, etc., and cite
+   original JSONL lines as `file1:1256`. Original logs are under
+   `~/.codex/sessions/` for Codex and
+   `~/.claude/projects/<cwd-slug>/<session-id>.jsonl` for Claude, with subagent
+   transcripts and persisted tool outputs under `<session-id>/`.
 
-## 3. Select recommendations
+2. Read the entire conversation output to recover the user's requests,
+   corrections, and the assistant's decisions. Then read the entire index
+   output to check tool calls and outcomes, including failures, retries, and
+   rework that never surfaced in the conversation. 
+   
+   Do NOT over index on the latest, most recent failure. We want to examine the
+   full session.
+   
+3. Inventory every correction and substantial friction. Give each an ID (C1,
+   C2, …) and cite its source messages or tool results. Split multi-part or
+   repeated corrections into separate IDs. Distinguish errors from changes the
+   user authorized.
 
-Recommend few changes to inspected, user-controlled targets. Prefer mechanical
-fixes and net-neutral or smaller changes to code and prompts. Rewrite,
-consolidate or delete before adding. Report net lines across affected files,
-counting moved text. Justify growth only when smaller edits cannot retain
-required behavior. Target the failed decision, not the incident's particulars;
-check that the fix transfers to different tools and tasks. When existing
-guidance already covers the failure, explain why it failed before proposing more
-wording. Do not re-propose completed fixes.
+## 2. Select recommendations
 
-## Output
+Based on the identified frictions and corrections, suggest changes to:
+
+1. The codebase we are working on
+   - This is also a chance to report on an proposals from your ledger
+2. Missing tooling we could build
+3. The user-controlled harness prompts, skills, and agent files.
+   - We want to keep these files slim. Focus on clarifying ambiguities
+     or reifying implicit context justifying the rules.
+
+## 3. Output
 
 **Session audit:** Report every substantial pattern with its evidence, cause,
 and disposition. Do not substitute a link to the report or a status question for
 it.
 
-**Recommendations:** Use **Harness** and **Codebase** subsections, highest
-priority first. For each proposal give:
+**Recommendations:** Use **Harness**, **Tooling**, and **Codebase**
+subsections, highest priority first. For each proposal give:
 
 - **Addresses:** The audited pattern.
 - **Change and where:** The concrete edit and inspected target; provide an exact
