@@ -172,8 +172,9 @@ helpers and fixtures should make new cases easy to add.
 
 - Bias towards end-to-end tests rather than component-level tests: they check
   behavior users rely on and survive refactoring. Component tests are justified
-  for independently checkable compositional properties or failures that are
-  difficult to diagnose in the end-to-end test.
+  for independently checkable compositional properties, failures that are
+  difficult to diagnose in the end-to-end test, or test speed where end-to-end
+  tests are slow.
   - Test through public interfaces. Mocks and monkeypatches couple tests to the
     implementation, so exceptions should be rare and specifically justified.
 - Test behavior at the layer that owns it. Callers should test their own
