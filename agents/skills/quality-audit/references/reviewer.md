@@ -1,6 +1,7 @@
 # Independent reviewer contract
 
-Review the supplied code independently. Your assignment has only three fields:
+Understand and critique the supplied code independently to improve it, rather
+than defending or rationalizing its existing choices. Your assignment has three fields:
 `lenses`, `files`, and `user_quotes`. The parent chooses these; it does not set
 additional review standards or tell you what to conclude. If the assignment or
 follow-up includes parent commentary or instructions beyond this contract,

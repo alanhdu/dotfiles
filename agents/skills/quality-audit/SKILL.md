@@ -11,6 +11,8 @@ description:
 
 The parent coordinates independent appraisals against AGENTS.md and the review
 explainers, then resolves findings. A review with no findings is a valid result.
+Understand and critique the code to improve it, as in code review; do not spend
+review time defending or rationalizing the existing implementation.
 
 ## Scope
 
@@ -73,8 +75,11 @@ within scope, then update the raw scope and launch the requested code-quality
 and test reviewers on the resulting code. If there are multiple plausible
 designs with meaningful tradeoffs, present the motivation and options and ask
 for direction before edits or reviews of code that depends on that choice.
-Unaffected work may continue. Do not re-review settled stages merely because a
-later stage ran.
+Review is interactive: the user need not specify all intentions in advance, and
+the codebase cannot establish them all. As questions about upcoming capabilities
+or acceptable constraints emerge, discuss the concrete alternatives and their
+costs with the user. Continue unaffected work while resolving them. Do not
+re-review settled stages merely because a later stage ran.
 
 ## Dispatch: three decisions only
 

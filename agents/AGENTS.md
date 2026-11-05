@@ -123,8 +123,10 @@ It controls execution:
 
 ### Design
 
-- Functions and classes are for _abstraction_, not _reuse_. Duplication is
-  preferred to muddled or unclear abstraction boundaries.
+- Question whether machinery needs to exist: eliminate accidental complexity
+  before organizing it. Judge the simplicity of the whole operation.
+- Functions and classes are for _abstraction_, not _reuse_. Share behavior only
+  when changes should apply to every user; otherwise prefer duplication.
 - Prefer the simplest straight-line implementation. Use the ladder inline code →
   function → class → protocol, moving up only when the new unit owns an
   independent decision, invariant, or contract.
