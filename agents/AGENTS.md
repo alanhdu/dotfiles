@@ -110,9 +110,13 @@ It controls execution:
     merge commit, and put C on top of that merge.
   - Ideally, factor out the easiest/simplest commits first so they can merge
     early while we go back and forth on the more complicated parts of the diff.
-- As a rough rule of thumb, each commit should be entirely mechanical (e.g. a
-  codemod or moving code without edits) or under 400 changed lines. Many
-  exceptions are valid; judge coherence and reviewability.
+- Unbundle independent improvements into separate commits so each can be reviewed
+  on its own. Separate mechanical moves from improvements: reviewers can skim
+  a large mechanical diff for equivalence and scrutinize the improvements.
+  Mixing them requires close correctness review of the entire diff.
+  - As a rough rule of thumb, each commit should be entirely mechanical (e.g. a
+    codemod or moving code without edits) or under 400 changed lines. Many
+    exceptions are valid; judge coherence and reviewability.
 - Write commit messages in Markdown, matching my existing commit style.
   - Lead with the purpose/motivation. Explain the idea and avoid cataloguing
     edits or work history.

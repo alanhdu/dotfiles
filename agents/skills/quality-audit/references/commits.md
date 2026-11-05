@@ -15,15 +15,16 @@ For each commit, return a compact table that accounts for every changed file.
 
 Then ensure:
 
-- [ ] Each commit has one responsibility. Separate independent changes, and
-      mechanical moves from behavior changes when that aids review.
+- [ ] Classify each hunk as a move, a required API adaptation, or a separate
+      improvement. Unbundle independent improvements into separate commits.
+      Mechanical commits preserve fixtures, assertions and contract details;
+      put redesign and simplification in later commits.
 - [ ] Purely mechanical moves and renames precede the commits that use them:
       they can merge without reviewers understanding the full refactor.
 - [ ] Every commit avoids churn (e.g. reformatting, renaming) unless required by
-      the change.
-- [ ] Fixups are folded into their owning commits. Rejected experiments and task
-      artifacts are excluded; maintained product content is not mistaken for an
-      artifact.
+      the change. Churn makes reviewing harder by creating diff noise.
+- [ ] Fixups are folded into their owning commits. Otherwise, reviewers waste
+      time on broken/bad commits and have to update our understanding later.
 
 ## Example: an extraction and its motivating adoption
 
