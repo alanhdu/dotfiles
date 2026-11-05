@@ -18,10 +18,12 @@ A justified decision to leave a gap untested is a successful review.
       changing the implementation should not require rewriting dozens of tests.
 - [ ] Assuming lower-layer guarantees hold, identify what each caller's tests
       still need to establish. Apply AGENTS.md's test-layer preferences.
-- [ ] Every test function and case earns its place through useful bug detection
-      or diagnosis, not more assertions or coverage. It does not duplicate
-      evidence from type checking or other tests; added cases target realistic,
-      consequential bugs.
+- [ ] Tests are non-redundant with each other and with type-checking, linting,
+      static analysis, etc.
+- [ ] For each added check, identify a plausible maintenance change that causes
+      a consequential failure and explain why existing checks would miss it.
+      Inspect overlapping invalidation and validation paths before claiming new
+      coverage.
 - [ ] Examples use compact parameter tables. If extending one needs substantial
       machinery, reconsider the test design.
 - [ ] Hypothesis properties have simple, independent oracles. Generation targets
