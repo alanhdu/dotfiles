@@ -102,10 +102,12 @@ It controls execution:
 - Structure commits so I can review and merge work incrementally:
   - Every prefix of the stack should be mergeable. No commit should need a later
     commit to work. Each prefix should build and pass its relevant tests.
-  - Parallel work belongs in parallel commits. If C depends on independent A and
-    B, branch A and B from their common base, join them with a merge commit, and
-    put C on top of that merge. This lets me submit A and B for review in
-    parallel and merge them independently.
+  - Use parallel branches or bookmarks for work I want reviewed and merged
+    independently. Each may group multiple commits, including logically
+    independent changes, in one PR: GitHub PRs have significant overhead, so
+    logical independence alone does not require separate PRs. If C depends on
+    branches A and B, start A and B from their common base, join them with a
+    merge commit, and put C on top of that merge.
   - Ideally, factor out the easiest/simplest commits first so they can merge
     early while we go back and forth on the more complicated parts of the diff.
 - As a rough rule of thumb, each commit should be entirely mechanical (e.g. a
