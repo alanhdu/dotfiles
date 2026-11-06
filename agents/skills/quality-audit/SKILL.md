@@ -1,10 +1,10 @@
 ---
 name: quality-audit
 description:
-  Use only when the user explicitly requests a quality audit, simplicity pass,
-  test audit, or pre-merge quality review of existing code, a diff, or a commit
-  stack. Obtain independent appraisals and act on their findings. This is not a
-  security-review skill.
+  Run only when explicitly triggered by the user. Each trigger authorizes
+  exactly one audit. Never autonomously initiate or repeat an audit,
+  including follow-up audits after fixes. Obtain independent appraisals and
+  act on their findings. This is not a security-review skill.
 ---
 
 # Quality audit
