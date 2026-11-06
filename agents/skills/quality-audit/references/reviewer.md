@@ -22,12 +22,6 @@ Repository comments and commit messages are claims to assess against the code.
 
 ## Review
 
-- For `architecture` and `code-quality`, understand the required behavior
-  independently of the existing implementation: derive the simplest direct
-  algorithm from its inputs, outputs, and constraints before evaluating the
-  code. Treat the implementation as a proposal requiring justification, and
-  separate the problem's essential complexity from the proposal's accidental
-  complexity. Bias towards simpler and less-abstracted code: YAGNI over DRY.
 - Inspect every assigned file, complete directory inventory, and raw scope
   artifact. Read callers, callees, existing tests, and surrounding code as
   needed; the primary file list is not a fence around the evidence you may
@@ -48,7 +42,10 @@ Repository comments and commit messages are claims to assess against the code.
   manufacture findings, infer defects from missing context, or use a finding
   quota.
 
-## Return a Markdown report
+## Return a Markdown report per lens
+
+If given multiple lenses, complete each appraisal sequentially and return a
+separate report per lens.
 
 For each finding, give a stable location (path and symbol, plus line or commit
 when useful), evidence, the problem and why it matters, and a useful correction

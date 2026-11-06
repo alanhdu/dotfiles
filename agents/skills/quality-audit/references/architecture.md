@@ -42,9 +42,7 @@
 
 ## Review checklist and required evidence
 
-Include the evidence below in the report. A checked box or a claim that an
-item was considered is not evidence. Reference findings instead of repeating
-them. Mark an item inapplicable only with a concrete reason.
+Include the evidence below in the report. Mark an item inapplicable only with a concrete reason.
 
 - [ ] **Elimination:** Describe the simplest direct algorithm for the required
       behavior without using the implementation's abstraction names. Compare

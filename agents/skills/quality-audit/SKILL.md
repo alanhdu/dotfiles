@@ -108,8 +108,7 @@ Read {skill_dir}/references/reviewer.md and review this assignment:
 ```
 
 Use absolute file or directory paths, including raw manifests or patches when
-needed. Directory assignments cover the complete requested inventory. Quotes are
-verbatim, with qualifications and corrections preserved; use an empty list when
+needed. Directory assignments cover the complete requested inventory. Quotes are verbatim, with qualifications and corrections preserved; use an empty list when
 none apply. Do not paraphrase or select excerpts that reverse the user's
 meaning. Never assign review reports, or a directory containing them or the
 parent's scratch notes. Every follow-up is subject to the same restrictions.
@@ -122,6 +121,9 @@ becomes available and again at handoff, including clean reviews and findings the
 parent rejects. The user checks the parent's dispositions against them, so do
 not replace, edit, or truncate reports to fit the parent's summary. Retain them
 for follow-up; copying them into chat is unnecessary.
+
+Before accepting a report, reconcile its coverage against the assigned source
+inventory and verify that it audited the full scope.
 
 Give every finding a disposition: fixed, rejected with a reason, or unresolved.
 The parent may summarize and disagree, but its decisions remain separate from

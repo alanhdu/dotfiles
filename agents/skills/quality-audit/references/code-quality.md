@@ -1,11 +1,15 @@
 # Code quality and documentation
 
 Assess whether the implementation expresses its responsibilities clearly. Apply
-AGENTS.md preferences and the codebase's established terms and style. Simplicity
-concerns the design and the reader's work, not an arbitrary line count.
+AGENTS.md preferences and the codebase's established terms and style.
 
-## Implementation checklist
+## Review checklist and required evidence
 
+Include the evidence below in the report. Mark an item inapplicable only with a concrete reason.
+
+- [ ] Inventory every docstring, function, method, class, or code block
+      in scope. Read the full body and for each, give a compact
+      retain/simplify/remove verdict.
 - [ ] Control flow follows AGENTS.md's "pull ifs up and fors down". Many
       branches (rule of thumb: four or more) suggest the varying behavior wants
       to move up the inline code → function → class → protocol ladder, such as
@@ -19,7 +23,7 @@ concerns the design and the reader's work, not an arbitrary line count.
 - [ ] Long blocks (rule of thumb: over 15 lines) are broken up with one-line
       comments or blank lines so readers can follow the steps.
 - [ ] Single-use functions are inlined unless they mark an important abstraction
-      boundary (e.g. one independently checked in tests); otherwise readers must
+      boundary (e.g. one independently checked in tests, or an operation that is tricky to understand and can use a name); otherwise readers must
       jump around to follow one operation.
 - [ ] All parameters of every function/class compose. Setting a parameter does
       not magically cause other parameters to be ignored.

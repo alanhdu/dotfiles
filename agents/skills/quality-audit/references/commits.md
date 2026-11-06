@@ -8,7 +8,9 @@ Inspect ordered messages and every commit's parent-relative patch, including
 changes later removed or overwritten. A clean final tree does not establish that
 every prefix of the stack is mergeable.
 
-## Structure review
+## Review checklist and required evidence
+
+Include the evidence below in the report. Mark an item inapplicable only with a concrete reason.
 
 For each commit, return a compact table that accounts for every changed file.
 `commit | purpose | changed symbols/path groups | disposition`.
@@ -25,6 +27,9 @@ Then ensure:
       the change. Churn makes reviewing harder by creating diff noise.
 - [ ] Fixups are folded into their owning commits. Otherwise, reviewers waste
       time on broken/bad commits and have to update our understanding later.
+- [ ] Every commit message follows the standards: focus on motiviation and big
+      picture, not implementation detials that are better understood through the
+      code diff. Strike a good balance between brevity (easy to read) and informativeness (roughly match other commits from the author).
 
 ## Example: an extraction and its motivating adoption
 

@@ -9,15 +9,17 @@ generator cannot absorb the case clearly (this is often a signal of a poorly
 designed test suite). Do not add test machinery merely to make a gap observable.
 A justified decision to leave a gap untested is a successful review.
 
-## Checklist
+## Review checklist and required evidence
 
-- [ ] The suite conforms to the testing preferences in AGENTS.md; this checklist
-      elaborates them.
+Include the evidence below in the report. Mark an item inapplicable only with a concrete reason.
+
+- [ ] Inventory every test, fixture, or helper in scope. For each, give a
+      compact retain/simplify/merge/remove verdict.
 - [ ] Tests exercise public interfaces at stable boundaries and avoid
       [test-driven ossification](https://matklad.github.io/2021/05/31/how-to-test.html):
       changing the implementation should not require rewriting dozens of tests.
-- [ ] Assuming lower-layer guarantees hold, identify what each caller's tests
-      still need to establish. Apply AGENTS.md's test-layer preferences.
+- [ ] Apply AGENTS.md's test-layer preferences, ensuring code is tested at the
+      proper layer.
 - [ ] Tests are non-redundant with each other and with type-checking, linting,
       static analysis, etc.
 - [ ] For each added check, identify a plausible maintenance change that causes
