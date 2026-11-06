@@ -45,6 +45,27 @@ waiting.
   without testing in between. Then resolve each conflicted descendant once,
   bottom-up.
 
+### Splitting one large commit
+
+The commit being split is the source of truth for the final code. Do not rebuild
+the stack from its base with that commit only as a reference: every
+hand-written step invites design decisions the user never approved.
+
+- Record the commit's hash as the target. Insert commits before it with
+  `jj new --insert-after <parent> --insert-before <commit>`, and fill them with
+  `jj restore --from <target> <paths>`. Split along independently useful
+  behavior or mechanical changes. Minimize temporary adapters that will just
+  be overwritten later.
+  - We want to balance "small, self-contained commits" (which might require scaffolding that is later removed) from "churn that wastes review time" (since
+  code that will be deleted later does not need to be fully understood). These
+  are in tension, but we want to minimize both commit size and churn.
+- After each insertion, run `jj restore --from <target> --into <commit>` so the
+  top commit keeps the target tree. At the end,
+  `jj diff --from <target> --to <tip>` must contain only the differences you
+  report (restored docstrings, removed drive-bys, justified simplifications).
+- Land a simplification by editing the commit that owns the code, never as a
+  fixup on top.
+
 ## 3. Rewrite messages
 
 Follow AGENTS.md's commit-message guidance and wrap paragraphs.

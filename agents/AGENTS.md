@@ -95,6 +95,8 @@ It controls execution:
 - Prefer jujutsu (`jj`) in repositories configured for it; otherwise use Git.
   - Report change IDs, which survive rewrites. Include git hashes only when
     needed for external systems or to identify an exact reviewed snapshot.
+    Name commits by change ID, not by owner ("your commit"): agents often author
+    commits on my bookmarks.
   - Preserve change IDs when rewriting, but prioritize a coherent stack: split,
     fold, or abandon commits as needed. Do not duplicate commits.
   - `jj` history edits are recoverable through the oplog; never ask for approval
