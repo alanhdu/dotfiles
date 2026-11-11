@@ -2,14 +2,14 @@
 name: jj-workspace
 description:
   Make a code change in an isolated, temporary jj workspace and hand back a
-  bookmark without touching the user's working copy. Use when the user wants
+  bookmark without editing the user's working-copy files. Use when the user wants
   edits made off to the side in a jj repository.
 ---
 
 # Isolated jj workspace workflow
 
-Work in a temporary jj workspace without touching the user's working copy. Hand
-back a local bookmark; commits are visible from every workspace.
+Work in a temporary jj workspace and hand back a local bookmark. Commits are
+visible from every workspace; keep file edits in the temporary workspace.
 
 ## Conventions
 
@@ -24,22 +24,24 @@ back a local bookmark; commits are visible from every workspace.
 1. Create a unique temporary directory with
    `mktemp -d "${TMPDIR:-/tmp}/jj-workspace-<slug>.XXXXXX"`. Record the exact
    returned path.
-2. Add the workspace without snapshotting the current one, then move it onto the
-   base:
-   `jj workspace add --ignore-working-copy --no-colocate --name <slug> <path>; jj -R <path> new '<base>'`.
-   With `--ignore-working-copy`, `add` ignores `--revision` and exits 1 after
-   creating the workspace on the root commit; `new` fixes both. Use the existing
-   target when continuing a stack; otherwise use the named base or `trunk()`.
+2. Add the workspace at the base:
+
+   ```bash
+   jj workspace add --no-colocate --name <slug> -r '<base>' <path>
+   ```
+
+   Use the existing target when continuing a stack; otherwise use the named
+   base or `trunk()`.
    Use `--colocate` instead when Git metadata is needed (Git 2.42+).
-3. Work inside it. Follow the repository's setup and verification instructions;
-   do not assume a language, source layout, environment manager, or toolchain.
+3. Work inside it, following the repository's setup and verification instructions.
 4. Describe the change and confirm with `jj status` that only intended files
    changed.
 5. Set the requested bookmark to the intended commit and verify its target;
    reuse an existing bookmark when named.
-6. Once the user has explicitly accepted the result or requests cleanup, forget
-   the temporary workspace with `jj workspace forget <slug>`, then remove only
-   the exact temporary directory returned by `mktemp`.
+6. Once the user has explicitly accepted the result or requests cleanup, confirm
+   the workspace name refers to the exact temporary directory returned by
+   `mktemp`, then run `jj workspace remove <slug>` from another workspace. This
+   snapshots the target's working copy and removes its directory from disk.
 
 ## Dependencies and baseline comparisons
 

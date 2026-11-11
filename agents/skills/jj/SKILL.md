@@ -13,7 +13,7 @@ Reason from jj's model, not Git's. Before using an unfamiliar command, flag,
 template, or revset, check the installed version's `jj <command> --help` or
 `jj help -k <topic>`. After a syntax error, read help before retrying.
 
-- The working copy is a commit, and every jj command snapshots it first. When
+- The working copy is a commit; commands normally snapshot it first. When
   inspection must not record edits, pass `--ignore-working-copy` after the
   subcommand (`jj log --ignore-working-copy …`) so permission rules still match.
 - Rewrite changes in place (`describe`, `squash`, `split`, `absorb`, `rebase`)
@@ -22,25 +22,33 @@ template, or revset, check the installed version's `jj <command> --help` or
 - Name revisions by change ID or bookmark. A commit ID names one snapshot, and
   reusing an obsolete one revives it as a divergent copy.
 - Workspaces share one graph. A rewrite rebases every descendant, including
-  other workspaces' `@`.
+  other workspaces' `@`. Before rewriting, check
+  `jj log --ignore-working-copy -r '(<revs>):: & working_copies()'`.
+  If another workspace's `@` appears, stack on top or ask; rewriting beneath it
+  can leave it stale and require reconciling unsnapshotted edits.
 - Every operation is in `jj op log`. Recover with `jj undo` or `jj op restore`,
-  not by hand.
+  not by hand or with `jj op undo`. Undo/redo across workspaces requires
+  `--allow-cross-workspace`; inspect the operation before overriding this guard.
 
-## Observed mistakes
+## Translating Git habits
 
-From about 20k jj calls in past Claude and Codex sessions:
+These are recurring mistakes in agent command history. Translate the intent,
+rather than substituting `jj` for `git`.
 
-- **Rewriting under another workspace.** If that workspace has edits not yet
-  snapshotted, its next command reports a stale working copy, moves those edits
-  into a divergent sibling, and removes them from disk. Before rewriting, check
-  `jj log -r '(<revs>):: & working_copies()'`. If another workspace's `@`
-  appears, stack on top or ask.
+| Git command or habit | jj equivalent |
+| --- | --- |
+| `git diff A B` | `jj diff --from A --to B`; don't mix `-r` with `--to`. |
+| `git show R:path` | `jj file show -r R path` for file contents. |
+| `git show R -- path` | `jj diff -r R path` for that revision's patch. |
+| `git grep pattern` | `rg pattern` on disk; `jj file search -r R --pattern pattern` in a revision. |
+| `R^` / `R~N` | `first_parent(R)` / `first_parent(R, N)`; `R-` selects all parents. |
+| `git diff --check` | No jj flag; use the repository's whitespace/lint checks. |
+
+## Other pitfalls
+
 - **Leaving divergence.** Fix it with `jj converge --no-interactive`, then
   confirm `jj log -r 'divergent()'` is empty.
-- **Git syntax.** `jj grep`, `jj diff --check`, `rev:path`, `jj op undo`,
-  `jj diff -r A --to B`, `jj show <rev> -- <path>`, and `--stat --summary` all
-  fail. Use `rg`, `jj file show -r`, `jj undo`, `--from A --to B`, and
-  `jj diff -r <rev> <paths>`.
+- **Diff formats.** Choose `--stat` or `--summary`; they cannot be combined.
 - **Template contexts.** The `evolog` template is a `CommitEvolutionEntry`, so
   use `commit.commit_id()`, not `commit_id`.
 - **`jj resolve --list` exits nonzero when there are no conflicts**, which
@@ -48,8 +56,8 @@ From about 20k jj calls in past Claude and Codex sessions:
 - **Editors.** `squash` and `describe` open an editor without `-m` (or
   `--use-destination-message` for `squash`).
 - **Forcing bookmarks.** "Refusing to move bookmark backwards or sideways" means
-  the change was replaced instead of rewritten. Find out why before passing
-  `--allow-backwards`.
+  the target isn't a forward move. Check whether the change was replaced instead
+  of rewritten before passing `--allow-backwards`.
 
 Use [jj-workspace](../jj-workspace/SKILL.md) for isolated work and
 [restack](../restack/SKILL.md) for reshaping stacks.
