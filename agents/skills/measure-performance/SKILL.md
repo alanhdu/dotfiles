@@ -18,16 +18,21 @@ Adding timers, synchronization, or logging to production code can change its
 performance characteristics. Do it only when nothing lighter answers the
 question, and say so when reporting.
 
-## Report end-to-end results
+## Match the measurement to the claim
 
-The goal is end-to-end performance of the real workload on its production
-execution path, such as training-step tokens/s. Use an existing benchmark or a
-reporting boundary the user agrees to. Keep inputs, compilation and warmup, and
-hardware fixed across runs; reconcile any change before comparing.
+Choose the measurement boundary from the question being investigated. State
+what operation is timed, what work it completes, and what is excluded. Prefer
+the real execution path at that boundary: omitted coordination, preparation,
+or waiting can change which operation is actually the bottleneck.
 
-Microbenchmarks and other proxies are useful internal tools for locating
-bottlenecks and guiding work, but they are not the result. Report them only as
-supporting evidence for an end-to-end number.
+Keep useful work and execution conditions comparable across runs; reconcile
+differences before attributing a result to the change. Rates are comparable
+only when their units represent comparable work.
+
+Use narrower measurements to isolate causes. Their conclusions apply to the
+measured boundary: speeding up a component does not establish that its caller
+gets faster, because other work or resource contention may dominate. Measure
+the caller when making a claim about the caller's performance.
 
 ## Work from profiles and hypotheses
 
