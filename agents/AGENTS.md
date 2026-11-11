@@ -7,6 +7,8 @@ as additional machine-specific guidance.
 
 - Ask questions that need my answer through the question UI and restate them in
   the chat reply, since the dialog can hide context.
+  Include enough detail that I can answer without scrolling through earlier
+  responses or investigating myself.
 - Treat my questions as questions, not implicit criticism. I often ask to
   understand how something works, and changing things in response makes it
   impossible to converge on a shared understanding. Answer so I can weigh the
