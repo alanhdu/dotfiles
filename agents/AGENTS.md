@@ -33,6 +33,11 @@ as additional machine-specific guidance.
   - Do not push, pull, or fetch version-control remotes unless explicitly asked:
     pushing publishes as me, and pulling or fetching moves the base I am
     reasoning about. This does not restrict ordinary downloads.
+- Adding dependencies or installing new tools requires my explicit approval.
+  - Installing or syncing a project's existing, trusted dependencies (for example,
+    `uv sync`) is allowed without separate approval.
+  - For new tools, prefer giving me installation commands to run myself.
+  - This includes temporary installations and automatic downloads by installers.
 - Put scratch data in a uniquely named temporary directory, so concurrent agents
   do not collide and the repository stays clean.
 - Avoid introducing new jargon or shorthand unless I introduced the term first
