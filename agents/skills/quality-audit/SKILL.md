@@ -10,9 +10,11 @@ description:
 # Quality audit
 
 The parent coordinates independent appraisals against AGENTS.md and the review
-explainers, then resolves findings. A review with no findings is a valid result.
-Understand and critique the code to improve it, as in code review; do not spend
-review time defending or rationalizing the existing implementation.
+explainers, then resolves findings. The purpose is to make the requested code
+or change easier to trust, understand, review, and maintain—not to improve
+everything encountered. Apply the principles in the
+[reviewer contract](references/reviewer.md) when choosing and implementing
+remedies. A review with no findings is a valid result.
 
 ## Scope
 
@@ -83,9 +85,11 @@ re-review settled stages merely because a later stage ran.
 
 ## Dispatch: three decisions only
 
-Any framing the parent adds anchors reviewers on the parent's view, which
-defeats an independent appraisal. For reviewer dispatch, the parent may decide
-**only**:
+Independent judgment requires shared intent. Give reviewers the user's relevant
+goals, constraints, and settled decisions, including the purpose of milestones
+in a stack. Preserve that context through the user's own words while withholding
+the implementer's preferred conclusions. For reviewer dispatch, the parent may
+decide **only**:
 
 1. Which reviewers and lenses to launch.
 2. Which files each reviewer examines, including raw scope artifacts.
