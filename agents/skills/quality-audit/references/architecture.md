@@ -83,9 +83,9 @@ Include the evidence below in the report. Mark an item inapplicable only with a 
       and performance. Explain unexpected implementation size through concrete
       required behavior or removable machinery; line counts alone do not suffice.
 
-- [ ] **Placement:** Assess whether changed responsibilities belong where they
-      live. Identify any experiment code promoted into maintained shared code
-      and the requirement that justifies that placement.
+- [ ] **Code Organization:** Assess module, package, and class boundaries.
+      Do they group related responsibilities coherently? Do dependencies follow
+      the intended layers? Do functions live in the right package?
 
 Keep evidence compact, but preserve complete inventory coverage. Correctness
 and performance findings do not substitute for the simplification analysis.

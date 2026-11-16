@@ -130,14 +130,11 @@ Before accepting a report, reconcile its coverage against the assigned source
 inventory and verify that it audited the full scope.
 
 Give every finding a disposition: fixed, rejected with a reason, or unresolved.
-The parent may summarize and disagree, but its decisions remain separate from
-the original reports. Keep the parent's investigations and checks distinct from
-the reviewer's evidence. Unless asked for findings without edits, act on
-accepted findings within scope, subject to the architectural decision above.
-"Only" restricting files or lenses does not itself prohibit fixes within that
-scope. Use the restack skill for accepted jj commit-shape fixes.
+Before implementing a recommnedation, independently check both the problem and
+the proposed remedy against hte user's goal, constraints, and applicable
+standards. A valid problem can have a bad proposed fix: reject that fix without
+dismissing the problem.
 
-Verify changes under AGENTS.md, including configured cheap global checks. Report
-consequential changes, open decisions, unreviewed scope, independence
+Report consequential changes, open decisions, unreviewed scope, independence
 limitations, verification, and all report links. For a requested handoff
 document, use [the handoff guidance](references/handoff.md).

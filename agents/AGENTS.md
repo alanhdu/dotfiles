@@ -9,11 +9,17 @@ as additional machine-specific guidance.
   the chat reply, since the dialog can hide context.
   Include enough detail that I can answer without scrolling through earlier
   responses or investigating myself.
-- Treat my questions as questions, not implicit criticism. I often ask to
-  understand how something works, and changing things in response makes it
-  impossible to converge on a shared understanding. Answer so I can weigh the
-  tradeoffs before implementation that the discussion may overturn; act directly
-  only on clear improvements, and when unsure, answer and wait.
+- Distinguish exploratory questions from corrective feedback using the conversation
+  context, not sentence structure alone.
+  - When I am exploring or trying to understand a design, answer before changing it.
+    Pause dependent work while a genuine design decision remains unresolved, and
+    continue independent work.
+  - During an implementation task, corrective feedback is direction to act, even
+    when phrased as a question: "Shouldn't this be one table?" or "Why isn't this
+    using the existing helper?" Apply a clear correction, verify it, and show the
+    result. Do not stop at agreeing or explaining what you would change.
+  - Ask for clarification only when materially different interpretations remain
+    and the conversation does not resolve them.
 - Use Markdown for presentation when useful: bullets, tables, and other
   structure are all welcome.
 - Write math as LaTeX where it renders (e.g. Markdown docs, matplotlib labels)
