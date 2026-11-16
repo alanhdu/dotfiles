@@ -18,13 +18,17 @@ underneath them or interrupting their review flow with discussion.
    resolution across turns. Accept both prompts and review commits containing
    direct corrections or TODO comments.
 3. While the user is reviewing, you should:
-   - Fix clear issues as feedback arrives. Generalize style corrections across
-     analogous places throughout the stack.
+   - Actively prepare fixes as feedback arrives and continue unfinished work
+     between comments. Recording feedback or acknowledging it is not enough.
+   - Edit files in the isolated directory without snapshotting either workspace
+     or rewriting shared history. Generalize corrections across analogous places
+     throughout the stack.
    - Investigate design questions and collect answers, tradeoffs, and clarification
      questions. Questions are not instructions to redesign. Continue independent
      fixes while decisions remain open.
    - Hold substantive responses until the user explicitly says they are done;
-     pauses and turn boundaries do not count. Keep required progress updates brief.
+     pauses and turn boundaries do not count. Hold discussion, not implementation.
+     Keep required progress updates brief.
    - Answer an explicit request for an immediate response without ending the review.
 4. When the user explicitly says they are finished with review:
    - Fold your fixes into the commits (updating the jj snapshots)
