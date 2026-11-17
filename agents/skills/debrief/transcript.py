@@ -27,7 +27,9 @@ class Text(BaseModel):
 class Message(BaseModel):
     role: str
     content: str | list[dict[str, JsonValue]]
-    channel: str | None = Field(default=None, validation_alias=AliasChoices("channel", "phase"))
+    channel: str | None = Field(
+        default=None, validation_alias=AliasChoices("channel", "phase")
+    )
 
 
 class ToolCall(BaseModel):
@@ -43,11 +45,15 @@ class ToolResult(BaseModel):
 
 
 class ToolOutput(BaseModel):
-    body: JsonValue = Field(validation_alias=AliasChoices("output", "value", "content", "text"))
+    body: JsonValue = Field(
+        validation_alias=AliasChoices("output", "value", "content", "text")
+    )
     exit_code: int | None = Field(
         default=None, validation_alias=AliasChoices("exit_code", "exitCode")
     )
-    is_error: bool = Field(default=False, validation_alias=AliasChoices("is_error", "isError"))
+    is_error: bool = Field(
+        default=False, validation_alias=AliasChoices("is_error", "isError")
+    )
     status: str | None = None
 
 
@@ -97,13 +103,17 @@ def output(value: JsonValue) -> tuple[str, list[str]]:
             return value, []
     if isinstance(value, list):
         parts = [output(part) for part in value]
-        return "\n".join(body for body, _ in parts), [s for _, statuses in parts for s in statuses]
+        return "\n".join(body for body, _ in parts), [
+            s for _, statuses in parts for s in statuses
+        ]
     try:
         envelope = ToolOutput.model_validate(value)
     except ValidationError:
         return json.dumps(value, ensure_ascii=False), []
     body, statuses = output(envelope.body)
-    status = envelope.model_dump(exclude={"body"}, exclude_none=True, exclude_defaults=True)
+    status = envelope.model_dump(
+        exclude={"body"}, exclude_none=True, exclude_defaults=True
+    )
     return body, ([json.dumps(status)] if status else []) + statuses
 
 
@@ -115,7 +125,9 @@ def read_file(path: Path, provider: str, *, file_label: str) -> list[Entry]:
         ref = f"{file_label}:{line}"
         try:
             record = Record.model_validate_json(raw)
-            wanted = ("response_item",) if provider == "codex" else ("user", "assistant")
+            wanted = (
+                ("response_item",) if provider == "codex" else ("user", "assistant")
+            )
             if record.type not in wanted:
                 continue
             node = item(record.payload)
@@ -145,7 +157,11 @@ def read_file(path: Path, provider: str, *, file_label: str) -> list[Entry]:
                         else json.dumps(block.arguments, ensure_ascii=False)
                     )
                     entries.append(
-                        Entry(ref=ref, role=f"call {block.name} {block.call_id}", text=body)
+                        Entry(
+                            ref=ref,
+                            role=f"call {block.name} {block.call_id}",
+                            text=body,
+                        )
                     )
                 elif isinstance(block, ToolResult):
                     body, status = output(block.body)
@@ -222,13 +238,17 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("provider", choices=("codex", "claude"))
     parser.add_argument("files", nargs="+", type=Path)
-    parser.add_argument("--format", choices=("conversation", "index", "users"), required=True)
+    parser.add_argument(
+        "--format", choices=("conversation", "index", "users"), required=True
+    )
     args = parser.parse_args()
     entries = []
     try:
         files = {
             f"file{number}": str(path)
-            for number, path in enumerate(dict.fromkeys(p.resolve() for p in args.files), 1)
+            for number, path in enumerate(
+                dict.fromkeys(p.resolve() for p in args.files), 1
+            )
         }
         for label, path in files.items():
             if args.format != "users":
@@ -239,7 +259,9 @@ def main() -> None:
         else:
             {"conversation": conversation, "index": index}[args.format](entries)
         if args.format != "users":
-            print(f"# User messages: {len({e.ref for e in entries if e.role == 'user'})}")
+            print(
+                f"# User messages: {len({e.ref for e in entries if e.role == 'user'})}"
+            )
     except (OSError, ValueError) as error:
         parser.exit(2, f"{error}\n")
 
