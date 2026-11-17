@@ -1,7 +1,9 @@
 ---
 name: debrief
 description:
-  Audit full sessions or selected mistakes and recommend durable improvements.
+  Audit a session transcript or selected mistakes and recommend durable
+  improvements to the codebase, tooling, and agent instructions. Use when the
+  user asks for a debrief, retrospective, or what went wrong in a session.
 ---
 
 # Debrief

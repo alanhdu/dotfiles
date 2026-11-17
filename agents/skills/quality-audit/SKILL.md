@@ -1,10 +1,10 @@
 ---
 name: quality-audit
 description:
-  Run only when explicitly triggered by the user. Each trigger authorizes
-  exactly one audit. Never autonomously initiate or repeat an audit,
-  including follow-up audits after fixes. Obtain independent appraisals and
-  act on their findings. This is not a security-review skill.
+  Audit code, a diff, or a commit stack for architecture, code quality, tests,
+  and commit structure using independent fresh-context reviewers, then resolve
+  their findings. Use only when the user explicitly asks for a quality audit;
+  each request authorizes one audit. Not a security review.
 ---
 
 # Quality audit
@@ -15,6 +15,10 @@ or change easier to trust, understand, review, and maintain—not to improve
 everything encountered. Apply the principles in the
 [reviewer contract](references/reviewer.md) when choosing and implementing
 remedies. A review with no findings is a valid result.
+
+Audits are expensive and interrupt the user with findings, so each request
+authorizes exactly one. Do not start an audit on your own initiative or repeat
+one after applying fixes; propose a follow-up audit instead.
 
 ## Scope
 
