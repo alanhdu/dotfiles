@@ -48,7 +48,12 @@ the caller when making a claim about the caller's performance.
 - Negative results (where we see no speed-ups) are important for updating our
   mental model and forming better hypotheses in the future.
 
-## Example: a slow training run
+## Examples
+
+These illustrate the reasoning; the tools and culprits will differ from case to
+case.
+
+### A slow training run
 
 Training reaches 40% of the expected tokens/s. Swapping in a faster attention
 kernel is a guess; a microbenchmark would show it 1.3× faster and still change
@@ -57,3 +62,12 @@ nothing end-to-end. Instead, sample the running job with `py-spy dump` and watch
 tokenization. The hypothesis is an input-bound run whose best case is the GPU
 step rate already visible in the step logs between stalls. Move tokenization to
 preprocessing, then report end-to-end tokens/s before and after.
+
+### A speedup that compares different work
+
+A new batcher reports 2.1× the baseline's samples/s. It sorts sequences by
+length, and the 200-step benchmark window drew only the shortest ones, so each
+sample carried about half the tokens. The rate went up because the work per
+sample went down. Compare tokens/s over a window that covers the full length
+distribution, or feed both versions identical batches; here the real change is
+within noise, which is still worth reporting.
