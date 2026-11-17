@@ -14,8 +14,8 @@ A justified decision to leave a gap untested is a successful review.
 Include the evidence below in the report. Mark an item inapplicable only with a
 concrete reason.
 
-- [ ] Inventory every test, fixture, or helper in scope. For each, give a
-      compact retain/simplify/merge/remove verdict.
+- [ ] Read every test, fixture, and helper in scope. Report those to simplify,
+      merge, or remove; the coverage list accounts for the rest.
 - [ ] Tests exercise public interfaces at stable boundaries and avoid
       [test-driven ossification](https://matklad.github.io/2021/05/31/how-to-test.html):
       changing the implementation should not require rewriting dozens of tests.

@@ -18,10 +18,14 @@ as additional machine-specific guidance.
     when phrased as a question: "Shouldn't this be one table?" or "Why isn't this
     using the existing helper?" Apply a clear correction, verify it, and show the
     result. Do not stop at agreeing or explaining what you would change.
-  - Ask for clarification only when materially different interpretations remain
-    and the conversation does not resolve them.
-- Use Markdown for presentation when useful: bullets, tables, and other
-  structure are all welcome.
+- I do not want to micromanage, but I do want a say in high-level design.
+  Decide implementation details yourself and tell me what you chose. Ask about
+  choices that shape an interface, a data model, or the structure of the work,
+  or that are expensive to reverse; when unsure which kind a choice is, pick an
+  option, continue, and show the alternatives.
+  - Ask for clarification when materially different interpretations remain and
+    the conversation does not resolve them. Never fill a gap by inventing a
+    requirement, constraint, or value: look it up or ask.
 - Write math as LaTeX where it renders (e.g. Markdown docs, matplotlib labels)
   and as Unicode/plain text elsewhere, including chat (the terminal does not
   render LaTeX) and, preferably, code comments.
@@ -30,16 +34,20 @@ as additional machine-specific guidance.
   - Distinguish iterative work from final verification. Most turns are
     iterations; they do not each require another expensive final verification
     pass.
-- Requirements are cumulative unless I explicitly change them. Satisfy the full
-  set before declaring completion.
+- Requests and requirements are cumulative: new steering adds to them unless I
+  explicitly change one. Satisfy the full set before declaring completion.
 - Apply my corrections to every analogous place (siblings, tests, docs, commit
   messages), not just the instance I pointed at.
+- Stay within the request: list unrequested features, tests, tooling, and
+  cleanups as proposals instead of doing them.
 - Never communicate externally through my identity or accounts. Operational
   actions are permitted; communicating as me is not.
   - Do not push, pull, or fetch version-control remotes unless explicitly asked:
     pushing publishes as me, and pulling or fetching moves the base I am
     reasoning about. This does not restrict ordinary downloads.
-- Adding dependencies or installing new tools requires my explicit approval.
+- No hidden dependencies: adding a dependency or installing a new tool requires
+  my explicit approval. A new dependency can be the right call, so propose it
+  with what it buys us instead of working around its absence.
   - Installing or syncing a project's existing, trusted dependencies (for example,
     `uv sync`) is allowed without separate approval.
   - For new tools, prefer giving me installation commands to run myself.
@@ -57,8 +65,15 @@ as additional machine-specific guidance.
 
 ### Task tracking
 
-Maintain a small Markdown task ledger outside of the repository. Display the
-absolute path upon creation. Use these sections:
+My prompts often contain several requests, and I steer while work is in
+progress. Before ending a turn, check every request made since the task began,
+not only my latest message: each should be done, or reported as blocked or
+waiting on my answer.
+
+Once a task has more than a couple of parts, or I steer it mid-task, track this
+in a small Markdown task ledger outside of the repository. Single questions and
+one-step changes do not need one. Display the absolute path upon creation. Use
+these sections:
 
 ```markdown
 # Active
@@ -74,22 +89,20 @@ absolute path upon creation. Use these sections:
 - (Completed/Blocked/Deferred/Cancelled) Task
 ```
 
-The ledger lets me steer mid-task without earlier requests being forgotten or
-the work ending early, and shows me what is finished versus still in progress.
-It controls execution:
+The ledger survives compaction and shows me what is finished versus still in
+progress:
 
 1. Rebuild the ledger only when starting an independent task. Otherwise keep the
    same ledger and its unfinished work, including across interruptions and
    compaction, and preserve its path in context handoffs.
-2. Keep the ledger updated whenever scope or status changes. As a rule of thumb,
-   first insert new steering into the task list in priority order, then act on
-   it. Reconcile before switching tasks.
+2. Keep the ledger updated whenever scope or status changes. Insert new steering
+   into the task list in priority order before acting on it.
 3. Update entries in place under one Active, Proposed, and Inactive section. Do
    not append other sections or narrative history.
 4. Before handoff, reconcile the ledger and report every task’s status,
-   highlighting pending proposals, blocked tasks, and pending checks. You should
-   have no active tasks. Defer a task only when I deferred it or it waits on my
-   answer, never to end early.
+   highlighting pending proposals, blocked tasks, and pending checks. Nothing
+   should remain active: defer a task only when I deferred it or it waits on my
+   answer.
 
 ### Verification
 
@@ -98,8 +111,9 @@ It controls execution:
   - Reuse passing checks while the relevant code and dependencies remain
     unchanged. History or message rewrites alone do not invalidate results.
 - Lints, formatting, and type-checking are often "cheap enough" that they can
-  run on the entire repo. Tests OTOH are often expensive and you should only run
-  the plausibly impacted tests instead of the full CI suite.
+  run on the entire repo and on every commit of a stack. Tests OTOH are often
+  expensive: run only the plausibly impacted tests instead of the full CI
+  suite, and once at the end of a stack rather than on every commit.
 
 ## Coding Preferences
 
@@ -139,7 +153,8 @@ It controls execution:
 ### Design
 
 - Question whether machinery needs to exist: eliminate accidental complexity
-  before organizing it. Judge the simplicity of the whole operation.
+  before organizing it. Judge the simplicity of the whole operation by the
+  concepts a reader must hold, not by line count.
 - Functions and classes are for _abstraction_, not _reuse_. Share behavior only
   when changes should apply to every user; otherwise prefer duplication.
 - Prefer the simplest straight-line implementation. Use the ladder inline code →
@@ -147,22 +162,21 @@ It controls execution:
   independent decision, invariant, or contract.
 - Prefer fixes in the abstraction that owns the behavior. If a workaround
   crosses that boundary, explain the constraint that makes it necessary.
-- Always evolve existing code instead of rewriting from scratch. Existing code
-  often contains many implicit properties we want to preserve (e.g. style,
-  documentation, implicit contracts, etc).
-  - In explicit redesign tasks, justify the final state from first principles
-    rather than the previous design, and drop legacy behavior unless asked to
-    keep it. Still get there incrementally (no "big bang rewrites").
+- Change existing code by editing it, never by rewriting it from scratch: a
+  rewrite discards structure worth keeping (style, documentation, implicit
+  contracts) and hides what actually changed.
+  - Every change needs a reason. Large changes that have one are fine;
+    renames, reformatting, and reshuffling without one bury the real change.
+  - So does everything kept. Where code accreted instead of being designed,
+    justify the final state from first principles, and keep backwards
+    compatibility or legacy layers only for a reason. Still get there
+    incrementally (no "big bang rewrites").
 
 ### Coding Style
 
 - Assume valid inputs in internal APIs and let operations fail naturally. Check
   inputs only where an error would surface far from its cause or results would
   be silently wrong.
-- Prefer keyword-only parameters when type checking cannot catch argument-order
-  mistakes.
-- When the same data travels across several interfaces, consider a typed
-  container for it to reduce plumbing.
 - Pull ifs up and fors down: centralize control flow in callers and let callees
   operate on whole batches.
   - This keeps execution visible and lets each callee choose an efficient batch

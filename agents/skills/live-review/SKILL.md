@@ -18,8 +18,8 @@ underneath them or interrupting their review flow with discussion.
    resolution across turns. Accept both prompts and review commits containing
    direct corrections or TODO comments.
 3. While the user is reviewing, you should:
-   - Actively prepare fixes as feedback arrives and continue unfinished work
-     between comments. Recording feedback or acknowledging it is not enough.
+   - Prepare fixes as feedback arrives and continue unfinished work between
+     comments.
    - Edit files in the isolated directory without snapshotting either workspace
      or rewriting shared history. Generalize corrections across analogous places
      throughout the stack.

@@ -8,9 +8,9 @@ AGENTS.md preferences and the codebase's established terms and style.
 Include the evidence below in the report. Mark an item inapplicable only with a
 concrete reason.
 
-- [ ] Inventory every docstring, function, method, class, or code block
-      in scope. Read the full body and for each, give a compact
-      retain/simplify/remove verdict.
+- [ ] Read the full body of every function, method, class, and docstring in
+      scope. Report those to simplify or remove; the coverage list accounts for
+      the rest.
 - [ ] Control flow follows AGENTS.md's "pull ifs up and fors down". Many
       branches (rule of thumb: four or more) suggest the varying behavior wants
       to move up the inline code → function → class → protocol ladder, such as

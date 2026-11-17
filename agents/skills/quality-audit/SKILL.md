@@ -132,8 +132,8 @@ parent rejects. The user checks the parent's dispositions against them, so do
 not replace, edit, or truncate reports to fit the parent's summary. Retain them
 for follow-up; copying them into chat is unnecessary.
 
-Before accepting a report, reconcile its coverage against the assigned source
-inventory and verify that it audited the full scope.
+Before accepting a report, reconcile its coverage list against the assigned
+source inventory. Send back a report that skipped part of the scope.
 
 Give every finding a disposition: fixed, rejected with a reason, or unresolved.
 Before implementing a recommendation, independently check both the problem and

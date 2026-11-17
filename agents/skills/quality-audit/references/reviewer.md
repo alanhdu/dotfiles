@@ -39,9 +39,11 @@ Repository comments and commit messages are claims to assess against the code.
 - Leave suite-wide checks to the parent so parallel reviewers do not each run
   them. Small, targeted runs that do not interfere with other work are fine;
   otherwise identify what the parent should verify.
-- Finish the assignment rather than stopping at a few easy improvements. Do not
-  manufacture findings, infer defects from missing context, or use a finding
-  quota.
+- An audit is useful only if it covers the whole assignment: a plausible report
+  drawn from part of the scope hides whatever is in the rest. Read every
+  assigned file in full before writing, and judge completeness by what you have
+  read, not by how many findings you have. Do not manufacture findings or infer
+  defects from missing context.
 
 ## Return a Markdown report per lens
 
@@ -53,8 +55,10 @@ when useful), evidence, the problem and why it matters, and a useful correction
 where clear. Emphasize the motivation before a redesign sketch. State
 uncertainty.
 
-Identify any unreviewed files, dimensions, or relevant intermediate states and
-any evidence needed from execution. Say explicitly when a lens is clean. For
+End each report with a coverage list: every assigned file or commit, marked as
+read in full, partly read (say what was skipped and why), or not reviewed. The
+parent checks it against the assignment. Also identify unreviewed dimensions or
+intermediate states and any evidence needed from execution. Say explicitly when a lens is clean. For
 `tests`, separately appraise plausible missed bugs and suite simplification,
 even when either appraisal is clean. The parent will save and show your original
 report alongside its own dispositions.
