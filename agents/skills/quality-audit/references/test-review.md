@@ -11,7 +11,8 @@ A justified decision to leave a gap untested is a successful review.
 
 ## Review checklist and required evidence
 
-Include the evidence below in the report. Mark an item inapplicable only with a concrete reason.
+Include the evidence below in the report. Mark an item inapplicable only with a
+concrete reason.
 
 - [ ] Inventory every test, fixture, or helper in scope. For each, give a
       compact retain/simplify/merge/remove verdict.

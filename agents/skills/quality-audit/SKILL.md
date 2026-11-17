@@ -112,7 +112,8 @@ Read {skill_dir}/references/reviewer.md and review this assignment:
 ```
 
 Use absolute file or directory paths, including raw manifests or patches when
-needed. Directory assignments cover the complete requested inventory. Quotes are verbatim, with qualifications and corrections preserved; use an empty list when
+needed. Directory assignments cover the complete requested inventory. Quotes are
+verbatim, with qualifications and corrections preserved; use an empty list when
 none apply. Do not paraphrase or select excerpts that reverse the user's
 meaning. Never assign review reports, or a directory containing them or the
 parent's scratch notes. Every follow-up is subject to the same restrictions.
@@ -130,8 +131,8 @@ Before accepting a report, reconcile its coverage against the assigned source
 inventory and verify that it audited the full scope.
 
 Give every finding a disposition: fixed, rejected with a reason, or unresolved.
-Before implementing a recommnedation, independently check both the problem and
-the proposed remedy against hte user's goal, constraints, and applicable
+Before implementing a recommendation, independently check both the problem and
+the proposed remedy against the user's goal, constraints, and applicable
 standards. A valid problem can have a bad proposed fix: reject that fix without
 dismissing the problem.
 

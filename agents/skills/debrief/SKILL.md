@@ -19,9 +19,9 @@ your experiences and findings.
    ```
 
    Use Python 3.11+ with Pydantic 2 already installed (for example, a project’s
-   `.venv/bin/python`), otherewise use `uv run` (which requires a writeable
+   `.venv/bin/python`), otherwise use `uv run` (which requires a writeable
    cache and network access on a cache miss).
-   
+
    Save outputs beside the existing task scratch directory and inspect the saved
    outputs to avoid overflowing the tool-call output budget.
 
@@ -34,11 +34,11 @@ your experiences and findings.
 2. Read the entire conversation output to recover the user's requests,
    corrections, and the assistant's decisions. Then read the entire index
    output to check tool calls and outcomes, including failures, retries, and
-   rework that never surfaced in the conversation. 
-   
+   rework that never surfaced in the conversation.
+
    Do NOT over index on the latest, most recent failure. We want to examine the
    full session.
-   
+
 3. Inventory every correction and substantial friction. Give each an ID (C1,
    C2, …) and cite its source messages or tool results. Split multi-part or
    repeated corrections into separate IDs. Distinguish errors from changes the
@@ -49,11 +49,11 @@ your experiences and findings.
 Based on the identified frictions and corrections, suggest changes to:
 
 1. The codebase we are working on
-   - This is also a chance to report on an proposals from your ledger
+   - This is also a chance to report on any proposals from your ledger
 2. Missing tooling we could build
 3. The user-controlled harness prompts, skills, and agent files.
-   - We want to keep these files slim. Focus on clarifying ambiguities
-     or reifying implicit context justifying the rules.
+   - We want to keep these files slim. Focus on clarifying ambiguities or
+     reifying implicit context justifying the rules.
 
 ## 3. Output
 

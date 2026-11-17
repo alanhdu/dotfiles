@@ -99,7 +99,7 @@ It controls execution:
     unchanged. History or message rewrites alone do not invalidate results.
 - Lints, formatting, and type-checking are often "cheap enough" that they can
   run on the entire repo. Tests OTOH are often expensive and you should only run
-  the plausbily impacted tests instead of the full CI suite.
+  the plausibly impacted tests instead of the full CI suite.
 
 ## Coding Preferences
 

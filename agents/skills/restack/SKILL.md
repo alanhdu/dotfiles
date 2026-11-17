@@ -56,9 +56,10 @@ hand-written step invites design decisions the user never approved.
   `jj restore --from <target> <paths>`. Split along independently useful
   behavior or mechanical changes. Minimize temporary adapters that will just
   be overwritten later.
-  - We want to balance "small, self-contained commits" (which might require scaffolding that is later removed) from "churn that wastes review time" (since
-  code that will be deleted later does not need to be fully understood). These
-  are in tension, but we want to minimize both commit size and churn.
+  - Balance "small, self-contained commits" (which might require scaffolding
+    that is later removed) against "churn that wastes review time" (since code
+    that will be deleted later does not need to be fully understood). These are
+    in tension, but we want to minimize both commit size and churn.
 - After each insertion, run `jj restore --from <target> --into <commit>` so the
   top commit keeps the target tree. At the end,
   `jj diff --from <target> --to <tip>` must contain only the differences you

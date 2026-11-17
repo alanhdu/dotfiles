@@ -12,8 +12,8 @@ underneath them or interrupting their review flow with discussion.
 
 1. Work in a separate directory, following [jj-workspace](../jj-workspace/SKILL.md).
    The user edits the main workspace. Until they explicitly finish, do not
-   snapshot either workspace or rewrite shared history;
-   - inspect jj state with `--ignore-working-copy`.
+   snapshot either workspace or rewrite shared history; inspect jj state with
+   `--ignore-working-copy`.
 2. Track all incoming feedback in your ledger, retaining its source and
    resolution across turns. Accept both prompts and review commits containing
    direct corrections or TODO comments.

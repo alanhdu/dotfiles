@@ -5,7 +5,8 @@ AGENTS.md preferences and the codebase's established terms and style.
 
 ## Review checklist and required evidence
 
-Include the evidence below in the report. Mark an item inapplicable only with a concrete reason.
+Include the evidence below in the report. Mark an item inapplicable only with a
+concrete reason.
 
 - [ ] Inventory every docstring, function, method, class, or code block
       in scope. Read the full body and for each, give a compact
@@ -23,8 +24,9 @@ Include the evidence below in the report. Mark an item inapplicable only with a 
 - [ ] Long blocks (rule of thumb: over 15 lines) are broken up with one-line
       comments or blank lines so readers can follow the steps.
 - [ ] Single-use functions are inlined unless they mark an important abstraction
-      boundary (e.g. one independently checked in tests, or an operation that is tricky to understand and can use a name); otherwise readers must
-      jump around to follow one operation.
+      boundary (e.g. one independently checked in tests, or an operation that
+      is tricky to understand and can use a name); otherwise readers must jump
+      around to follow one operation.
 - [ ] All parameters of every function/class compose. Setting a parameter does
       not magically cause other parameters to be ignored.
 
