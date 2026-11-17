@@ -59,5 +59,5 @@ rather than substituting `jj` for `git`.
   the target isn't a forward move. Check whether the change was replaced instead
   of rewritten before passing `--allow-backwards`.
 
-Use [jj-workspace](../jj-workspace/SKILL.md) for isolated work and
-[restack](../restack/SKILL.md) for reshaping stacks.
+Use the `jj-workspace` skill for isolated work and the `restack` skill for
+reshaping stacks.

@@ -11,19 +11,21 @@ your experiences and findings.
 
 ## 1. Audit before synthesis
 
-1. Extract summaries of the transcript using the `transcript.py`:
+1. Extract summaries of the transcript using the `transcript.py` in the same
+   directory as this file. Write them to the task's scratch directory, creating
+   a uniquely named temporary one if none exists (`$task_dir` below):
 
    ```sh
-   python transcript.py <codex/claude> SESSION.jsonl CONTINUATION.jsonl --format=conversation > "$task_dir/conversation.md"
-   python transcript.py <codex/claude> SESSION.jsonl CONTINUATION.jsonl --format=index > "$task_dir/index.tsv"
+   python <skill-dir>/transcript.py <codex|claude> SESSION.jsonl CONTINUATION.jsonl --format=conversation > "$task_dir/conversation.md"
+   python <skill-dir>/transcript.py <codex|claude> SESSION.jsonl CONTINUATION.jsonl --format=index > "$task_dir/index.tsv"
    ```
 
    Use Python 3.11+ with Pydantic 2 already installed (for example, a project’s
    `.venv/bin/python`), otherwise use `uv run` (which requires a writeable
    cache and network access on a cache miss).
 
-   Save outputs beside the existing task scratch directory and inspect the saved
-   outputs to avoid overflowing the tool-call output budget.
+   Read the saved files rather than printing the script's output directly, which
+   can exceed the tool-call output limit.
 
    Outputs declare each source path once as `file1`, `file2`, etc., and cite
    original JSONL lines as `file1:1256`. Original logs are under
@@ -36,8 +38,8 @@ your experiences and findings.
    output to check tool calls and outcomes, including failures, retries, and
    rework that never surfaced in the conversation.
 
-   Do NOT over index on the latest, most recent failure. We want to examine the
-   full session.
+   Examine the full session: the most recent failure is the easiest to recall
+   but rarely the only one worth addressing.
 
 3. Inventory every correction and substantial friction. Give each an ID (C1,
    C2, …) and cite its source messages or tool results. Split multi-part or

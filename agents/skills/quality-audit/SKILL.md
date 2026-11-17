@@ -72,7 +72,7 @@ Wait for reviewers sharing the same code to finish before editing it, or give
 them isolated snapshots. Parallel appraisals must not observe each other's
 fixes.
 
-At an architectural finding, show the original report. Apply an obvious fix
+At an architectural finding, link the original report. Apply an obvious fix
 within scope, then update the raw scope and launch the requested code-quality
 and test reviewers on the resulting code. If there are multiple plausible
 designs with meaningful tradeoffs, present the motivation and options and ask
@@ -104,7 +104,8 @@ Launch fresh-context subagents that do not edit the shared code (Codex:
 general-purpose role if a specialized role conflicts with this contract. If
 independent delegation is unavailable, disclose that limitation.
 
-Use this fixed dispatch envelope, substituting only the path and data fields:
+Use this fixed dispatch envelope, substituting only the data fields and
+`{skill_dir}`, the absolute path of the directory containing this file:
 
 ```text
 Read {skill_dir}/references/reviewer.md and review this assignment:

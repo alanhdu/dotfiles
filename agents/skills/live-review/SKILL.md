@@ -10,9 +10,9 @@ description: >-
 Let the user keep reviewing while you prepare fixes, without changing the code
 underneath them or interrupting their review flow with discussion.
 
-1. Work in a separate directory, following [jj-workspace](../jj-workspace/SKILL.md).
-   The user edits the main workspace. Until they explicitly finish, do not
-   snapshot either workspace or rewrite shared history; inspect jj state with
+1. Work in a separate directory, following the `jj-workspace` skill. The user
+   edits the main workspace. Until they explicitly finish, do not snapshot
+   either workspace or rewrite shared history; inspect jj state with
    `--ignore-working-copy`.
 2. Track all incoming feedback in your ledger, retaining its source and
    resolution across turns. Accept both prompts and review commits containing
@@ -28,7 +28,7 @@ underneath them or interrupting their review flow with discussion.
      fixes while decisions remain open.
    - Hold substantive responses until the user explicitly says they are done;
      pauses and turn boundaries do not count. Hold discussion, not implementation.
-     Keep required progress updates brief.
+     Keep any progress updates brief.
    - Answer an explicit request for an immediate response without ending the review.
 4. When the user explicitly says they are finished with review:
    - Fold your fixes into the commits (updating the jj snapshots)
