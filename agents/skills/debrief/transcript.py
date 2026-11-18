@@ -9,6 +9,7 @@ import argparse
 import difflib
 import json
 from pathlib import Path
+from typing import Literal
 
 from pydantic import (
     AliasChoices,
@@ -17,19 +18,12 @@ from pydantic import (
     Field,
     JsonValue,
     ValidationError,
+    field_validator,
 )
 
 
 class Text(BaseModel):
     text: str
-
-
-class Message(BaseModel):
-    role: str
-    content: str | list[dict[str, JsonValue]]
-    channel: str | None = Field(
-        default=None, validation_alias=AliasChoices("channel", "phase")
-    )
 
 
 class ToolCall(BaseModel):
@@ -42,6 +36,34 @@ class ToolResult(BaseModel):
     call_id: str = Field(validation_alias=AliasChoices("call_id", "tool_use_id"))
     body: JsonValue = Field(validation_alias=AliasChoices("output", "content"))
     is_error: bool = False
+
+
+class HiddenContent(BaseModel):
+    type: Literal["thinking", "encrypted_content"]
+
+
+ContentBlock = Text | ToolCall | ToolResult | HiddenContent
+
+
+class Message(BaseModel):
+    role: str
+    content: list[ContentBlock]
+    channel: str | None = Field(
+        default=None, validation_alias=AliasChoices("channel", "phase")
+    )
+
+    @field_validator("content", mode="before")
+    @classmethod
+    def parse_content(
+        cls, value: str | list[dict[str, JsonValue]]
+    ) -> list[ContentBlock]:
+        if isinstance(value, str):
+            return [Text(text=value)]
+        return [
+            content_block(block)
+            or Text(text=f"[Non-text content: {block.get('type')}]")
+            for block in value
+        ]
 
 
 class ToolOutput(BaseModel):
@@ -80,19 +102,26 @@ class Entry(BaseModel):
     status: str = ""
 
 
-def item(data: dict[str, JsonValue]) -> Message | Text | ToolCall | ToolResult | None:
-    match data.get("type", "message"):
-        case "message":
-            return Message.model_validate(data)
-        case "agent_message":
-            return Message.model_validate({"role": "agent", "content": data["content"]})
+def content_block(data: dict[str, JsonValue]) -> ContentBlock | None:
+    match data.get("type"):
         case "text" | "input_text" | "output_text":
             return Text.model_validate(data)
         case "function_call" | "custom_tool_call" | "tool_use":
             return ToolCall.model_validate(data)
         case "function_call_output" | "custom_tool_call_output" | "tool_result":
             return ToolResult.model_validate(data)
+        case "thinking" | "encrypted_content":
+            return HiddenContent.model_validate(data)
     return None
+
+
+def item(data: dict[str, JsonValue]) -> Message | ContentBlock | None:
+    match data.get("type", "message"):
+        case "message":
+            return Message.model_validate(data)
+        case "agent_message":
+            return Message.model_validate({"role": "agent", "content": data["content"]})
+    return content_block(data)
 
 
 def output(value: JsonValue) -> tuple[str, list[str]]:
@@ -136,19 +165,14 @@ def read_file(path: Path, provider: str, *, file_label: str) -> list[Entry]:
                 if node.channel == "analysis":
                     continue
                 role = "context" if record.is_meta or record.is_summary else node.role
-                blocks = (
-                    [Text(text=node.content)]
-                    if isinstance(node.content, str)
-                    else [
-                        item(b) or Text(text=f"[Non-text content: {b.get('type')}]")
-                        for b in node.content
-                        if b.get("type") not in ("thinking", "encrypted_content")
-                    ]
-                )
+                blocks = node.content
             else:
                 blocks = [node]
+            encrypted_count = 0
             for block in blocks:
-                if isinstance(block, Text):
+                if isinstance(block, HiddenContent):
+                    encrypted_count += block.type == "encrypted_content"
+                elif isinstance(block, Text):
                     entries.append(Entry(ref=ref, role=role, text=block.text))
                 elif isinstance(block, ToolCall):
                     body = (
@@ -177,6 +201,11 @@ def read_file(path: Path, provider: str, *, file_label: str) -> list[Entry]:
                             status=" | ".join(status),
                         )
                     )
+            if encrypted_count:
+                unavailable = (
+                    f"[Unavailable content: {encrypted_count} encrypted payload(s)]"
+                )
+                entries.append(Entry(ref=ref, role=role, text=unavailable))
         except ValidationError as error:
             raise ValueError(f"{path}:{line}: {error}") from error
     return entries
