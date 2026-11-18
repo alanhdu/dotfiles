@@ -131,12 +131,17 @@ progress:
 - Structure commits so I can review and merge work incrementally:
   - Every prefix of the stack should be mergeable. No commit should need a later
     commit to work. Each prefix should build and pass its relevant tests.
-  - Use parallel branches or bookmarks for work I want reviewed and merged
-    independently. Each may group multiple commits, including logically
-    independent changes, in one PR: GitHub PRs have significant overhead, so
-    logical independence alone does not require separate PRs. If C depends on
-    branches A and B, start A and B from their common base, join them with a
-    merge commit, and put C on top of that merge.
+  - Organize stacks at two levels:
+    - jj bookmarks (roughly equivalent to Git branches) mark coherent
+      milestones: each should deliver an understandable, usable capability.
+      Each bookmark becomes one GitHub PR for external review, which has
+      overhead; logical independence alone does not require another PR.
+    - Commits are focused semantic steps within a milestone. I review commit
+      by commit, so keep each individually reviewable and order them to build
+      toward the milestone. Fewer bookmarks does not imply fewer commits.
+  - Use parallel branches/bookmarks for milestones that can merge independently.
+    If C depends on A and B, branch both from their common base, join them with
+    a merge commit, and put C on top.
   - Ideally, factor out the easiest/simplest commits first so they can merge
     early while we go back and forth on the more complicated parts of the diff.
 - Unbundle independent improvements into separate commits so each can be reviewed
