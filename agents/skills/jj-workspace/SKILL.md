@@ -45,6 +45,10 @@ visible from every workspace; keep file edits in the temporary workspace.
 
 ## Dependencies and baseline comparisons
 
+In a colocated jj workspace, Git HEAD is @-, so Git-based builds see a
+nonempty @ as dirty changes to its parent. To build @, run `jj new`
+first: the files stay the same, but Git HEAD now identifies that revision.
+
 Ignored dependencies and generated environments are normally absent from a new
 workspace. Reuse an existing environment only when the repository documents that
 workflow and its paths remain valid from the temporary workspace. If the change
