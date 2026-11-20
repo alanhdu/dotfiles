@@ -16,6 +16,9 @@ One-paragraph summary (under 100 words): what changes and what it buys us.
 
 ## Design
 
-## Alternatives
+### Glossary
 
-## Open questions
+| Term | Meaning |
+|---|---|
+
+## Alternatives
