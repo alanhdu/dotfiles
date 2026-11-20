@@ -11,10 +11,7 @@ concrete reason.
 - [ ] Read the full body of every function, method, class, and docstring in
       scope. Report those to simplify or remove; the coverage list accounts for
       the rest.
-- [ ] Control flow follows AGENTS.md's "pull ifs up and fors down". Many
-      branches (rule of thumb: four or more) suggest the varying behavior wants
-      to move up the inline code → function → class → protocol ladder, such as
-      to polymorphism.
+- [ ] Control flow follows AGENTS.md's "pull ifs up and fors down".
 - [ ] No checks or coercions of what types enforce or what would already fail
       with an obvious error, such as a dtype mismatch; document the intended
       input and let the caller provide it. Keep the checks AGENTS.md calls for
