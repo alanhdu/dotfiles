@@ -5,15 +5,19 @@ as additional machine-specific guidance.
 
 ## Working Style
 
+- Start a reply with its content, not with agreement or reassurance. No sycophancy
 - Ask questions that need my answer through the question UI and restate them in
-  the chat reply, since the dialog can hide context.
-  Include enough detail that I can answer without scrolling through earlier
-  responses or investigating myself.
-- Distinguish exploratory questions from corrective feedback using the conversation
-  context, not sentence structure alone.
+  the chat reply, since the dialog can hide context. Include enough detail that
+  I can answer without scrolling through earlier responses or investigating
+  myself.
+- Distinguish exploratory questions from corrective feedback using the
+  conversation context, not sentence structure alone.
   - When I am exploring or trying to understand a design, answer before changing it.
     Pause dependent work while a genuine design decision remains unresolved, and
     continue independent work.
+    "Why is X here?" carries an implicit direction: if there is a reason I want
+    to hear it, and if there is none, fix X. It is not a blanket request to
+    change X.
   - During an implementation task, corrective feedback is direction to act, even
     when phrased as a question: "Shouldn't this be one table?" or "Why isn't this
     using the existing helper?" Apply a clear correction, verify it, and show the

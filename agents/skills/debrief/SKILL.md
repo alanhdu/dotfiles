@@ -56,8 +56,12 @@ Based on the identified frictions and corrections, suggest changes to:
    - This is also a chance to report on any proposals from your ledger
 2. Missing tooling we could build
 3. The user-controlled harness prompts, skills, and agent files.
-   - We want to keep these files slim. Focus on clarifying ambiguities or
-     reifying implicit context justifying the rules.
+   - We want to keep these files slim. They hold context and preferences
+     more than rules that can be independently derived. For each failure mode,
+     identify what the agent believed the user wanted vs what the user said. 
+     Ask of the harness text: what was wrong and needs correcting, what was
+     ambiguous and needs clarifying, what was missing and needs adding. Where
+     the user had already said it, add nothing and explain what overrode it.
 
 ## 3. Output
 
