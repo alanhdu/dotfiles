@@ -34,16 +34,18 @@ behavior.
 Examine the existing commit stack and design a better commit structure. Present
 the proposed stack in order. For each commit, list its responsibility, exact
 files or hunks, and focused verification. Explicitly identify every commit that
-will be split, folded, reordered, or abandoned. Then carry it out without
-waiting.
+will be split, folded, reordered, or abandoned. Carry out commit-level
+reshaping within the agreed milestones. Ask before adding, removing,
+or changing a bookmark milestone.
 
 - Fold fixups into their owning commits with
   `jj squash --from <fixup> --into <parent> --use-destination-message`.
 - Step 5 describes how much intermediate-state verification to run.
 - Apply every edit before resolving conflicts: put the changes in one commit on
-  top of the stack and `jj absorb` it, or edit the target commits in sequence
-  without testing in between. Then resolve each conflicted descendant once,
-  bottom-up.
+  top of the stack and distribute them by semantic ownership, or edit the
+  target commits in sequence without testing in between. Use `jj absorb`
+  only where line attribution matches that ownership. Then resolve each
+  conflicted descendant once, bottom-up.
 
 ### Splitting one large commit
 
