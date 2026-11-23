@@ -38,10 +38,10 @@ configured trunk, including pending working-copy changes. Resolve revisions
 locally; do not fetch for an audit. In Git, capture relevant staged, unstaged,
 and untracked changes; in jj, snapshot pending changes before pinning revisions.
 
-Keep a raw scope manifest and any patches under `scope/` in a unique temporary
-audit directory, separate from assignments and reports. Record paths and
-versions mechanically, without the parent's commentary. Give reviewers access to
-this evidence and repository context, even when their file assignments differ.
+Assign reviewers repository paths, commits, or commit ranges. Pin revisions
+to exact commit IDs so history edits cannot silently change the assignment.
+Reviewers inspect the repository directly; export patches only when they
+cannot access the relevant repository state.
 
 ## Select reviewers and order the work
 
@@ -77,8 +77,8 @@ them isolated snapshots. Parallel appraisals must not observe each other's
 fixes.
 
 At an architectural finding, link the original report. Apply an obvious fix
-within scope, then update the raw scope and launch the requested code-quality
-and test reviewers on the resulting code. If there are multiple plausible
+within scope, then record the resulting revisions in the assignments for
+subsequent code-quality and test reviewers. If there are multiple plausible
 designs with meaningful tradeoffs, present the motivation and options and ask
 for direction before edits or reviews of code that depends on that choice.
 Review is interactive: the user need not specify all intentions in advance, and
@@ -96,12 +96,12 @@ the implementer's preferred conclusions. For reviewer dispatch, the parent may
 decide **only**:
 
 1. Which reviewers and lenses to launch.
-2. Which files each reviewer examines, including raw scope artifacts.
+2. Which repository paths, commits, or ranges each reviewer examines.
 3. Which exact quotes from the user each reviewer receives.
 
 The parent must not author review questions, emphasis, summaries, rationales,
 hypotheses, acceptance criteria, expected findings, suggested fixes, or claims
-about passing checks. Do not put that material in scope files or task names.
+about passing checks. Do not put that material in assignments or task names.
 
 Launch fresh-context subagents that do not edit the shared code (Codex:
 `fork_turns="none"`; Claude Code: the `code-reviewer` agent type). Use a
@@ -113,11 +113,13 @@ Use this fixed dispatch envelope, substituting only the data fields and
 
 ```text
 Read {skill_dir}/references/reviewer.md and review this assignment:
-{"lenses": [...], "files": [...], "user_quotes": [...]}
+{"lenses": [...], "scope": [...], "user_quotes": [...]}
 ```
 
-Use absolute file or directory paths, including raw manifests or patches when
-needed. Directory assignments cover the complete requested inventory. Quotes are
+In `scope`, use absolute repository paths or exact commit IDs and ranges;
+include the repository path for revision assignments. Directory assignments
+cover the complete requested inventory. Exported patches may be assigned when
+repository state is inaccessible. Quotes are
 verbatim, with qualifications and corrections preserved; use an empty list when
 none apply. Do not paraphrase or select excerpts that reverse the user's
 meaning. Never assign review reports, or a directory containing them or the
@@ -133,7 +135,7 @@ not replace, edit, or truncate reports to fit the parent's summary. Retain them
 for follow-up; copying them into chat is unnecessary.
 
 Before accepting a report, reconcile its coverage list against the assigned
-source inventory. Send back a report that skipped part of the scope.
+paths and commits. Send back a report that skipped part of the scope.
 
 Give every finding a disposition: fixed, rejected with a reason, or unresolved.
 Before implementing a recommendation, independently check both the problem and
