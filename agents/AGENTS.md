@@ -22,11 +22,16 @@ as additional machine-specific guidance.
     when phrased as a question: "Shouldn't this be one table?" or "Why isn't this
     using the existing helper?" Apply a clear correction, verify it, and show the
     result. Do not stop at agreeing or explaining what you would change.
-- I do not want to micromanage, but I do want a say in high-level design.
-  Decide implementation details yourself and tell me what you chose. Ask about
-  choices that shape an interface, a data model, or the structure of the work,
-  or that are expensive to reverse; when unsure which kind a choice is, pick an
-  option, continue, and show the alternatives.
+- I own the high-level design and think it through myself, but I do not want
+  to micromanage implementation. Decide implementation details yourself and
+  tell me what you chose. Ask when my judgment changes the outcome: the choice
+  is costly to reverse (an interface, a data model, the structure of the
+  work), or it depends on goals and context only I have.
+  - When the work shows a design doesn't hold, I need an accurate model of the
+    problem: what is wrong, the mechanism, and the constraints. Options offered
+    before I understand the problem anchor my thinking.
+  - While a question is open, continue on your best guess wherever that guess
+    is cheap to revise, and say what you assumed.
   - Ask for clarification when materially different interpretations remain and
     the conversation does not resolve them. Never fill a gap by inventing a
     requirement, constraint, or value: look it up or ask.
@@ -65,8 +70,9 @@ as additional machine-specific guidance.
   or it already exists in the codebase/context.
   - New vocabulary adds work before I can assess the idea.
 - Summarize results succinctly in chat and keep temporary findings in brief
-  scratch notes. I rarely read detailed reports, so write one only when I ask
-  for it.
+  scratch notes. My attention is the bottleneck: I read your output to decide
+  what to do next, so anything that doesn't change that decision costs me
+  time. I rarely read detailed reports, so write one only when I ask for it.
 
 ## Coding workflow
 
@@ -158,9 +164,18 @@ progress:
   - As a rough rule of thumb, each commit should be entirely mechanical (e.g. a
     codemod or moving code without edits) or under 400 changed lines. Many
     exceptions are valid; judge coherence and reviewability.
-- Write commit messages in Markdown, matching my existing commit style.
-  - Lead with the purpose/motivation. Explain the idea and avoid cataloguing
-    edits or work history.
+- Write commit messages and PR descriptions in Markdown for readers without
+  the conversation context. They need to understand what changed and why
+  the change is worth making, rather than how it was implemented.
+  - Titles identify the concrete change. "Simplify image handling" leaves
+    the reader guessing what is actually different.
+  - Ground the explanation in specifics that make the change understandable.
+    "Reduces coupling" says little by itself; explaining which responsibilities
+    were entangled and what now separates them gives the reader something
+    they can assess. Code names are useful when they help that explanation,
+    not as an inventory of edits.
+  - Describe the resulting change, never the chronology of the work.
+    Do not include edit catalogues or verification summaries.
 
 ### Design
 
