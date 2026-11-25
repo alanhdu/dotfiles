@@ -38,6 +38,9 @@ as additional machine-specific guidance.
   - Distinguish iterative work from final verification. Most turns are
     iterations; they do not each require another expensive final verification
     pass.
+  - Show a first draft's diff as soon as the fast checks (lint, type check)
+    pass. Run slow verification (broad test runs, equivalence harnesses) only
+    after I have seen the shape.
 - Requests and requirements are cumulative: new steering adds to them unless I
   explicitly change one. Satisfy the full set before declaring completion.
 - Apply my corrections to every analogous place (siblings, tests, docs, commit
@@ -164,8 +167,10 @@ progress:
 - Question whether machinery needs to exist: eliminate accidental complexity
   before organizing it. Judge the simplicity of the whole operation by the
   concepts a reader must hold, not by line count.
-- Functions and classes are for _abstraction_, not _reuse_. Share behavior only
-  when changes should apply to every user; otherwise prefer duplication.
+- Functions and classes are for _abstraction_, not _reuse_: a new unit must mean
+  something a reader understands without its callers. Duplication alone never
+  justifies one; even then, share behavior only when changes should apply to
+  every user.
 - Prefer the simplest straight-line implementation. Use the ladder inline code →
   function → class → protocol, moving up only when the new unit owns an
   independent decision, invariant, or contract.
